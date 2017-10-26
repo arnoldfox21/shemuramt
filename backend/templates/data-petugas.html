@@ -1,0 +1,67 @@
+{% extends 'base-backend.html' %}
+{% block content %}
+          
+    <section id="content">
+        <div class="section white">
+            <h4 class="header center-align">{% if request.method == 'GET' and 'edit' in request.GET %}Edit {% endif %}Data petugas</h4>
+                <div class="container">
+                    <div class="row">
+                        <div class="col m12 s12 l12">
+                                {% if alert %}
+                                <div id="card-alert" class="card green">
+                                  <div class="card-content white-text">
+                                    <p><i class="mdi-alert-error"></i> {{alert}}</p>
+                                  </div>
+
+                                  <button type="button" class="close white-text" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">×</span>
+                                  </button>
+                                </div>
+                            {% endif %}
+                    {% include 'widget/data-petugas.html' %}
+                    {% if not 'edit' in request.GET %}
+                        <div class="fixed-action-btn" style="bottom: 50px; right: 19px;">
+                            <a href="{% url 'data-petugas' %}?edit" {% include 'widget/web_setting/web_color' %} class="btn-floating btn-large tooltipped" data-position="left" data-delay="50" data-tooltip="Edit data petugas">
+                             <i class="mdi-editor-border-color"></i>
+                            </a>
+                        </div>
+                    {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </section>
+  
+{% endblock %}
+{% block custom_js %}
+    <script type="text/javascript">
+
+          $(document).ready(function(){
+            if (window.location.search.indexOf('updated') > -1) {
+              swal("Berhasil", "Data telah diperbaruhi!", "success");
+            };
+            $('.btn-warning-cancel').click(function(){
+          swal({
+            title: "Are you sure?",
+            text: "You will not be able to recover this imaginary file!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: '#DD6B55',
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: "No, cancel plx!",
+            closeOnConfirm: false,
+            closeOnCancel: false
+          },
+          function(isConfirm){
+            if (isConfirm){
+              swal("Deleted!", "Your imaginary file has been deleted!", "success");
+
+            } else {
+              swal("Cancelled", "Your imaginary file is safe :)", "error");
+            }
+          });
+        });
+    });
+    
+
+    </script>
+{% endblock %}

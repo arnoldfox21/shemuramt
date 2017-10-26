@@ -1,0 +1,82 @@
+{% extends 'base-backend.html' %}
+{% block content %}
+      <section id="content">       
+          <div class="row">
+            <div class="col s12 m12 l12">
+              <div class="card-panel">
+                <h4 class="header2">{{ aksi }} Distributor {{ ambil.nama }}</h4>
+                <div class="row">
+                  <form class="col s12" method="POST" action="../hdist/?update">
+                  {% csrf_token %}
+                    <div class="row">
+                      <div class="input-field col s6">
+                      <input type="hidden" value="{{ ambil.pk }}" name="idd">
+                        <input id="first_name" name="nama" value="{{ ambil.nama }}" type="text">
+                        <label for="first_name">Nama</label>
+                      </div>
+                    
+                      <div class="input-field col s6">
+                        <input name="telp" id="last_name" value="{{ ambil.telp }}" type="text">
+                        <label for="last_name">No. Telp</label>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="input-field col s12">
+                        <input name="umail" id="email5" value="{{ ambil.umail }}" type="email">
+                        <label for="email">Email</label>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="input-field col s12">
+                        <input id="password6" name="password" value="{{ ambil.pswd }}" type="password">
+                        <label for="password">Password</label>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="input-field col s6">
+                        <select name="jk">
+                          <option disabled="">Pilih</option>
+                          <option {% if ambil.jenis_kelamin == 'l' %} selected {% endif %} value="l">Laki - laki</option>
+                          <option  {% if ambil.jenis_kelamin == 'p' %} selected {% endif %} value="p">Perempuan</option>
+                          <option  {% if ambil.jenis_kelamin == '0' %} selected {% endif %} value="lainnya">Lainnya</option>
+                        </select>
+                        <label>Jenis kelamin</label>
+                      </div>                        
+                      <div class="input-field col s6">
+                        <input type="date" value="{{ ambil.tgl_lahir }}" name="tgl_l" class="datepicker">
+                        <label for="dob">Tgl. lahir</label>
+                      </div>
+                      
+                    </div>
+                    
+                    <div class="row">
+                      <div class="file-field input-field col s6">
+                        <input class="file-path validate" value="{{ ambil.foto }}" type="text"/>
+                        <div {% include 'widget/web_setting/web_color' %} class="btn">
+                          <span>Ganti foto profil</span>
+                          <input type="file" />
+                        </div>
+                      </div>
+                      
+                    </div>
+                    <div class="row">
+                      <div class="input-field col s12">
+                        <textarea id="message5" class="materialize-textarea" name="alamat" length="120">{{ ambil.alamat }}</textarea>
+                        <label for="message">Alamat</label>
+                      </div>
+                      <div class="row">
+                        <div class="input-field col s12">
+                          <button {% include 'widget/web_setting/web_color' %} class="btn waves-effect waves-light right" type="submit" name="action">Submit
+                            <i class="mdi-content-send right"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+  </section>
+ {% endblock %}

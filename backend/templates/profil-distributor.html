@@ -1,0 +1,244 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load humanize %}
+      
+      <section id="content">        
+        <div class="container">
+
+          <div id="profile-page" class="section">
+            <div id="profile-page-header" class="card">
+                <div class="card-image waves-effect waves-block waves-light">
+                    <img class="activator" src="{{ STATIC_URL }}images/shemura-bg.jpg" alt="user background">                    
+                </div>
+                <figure class="card-profile-image">
+                    <img src="{{ STATIC_URL }}media/{% if ambil.foto|length == 0 %}male.png{% else %}{{ ambil.foto }}{% endif %}" alt="profile image" class="circle z-depth-2 responsive-img activator">
+                </figure>
+                <div class="card-content">
+                  <div class="row">                    
+                    <div class="col s3 offset-s2">                        
+                        <h4 class="card-title grey-text text-darken-4">{{ ambil.nama }}</h4>
+                        <p class="medium-small grey-text">Distributor</p>                        
+                    </div>
+                    <div class="col s2 center-align">
+                        <h4 class="card-title grey-text text-darken-4">{{ Tb }}</h4>
+                        <p class="medium-small grey-text">Transaksi gagal</p>                        
+                    </div>
+                    <div class="col s2 center-align">
+                        <h4 class="card-title grey-text text-darken-4">{{ count }}</h4>
+                        <p class="medium-small grey-text">Transaksi berhasil</p>                        
+                    </div>                    
+                    <div class="col s2 center-align">
+                        <h4 class="card-title grey-text text-darken-4">Rp. {{ tp|intcomma }}</h4>
+                        <p class="medium-small grey-text">Total pembelian</p>                        
+                    </div>                    
+                    <div class="col s1 right-align">
+                      <a href="#modal3" class="btn-floating waves-effect waves-light darken-2 right modal-trigger" {% include 'widget/web_setting/web_color' %}>
+                         <i class="mdi-editor-border-color"></i>
+                      </a>
+                    </div>
+                  </div>
+                </div>
+            </div>
+      
+            <div id="profile-page-content" class="row">
+              <div id="profile-page-sidebar">
+                <div class="col s12 m4">
+                <div class="card" {% include 'widget/web_setting/web_color' %}>
+                  <div class="card-content white-text">
+                  
+                    <div class="right-align">
+                      <a href="#modal1" class="btn-floating waves-effect waves-light darken-2 right modal-trigger" {% include 'widget/web_setting/web_color' %}>
+                         <i class="mdi-editor-border-color grey white-text"></i>
+                      </a>
+                    </div>
+                      <span class="card-title">Account info</span>
+                  </div>                  
+                </div>
+               
+                <ul id="profile-page-about-details" class="collection z-depth-1">
+                  <li class="collection-item">
+                    <div class="row">
+                      <div class="col s5 grey-text darken-1"><i class="mdi-action-wallet-travel"></i> Nama</div>
+                      <div class="col s7 grey-text text-darken-4 right-align">{{ ambil.nama }}</div>
+                    </div>
+                  </li>
+                  <li class="collection-item">
+                    <div class="row">
+                      <div class="col s5 grey-text darken-1"><i class="mdi-social-poll"></i> Password</div>
+                      <div class="col s7 grey-text text-darken-4 right-align">*******</div>
+                    </div>
+                  </li>
+                  <li class="collection-item">
+                    <div class="row">
+                      <div class="col s5 grey-text darken-1"><i class="mdi-social-domain"></i> Alamat</div>
+                      <div class="col s7 grey-text text-darken-4 right-align">{{ ambil.alamat }}</div>
+                    </div>
+                  </li>
+                   <li class="collection-item">
+                    <div class="row">
+                      <div class="col s5 grey-text darken-1"><i class="mdi-social-domain"></i> Email</div>
+                      <div class="col s7 grey-text text-darken-4 right-align">{{ ambil.umail }}</div>
+                    </div>
+                  </li>
+                   <li class="collection-item">
+                    <div class="row">
+                      <div class="col s5 grey-text darken-1"><i class="mdi-social-domain"></i> Tgl lahir</div>
+                      <div class="col s7 grey-text text-darken-4 right-align">{{ ambil.tgl_lahir }}</div>
+                    </div>
+                  </li>
+                  <li class="collection-item">
+                    <div class="row">
+                      <div class="col s5 grey-text darken-1"><i class="mdi-social-cake"></i> Umur</div>
+                      <div class="col s7 grey-text text-darken-4 right-align">{{ ambil.umur }}</div>
+                    </div>
+                  </li>
+                </ul>
+            
+                </div>
+
+               
+                 <div class="col s12 m4">
+               
+                <div class="card red">
+                  <div class="card-content white-text">
+                    <span class="card-title">Transaksi aktif</span>
+                    
+                  </div>                  
+                </div>
+                <ul id="profile-page-about-feed" class="collection z-depth-1">
+                {% for tf in tr %}
+                  <li class="collection-item avatar">
+                   <a href="{% url 'fakthur-pemesanan' %}?id={{ tf.id }}"><i class="mdi-action-description circle" {% include 'widget/web_setting/web_color' %}></i></a>
+                    <span class="title">{{ tf.id }}</span>
+                    <p>{{ tf.id_waktu }}
+                      <br> <span class="ultra-small">Status transaksi: Pending </span>
+                    </p>
+                    <a href="{% url 'h_t' %}?d_transaksi={{ tf.id }}" class="secondary-content"><i class="mdi-content-clear right"></i></a>
+                  </li>
+
+                  {% endfor %}
+                
+                </ul>
+               
+                </div>
+
+
+                <div class="col s12 m4">
+               
+                <div class="card green">
+                  <div class="card-content white-text">
+                    <span class="card-title">Transaksi terakhir</span>
+                    
+                  </div>                  
+                </div>
+                <ul id="profile-page-about-feed" class="collection z-depth-1">
+                {% for tf in gtr %}
+                  <li class="collection-item avatar">
+                   <i class="mdi-action-description circle green"></i>
+                    <span class="title">Rp. {{ tf.total_pembayaran|intcomma }}.00</span>
+                    <p>{{ tf.waktu_transaksi }} 
+                      <br> <span class="ultra-small">Pupuk cair </span>
+                    </p>
+                  </li>
+
+                  {% endfor %}
+                
+                </ul>
+               
+                </div>
+
+
+              </div>
+             
+              <div class="col md12 s12 l12">
+
+          
+              <div class="divider"></div>
+                <div id="striped-table">
+                  <h4 class="header">Record transaksi</h4>
+                  <div class="row">
+                    <div class="col s12 m12 l12">
+                      <table class="striped responsive-table bordered">
+                        <thead>
+                          <tr>
+                           
+                            <th data-field="time">Waktu transaksi</th>
+                            <th data-field="name">Nama barang</th>
+                            <th data-field="price">Harga satuan</th>
+                            <th data-field="name">Jumlah barang</th>
+                            <th data-field="price2">Total harga</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                        {% for love_u in gettr %}
+                         {% load humanize %}
+                          <tr>
+                           
+                            <td>{{ love_u.waktu_transaksi }}</td>
+                            <td>{{ love_u.nm_barang }}</td>
+                            <td>Rp. {{ love_u.harga|intcomma }}.00</td>
+                            <td>{{ love_u.jumlah_barang }}</td>
+                            <td>Rp. {{ love_u.total_pembayaran|intcomma }}.00</td>
+                          </tr>
+                        {% endfor %}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+                
+              </div>
+             
+
+              </div>
+           
+
+            </div>
+          </div>
+        </div>
+        </div>
+     
+      </section>
+              <div id="modal3" class="modal white">
+                <form action="{% url 'h_t' %}?foto_profil" method="POST" enctype="multipart/form-data">
+                  <div class="modal-content">
+                  {% csrf_token %}
+                  <div class="row">
+                    <div class="input-field col s6 m6 l6 center">
+                      <img src="{{ STATIC_URL }}media/{% if ambil.foto|length == 0 %}male.png{% else %}{{ ambil.foto }}{% endif %}" alt="" class="circle responsive-img">
+                    </div>
+             
+                        <div class="col m6">
+                        <p><h4 class="grey-text">Ganti foto profil</h4></p>
+                      
+                      <div class="file-field input-field">
+                        <input class="file-path validate" type="text"/>
+                        <div {% include 'widget/web_setting/web_color' %} class="btn">
+                          <span>Pilih foto</span>
+                          <input type="file" name="foto_profil"/>
+                        </div>
+                      </div>
+                    </div>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                     
+                    <button type="submit" class="waves-effect purple btn">Update</button>
+                  </div>
+                 </form>
+              </div>
+
+              <div id="modal1" class="modal white">
+                <form action="" method="POST">
+                  <div class="modal-content">
+                  {% csrf_token %}
+                  {{ form }}
+                  </div>
+                  <div class="modal-footer">
+                   
+                    <button type="submit" class="waves-effect purple btn">Update</button>
+                  </div>
+                 </form>
+              </div>
+
+{% endblock %}

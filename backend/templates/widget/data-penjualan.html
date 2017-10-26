@@ -1,0 +1,45 @@
+
+            <div id="striped-table" class="section">
+              <h4 class="header">Data Penjualan</h4>
+              <div class="row">
+                <div class="col s12 m12 l12">
+                  <table class="striped responsive-table bordered" class="display" cellspacing="0" width="100%">
+                      <thead>
+                          <tr>
+                              <th>ID</th>
+                              <th>Waktu transaksi</th>
+                              <th>Nama barang</th>
+                              <th>Harga</th>
+                              <th>Jumlah barang</th>
+                              <th>Nama</th>
+                          </tr>
+                      </thead>
+                   
+                      <tfoot>
+                          <tr>
+                              <th>ID</th>
+                              <th>Waktu transaksi</th>
+                              <th>Nama barang</th>
+                              <th>Harga</th>
+                              <th>Jumlah barang</th>
+                              <th>Nama</th>
+                          </tr>
+                      </tfoot>
+                   
+                      <tbody>
+                      {% for data in penjualan %}
+                      {% load humanize %}
+                          <tr>
+                              <td>{{ data.id }}</td>
+                              <td>{{ data.waktu_transaksi }}</td>
+                              <td>{{ data.nm_barang }}</td>
+                              <td>Rp. {{ data.harga|intcomma }}.00</td>
+                               <td>{{ data.jumlah_barang }}</td>
+                              <td>{{ data.id_dist.nama }}</td>
+                          </tr>
+                      {% endfor %}
+                      </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>

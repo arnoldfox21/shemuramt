@@ -1,0 +1,269 @@
+{% extends 'base.html' %}
+   {% block content %}
+   {% load humanize %}
+                    <div class="slider" {% include 'widget/web_setting/web_color' %}>
+                        <ul class="slides">
+                            <li>
+                                  <img src="{{ STATIC_URL }}images/fg.jpg"> 
+                                <div class="caption center-align">
+                                    <h3>Selamat datang di situs resmi</h3>
+                                    <h5 class="light grey-text text-lighten-3">Shemura MT</h5>
+                                </div>
+                            </li>
+                            <li>
+                                <img src="{{ STATIC_URL }}images/slide2.jpg">
+                                <div class="caption left-align">
+                                    <h3>Pabrik pupuk cair</h3>
+                                    <h5 class="light grey-text text-lighten-3">Solusi cerdas untuk petani.</h5>
+                                </div>
+                            </li>
+                            <li>
+                            <img src="{{ STATIC_URL }}images/slide1.jpg">       
+                                    <div class="caption right-align">
+                                <h3>Lebih efisien</h3>
+                                <h5 class="light grey-text text-lighten-3">mudah dan tidak terlalu menguras tenaga.</h5>
+                                </div>
+                            </li>
+                            <li>
+                                <img src="{{ STATIC_URL }}images/slide5.jpg"> 
+                                <div class="caption center-align">
+                                    <h3>Sistem layanan dan pelayanan yang canggih</h3>
+                                    <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                  <div class="col s12 banner z-depth-1" id="banner_home" {% include 'widget/web_setting/web_color' %}>
+                  <br/>
+                        <h1 class="header col s12 white-text center centralize"> Selamat datang di Situs resmi kami</h1>
+                      <div class="green">
+                        <div class="row">
+                            <h3 class="header col s12 white-text centralize center-align hide-on-small-only" itemprop="description"> {{ 'Situs ini dibangun untuk mempermudah transaksi dan melayani semua distributor Shemura MT.'|linebreaks }}</h3>
+                        </div>
+                            <div class="col s12 m8 centralize">
+                              {% if 'id' in request.session %}
+                              <div class="row">
+                                <div class="col m12 s12">
+                                <div class="center-align">
+                                 <a href="{% url 'login_distributor' %}" {% include 'widget/web_setting/web_color' %} class="waves-effect waves-light btn-large darken-1 s12 btn-trial"><i class="mdi-social-person left"></i> Lihat Profil</a></div>
+                                </div> 
+                              </div>
+                              {% else %}
+                              <div class="row">
+                                <div class="col m12 s12"> 
+                                  <div class="center-align">
+                                <a href="{% url 'login_distributor' %}" {% include 'widget/web_setting/web_color' %} class="waves-effect waves-light btn-large darken-1 btn-trial"> Masuk sebagai distributor</a>
+                                </div>
+                                </div>
+                              </div>
+                              {% endif %}
+                              <br/>
+                           </div>
+                        </div>
+                      </div>
+    <div id="main">
+       
+    <div class="wrapper card">
+
+      <section id="content">        
+        <!--start container-->
+        <div class="container">
+
+          <div class="section">
+            <div class="row">
+
+              <div class="col s12 m9 l9">
+                <div class="blog-sizer"></div>
+                
+                {% for select in barang %}
+
+                <div class="blog col m4 l4" style="margin-bottom: 20px">
+                    <div class="card z-depth-2">
+                        <div class="card-image waves-effect waves-block waves-light">
+                            <a href="#"><img src="{{ STATIC_URL }}images/vg.jpg" alt="blog-img">
+                            </a>
+                        </div>
+                        <ul class="card-action-buttons">
+                            <li><a href="pemesanan?id={{ select.id }}" class="btn-floating btn-large waves-effect waves-light green accent-4"><i class="mdi-action-shopping-cart"></i></a>
+                            </li>                            
+                        </ul>
+                        <div class="card-content">
+                            <p class="row">
+                              <span class="left"><a href="pemesanan?id={{ select.id }}">{{ select.nm_barang }}</a></span>
+                              <span class="right">{{ today|date:"D d M Y" }}</span>
+                            </p>
+                            <h4 class="card-title grey-text text-darken-4"><a href="#" class="grey-text text-darken-4">{{ select.nm_barang }}</a>
+                            </h4>
+                            <p class="blog-post-content">Pupuk cair {{ select.nm_barang }}.</p>
+                            
+                        </div>
+                    </div>
+                </div>
+                {%  endfor %}
+              </div>
+            
+            <div id="profile-page-sidebar" class="col s12 m3">
+               
+               
+                <div class="card darken-2" {% include 'widget/web_setting/web_color' %}>
+                  <div class="card-content white-text center-align">
+                    <p class="card-title"><i class="mdi-social-group-add"></i> 36</p>
+                    <p>Distributor terbaru</p>
+                  </div>                  
+                </div>
+  
+                <ul id="profile-page-about-feed" class="collection z-depth-1">
+                {% for data in anggota %}
+                  <li class="collection-item avatar">
+                   
+                    <img src="{{ STATIC_URL }}images/{{ data.foto }}" class="circle" width="40" />
+                    <span class="title">{{ data.nama|title }}</span>
+                    <p>Bergabung di Shemura MT.
+                      <br> <span class="ultra-small">pada {{ data.joined_time }}</span>
+                    </p>
+                    
+                    <a class="secondary-content"><i class="mdi-editor-attach-money"></i></a>
+                  </li>
+                  {% endfor %}
+                </ul>
+
+                <div class="card center-align">
+                  <div class="card-content white-text" {% include 'widget/web_setting/web_color' %}>
+                      <p class="card-stats-title"><i class="mdi-editor-attach-money"></i>Keuntungan distributor bulan ini rata - rata</p>
+                      <h5 class="card-stats-number">Rp. {{ rata_rata|intcomma }}.00</h5>
+                      <p class="card-stats-compare"><i class="mdi-hardware-keyboard-arrow-up"></i> 10% <span class="purple-text text-lighten-5">Perkiraan keuntungan bulan ini</span>
+                      </p>
+                  </div>
+                  <div class="card-action darken-2" {% include 'widget/web_setting/web_color' %}>
+                      <div id="sales-compositebar"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+
+  <div class="white">
+      <section id="ctas-footer">
+            <div class="row"> 
+               <a href="{% url 'hub_kami' %}" class="cta-rodape-esq col m6 s12 white-text" {% include 'widget/web_setting/web_color' %} alt="Faça uma consultoria gratuita com a melhor plataforma ead do mercado" title="Faça uma consultoria gratuita com a melhor plataforma ead do mercado"> <br><div class="col s3 offset-s1"> <i class="mdi-hardware-headset large"></i>
+            </div>
+            <div class="col s8"><h3 class="light">Hubungi kami kapan saja</h3><br>
+            </div>
+             </a>
+             <a href="" class="col m6 s12 green white-text cta-rodape-dir" alt="Faça uma demonstração gratuita da melhor plataforma ead do mercado" title="Faça uma demonstração gratuita da melhor plataforma ead do mercado"> <br><div class="col s3 offset-s1"> <i class="mdi-action-shopping-cart large"></i>
+              </div>
+              <div class="col s8"><h3 class="light text-left">Transaksi mudah dan cepat</h3><br>
+              </div>
+             </a>
+          </div>
+       </section>
+
+
+
+        <div id="content" class="testimonials section-box row lighten-5">
+          <div class="container">
+            <div class="center flow-text">
+             <span class="blue-grey-text text-lighten-3"> Pemimpin Perusahaan, <small><em>jajaran kabinet.</em></small> 
+            </span></div> <br><br>
+              <ul>
+                <li class="col m4 s12">
+                    <div class="caption left-align">
+                      <div class="col s3"> 
+                      <img src="{{ STATIC_URL }}images/male.png" class="circle wp-post-image" width="85" height="85">
+                      </div>
+                      <div class="col s9">
+                        <p class="grey-text text-darken-3"></p><div itemprop="reviewBody">Semoga website ini menjadi jalan terbaik untuk <strong>Shemura</strong> dalam melayani para distributor kami secara online.</div> <br><br>
+                        <p class="name" itemprop="name">Alex H.</p>
+                      <div class="divider"></div>
+                    </div>
+                  </div>
+                </li>
+                <li class="col m4 s12">
+                      <div class="caption left-align">
+                          <div class="col s3"> 
+                          <img src="{{ STATIC_URL }}images/male.png" class="circle wp-post-image" alt="daniel cardoso" width="85" height="85"></div><div class="col s9">
+                          <blockquote cite="hj" style="border-color: green" itemscope="">
+                          <p class="grey-text text-darken-3"></p>
+                          Target penjualan kami sudah semakin luas, <strong>Shemura</strong> membutuhkan system seperti ini agar pelayanan distributor kami lebih mudah <a href=""><strong>Hubungi kami</strong></a> kapan saja kami siap melayani anda.
+                          
+                          <br><br>
+                          <div itemprop="author" itemscope="" itemtype="http://schema.org/Person"><p class="name" itemprop="name">Hartono SH. MH.</p></div>
+                          <div class="divider"></div>
+                         
+
+
+                          </blockquote>
+                          </div>
+                      </div>
+                </li>
+              <li class="col m4 s12">
+                <div class="caption left-align">
+                    <div class="col s3"> 
+                        <img src="{{ STATIC_URL }}images/female.png" class="circle wp-post-image" alt="Alexandre Solera" width="85" height="85">
+                    </div>
+                        <div class="col s9">
+                           Target penjualan kami sudah semakin luas, <strong>Shemura</strong> membutuhkan system seperti ini agar pelayanan distributor kami lebih mudah <a href=""><strong>Hubungi kami</strong></a> kapan saja kami siap melayani anda.
+                            <br><br>
+
+                            <p class="name" itemprop="name">Gita Kumalasari H.</p>
+
+                            <div class="divider">
+                      
+                        </div>
+                    </div>
+                </div>
+              </li>
+          </ul>
+        </div>
+      </div>
+  </div>
+
+
+<div class="clients-area section-box hide-on-small-only lighten-5">
+  <div class="content-clients-area cf content-partners" style="opacity: 1; filter: grayscale(0.01) brightness(100%);">
+    <div class="row cf valign-wrapper">
+          <div class="col m10 s11 valign-wrapper">
+                <div class="col m6 s12 cf valign-wrapper">
+                    <div class="col s10"> 
+                    <img src="{{ STATIC_URL }}images/visa.png" class="responsive-img center" title="Startup Brasil" alt="Startup Brasil">
+                    </div>
+                </div>
+
+                <div class="col m6 s12 cf valign-wrapper">
+                    <div class="col s10"> 
+                    <img src="{{ STATIC_URL }}images/bca.png" class="responsive-img center" title="Startup Brasil" alt="Startup Brasil">
+                    </div>
+                </div>
+                <div class="col m6 s12 cf valign-wrapper">
+                    <div class="col s10"> 
+                    <img src="{{ STATIC_URL }}images/bri.png" class="responsive-img center" title="Startup Brasil" alt="Startup Brasil">
+                    </div>
+                </div>
+           </div>
+           <div class="col m10 s11 valign-wrapper">
+                 <div class="col m6 s12 cf valign-wrapper">
+                    <div class="col s10"> 
+                    <img src="{{ STATIC_URL }}images/mc.png" class="responsive-img center" title="Startup Brasil" alt="Startup Brasil">
+                    </div>
+                </div>      <div class="col m6 s12 cf valign-wrapper">
+                    <div class="col s10"> 
+                    <img src="{{ STATIC_URL }}images/discover.png" class="responsive-img center" title="Startup Brasil" alt="Startup Brasil">
+                    </div>
+                </div>      <div class="col m6 s12 cf valign-wrapper">
+                    <div class="col s10"> 
+                    <img src="{{ STATIC_URL }}images/mandiri.png" class="responsive-img center" title="Startup Brasil" alt="Startup Brasil">
+                    </div>
+                </div>
+             </div>
+       </div>
+    </div>
+</div>
+     
+{% endblock %}

@@ -1,0 +1,94 @@
+ <div id="email-list" class="col s10 m4 l4 card-panel z-depth-1">
+                  <ul class="collection">
+                  {% for contact in daft %}
+                  <a href="{% url 'mail' %}?mail={{ contact.pk }}">
+                    <li class="collection-item avatar email-unread {% if get.pk == contact.pk %}selected{% endif %}">
+                      <img src="{{ STATIC_URL }}media/{% if contact.distributor.foto|length == 0 %}male.png{% else %}{{ contact.distributor.foto }}{% endif %}" class="circle purple">
+                      <span class="email-title">{{ contact.nama|truncatechars:12}}</span>
+                      <p class="truncate grey-text ultra-small">{{ contact.subject|truncatechars:20 }}.</p>
+                      <a href="{% url 'mail' %}?mail{{ contact.pk }}" class="secondary-content email-time"><span class="blue-text ultra-small">6:38 am</span></a>
+                    </li>
+                    </a>
+                    {% endfor %}
+                  </ul>
+                </div>
+                <div id="email-details" class="col s12 m7 l7 card-panel">
+                  <p class="email-subject truncate">Email dari <span class="email-tag grey lighten-3">{{ get.nama }}</span> <br/><span class="email-tag  light-blue lighten-4">Subject : {{ get.subject }}</span> <i class="mdi-action-star-rate yellow-text text-darken-3 right"></i>
+                  </p>
+                  <hr class="grey-text text-lighten-2">
+                  <div class="email-content-wrap">
+                    <div class="row">
+                      <div class="col s10 m10 l10">
+                        <ul class="collection">
+                          <li class="collection-item avatar">
+                            <img src="images/avatar.jpg" alt="" class="circle">
+                            <span class="email-title">{{ get.nama }}</span>
+                            <p class="truncate grey-text ultra-small">Untuk saya, {{ data.username }}</p>
+                            <p class="grey-text ultra-small">Kemarin</p>
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="col s2 m2 l2 email-actions">
+                        <a class="modal-trigger" href="#balas"><span><i class="mdi-content-reply"></i></span></a>
+                        <a href=""><span><i class="mdi-navigation-more-vert"></i></span></a>
+                      </div>
+                    </div>
+                    <div class="email-content">
+                      
+                      <p>{{ get.pesan|linebreaks }}</p>
+                      <p>
+                        <br>{{ get.nama }}</p>
+                    </div>
+                  </div>
+                  <hr>
+                 
+                  <div class="email-reply">
+                    <div class="row">
+                      <div class="col s4 m4 l4 center-align">
+                         <a class="modal-trigger" href="#balas"><i class="mdi-content-reply"></i></a>
+                        <p class="ultra-small">Reply</p>
+                      </div>
+                      <div class="col s4 m4 l4 center-align">
+                        <a href="%21.html#"><i class="mdi-content-reply-all"></i></a>
+                        <p class="ultra-small">Reply all</p>
+                      </div>
+                      <div class="col s4 m4 l4 center-align">
+                        <a href="%21.html#"><i class="mdi-content-forward"></i></a>
+                        <p class="ultra-small">Forward</p>
+                      </div>
+                    </div>
+                  </div>
+
+               <div id="balas" class="modal bottom-sheet white">
+                <form action="" method="POST">
+                  <div class="modal-content">
+                  {% csrf_token %}
+                   
+                    <div class="modal-footer purple white-text">
+                    <p><h5>Balas pesan ke : {{ f.nama }} <span><<i>{{ f.umail }} </i>> | Subject: {{ f.subject|truncatechars_html:50 }}</span></h5></p>
+                    </div>
+                     <div>
+                    <div class="row">
+                        <div class="input-field col m4 l4 ">
+                        <div class="container">
+                        <p><b>Pesan:</b><br/>
+                        {{ f.pesan|truncatechars_html:90 }}
+                        </p>
+                        </div>
+                        </div>
+
+                       <div class="input-field col m8 l8">
+                          {{ form_r }}
+                          <label for="textarea1">Balas pesan</label>
+                          <div class="left">
+                           <div class="g-recaptcha" data-sitekey="6Lfbly8UAAAAAOMIGVEqPYd1Os9GYD3WA2RbQhUB"></div>
+                           </div><div class="right">
+                        <button type="submit" class="waves-effect purple btn">Kirim</button></div>
+                        </div>
+                      </div>
+                   
+                    </div>
+                  </div>
+                 
+                   </form>
+                </div>

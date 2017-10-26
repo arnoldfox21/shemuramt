@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load custom_tags %}
+{% load humanize %}
+
+      <section id="content">
+    <div class="parallax-container" style="height: 200px">
+      <div class="parallax"><img src="{{ STATIC_URL }}images/shemura-bg.jpg"></div>
+    </div>
+
+        <div id="breadcrumbs-wrapper">
+
+        <div class="container">
+        <div class="card">
+          <div id="invoice" style="margin: 30px">
+
+            <div class="invoice-lable">
+              <div class="row">
+              {% if reply == 'Keranjang' %}
+                <div class="col s12 m12 center-align l12 green waves-light">
+                  <h4 class="white-text invoice-text">Total: Rp. {{ total|intcomma }}.00</h4>
+                </div>
+              {% else %}
+              <div class="col s12 m12 center-align l12 red lighten-1">
+                <h5 class="white-text">{{ reply }}</h5>
+              </div>
+                {% endif %}
+              </div>
+            </div>
+
+            <div class="invoice-table">
+              <div class="row">
+                <div class="col s12 m12 l12">
+                  <table class="striped">
+                    <thead>
+                      <tr>
+                        <th data-field="no">No</th>
+                        <th data-field="item">Nama Barang</th>
+                        <th data-field="uprice">Harga satuan</th>
+                        <th data-field="price">Jumlah</th>
+                        <th data-field="price">Total</th>
+                        <th data-field="price">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    {% for chart in keranjang %}
+                      <tr>
+                        <td>{{ chart.id_barang.pk }}</td>
+                        <td>{{ chart.id_barang.nm_barang }}</td>
+                        <td>Rp. {{ chart.id_barang.harga_satuan|intcomma }}.00</td>
+                        <td>{{ chart.jumlah }}</td>
+                        <td>Rp. {{ chart|totalise|intcomma }}.00</td>
+                        {# <td>10000</td> #}
+                        <td><div class="col s12 m12">
+                                          <a href="http://shemura.pythonanywhere.com{% url 'h_t' %}?hapus-keranjang={{ chart.pk }}" class="btn-floating waves-effect waves-light" {% include 'widget/web_setting/web_color' %} id="link" onclick="doalert(this); return false;">
+                                          <i class="mdi-content-clear"></i>
+                                          </a>
+
+                                  </div></td>
+                      </tr>
+                     {% endfor %}
+                      <tr>
+                        <td colspan="4">Total belanja</td>
+                        <td>Rp. {{ total|intcomma }}.00</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+              </div>
+            </div>
+
+            <div class="invoice-footer" style="margin-top: 40px">
+              <div class="row">
+                <div class="col s12 m6 l6">
+                  <p class="strong">Terms of use</p>
+                  <ul>
+                    <li>Dengan mengakses Platform dan / atau menggunakan Layanan, Anda setuju untuk terikat dengan Syarat Penggunaan ini. Jika Anda tidak menyetujui Syarat Penggunaan ini, maka Anda jangan/berhenti mengakses dan/atau menggunakan Platform atau Layanan ini.</li>
+                  </ul>
+                </div>
+                <div class="col s12 m6 l6 center-align">
+                 <a href="{% url 'ck' %}" class="btn btn-large" {% include 'widget/web_setting/web_color' %}><i class="mdi-action-shopping-cart prefix"></i> Checkout</a>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+        <!--end container-->
+
+      </section>
+    <div class="hide">
+      <div class="progress">
+        <div class="indeterminate"></div>
+      </div>
+    </div>
+ {% endblock %}
+ {% block custom_js %}
+
+     <script>
+        function doalert(obj) {
+            swal({
+                title: "Apa anda yakin?",
+                text: "Kamu akan menghapus barang ini!",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: '#DD6B55',
+                confirmButtonText: 'Ya, hapus ini',
+                cancelButtonText: "Batal, batalkan ini",
+                closeOnConfirm: false,
+                closeOnCancel: false
+              },
+              function(isConfirm){
+                if (isConfirm){
+                  swal("Dihapus!", "Barang berhasil dihapus dari keranjang!", "success");
+                  setTimeout(function()
+                    {location.href=obj.getAttribute("href")} , 2000);
+                } else {
+                  swal("Dibatalkan", "Hapus barang dibatalkan", "error");
+                }
+              });
+        }
+    </script>
+
+     <script type="text/javascript">
+      $(document).ready(function(){
+      $('.parallax').parallax();
+    });
+
+    </script>
+{% endblock %}

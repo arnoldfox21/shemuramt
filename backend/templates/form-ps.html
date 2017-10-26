@@ -1,0 +1,88 @@
+{% extends 'base-backend.html' %}
+{% block content %}
+      <section id="content">
+       {% if status != 'ok' %}
+       {% include 'widget/error.html' with alert=status %}
+       {% else %}
+          <div class="row">
+            <div class="col s12 m12 l12">
+              <div class="card-panel">
+                <h4 class="header2">Pesan bahan ke suplier</h4>
+                <div class="row">
+                  <form class="col s12" method="POST" action="{% url 'fps' %}?code=404">
+                  {% csrf_token %}
+                    <div class="row">
+                      <div class="input-field col s6 m4 l4">
+                        <input id="first_name" name="nama" value="{{ ambil.nama }}" type="number">
+                        <label for="first_name">N</label>
+                      </div>
+                    
+                      <div class="input-field col s6 m4 l4">
+                        <input name="telp" id="last_name" value="{{ ambil.telp }}" type="number">
+                        <label for="last_name">PK</label>
+                      </div>
+        
+                  
+                      <div class="input-field col s6 m4 l4">
+                        <input id="first_name" name="nama" value="{{ ambil.nama }}" type="number">
+                        <label for="first_name">MN</label>
+                      </div>
+                    
+                      <div class="input-field col s6 m4 l4">
+                        <input name="telp" id="last_name" value="{{ ambil.telp }}" type="number">
+                        <label for="last_name">CU</label>
+                      </div>
+                
+                      <div class="input-field col s4 m4 l4">
+                        <input id="first_name" name="nama" value="{{ ambil.nama }}" type="number">
+                        <label for="first_name">MG</label>
+                      </div>
+                    
+                      <div class="input-field col s4 m4 l4">
+                        <input name="telp" id="last_name" value="{{ ambil.telp }}" type="number">
+                        <label for="last_name">ZN</label>
+                      </div>
+                  
+                      <div class="input-field col s4 m4 l4">
+                        <input id="first_name" name="nama" value="{{ ambil.nama }}" type="number">
+                        <label for="first_name">FE</label>
+                      </div>
+                    
+                      <div class="input-field col s4 m4 l4">
+                        <input name="telp" id="last_name" value="{{ ambil.telp }}" type="number">
+                        <label for="last_name">CA</label>
+                      </div>
+                    
+                    <div class="input-field col s6 m4 l4">
+                        <input name="telp" id="last_name" value="{{ ambil.telp }}" type="number">
+                        <label for="last_name">K</label>
+                      </div>
+                    </div>
+                      <div class="input-field col s12 l12">
+                        <textarea id="message5" class="materialize-textarea" length="120"></textarea>
+                        <label for="message">Message</label>
+                      </div>
+                      <div class="row">
+                        <div class="input-field col s12">
+                        <div class="g-recaptcha" data-sitekey="6Lfbly8UAAAAAOMIGVEqPYd1Os9GYD3WA2RbQhUB"></div>
+                         <a href="{% url 'fps' %}?code=404" {% include 'widget/web_setting/web_color' %} class="btn waves-effect waves-light right"> Request  <i class="mdi-content-send right"></i></a>
+                           
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+      {% endif %}
+  </section>
+
+  </div>
+  <!-- END WRAPPER -->
+
+  </div>
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+ {% endblock %}

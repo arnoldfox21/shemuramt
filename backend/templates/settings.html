@@ -1,0 +1,69 @@
+{% extends 'base-backend.html' %}
+{% block content %}
+<form method="POST" action="{% url 'h_t' %}?request_setting">
+   {% csrf_token %}
+            <div class="row white">
+              <div class="col s12 m12 l12">
+              <div class="center-align">
+                <h4>Pengaturan web</h4>
+              </div>
+                <ul class="collection">
+                {% for con in Setting %}
+                  <li class="collection-item avatar">
+                    <i class="circle mdi-action-settings green"></i>
+                    <span class="title" style="color: #{{ warna.config }}">{{ con.setting|title }}</span>
+                    <p class="green-text">
+                      <br><small class="blue-grey-text black-text text-lighten-2">{{ con.info }}</small>
+                    </p>
+                    <div class="secondary-content">
+                     <div class="switch">
+                      <label>
+                        Off
+                        <input type="checkbox" {% if con.config == 'on' %} checked {% endif %} name="{{ con.pk }}">
+                        <span class="lever"></span> On
+                      </label>
+                    </div>
+                  </div>
+                  </li>
+                {% endfor %}
+                <li class="collection-item avatar">
+                 <i class="circle mdi-action-settings green"></i>
+                    <span class="title" style="color: #{{ warna.config }}"">Warna website</span>
+                    <p class="green-text">
+                      <br><button type="button" class="btn" {% include 'widget/web_setting/web_color' %}></button>
+                    </p>
+                     <div class="secondary-content">
+                      <button class="btn jscolor {valueElement:'chosen-value', onFineChange:'setTextColor(this)'}">
+                        Pilih warna
+                      </button>
+                        <input id="chosen-value" type="text" name="color" value="#{{ warna.config }}">
+
+                      </div>  
+                </li>
+                </ul>
+
+              </div>
+              <div class="center-align"><input type="submit" class="btn waves-effect waves-light" {% include 'widget/web_setting/web_color' %} value="Simpan" name=""></div>
+            </div>
+          </div>
+</form>
+
+<script type="text/javascript" src="{{ STATIC_URL }}js/jscolor.js"></script>
+{% endblock %}
+{% block custom_js %}
+
+<script type="text/javascript">
+  $(document).ready(function(){
+
+      if (window.location.search.indexOf('updated') > -1) {
+         swal({   
+             title: "Berhasil!",   
+             text: "Pengaturan berhasil diperbaruhi",   
+             timer: 3000,   
+             showConfirmButton: true 
+        });
+        };
+      })
+      </script>
+
+{% endblock %}

@@ -1,0 +1,61 @@
+{% load humanize %}
+            <div class="section">
+              <h4 class="header center-align">{{ aktif|title }}</h4>
+              <div class="row">
+                <div class="col s12 m12 l12">
+                  <table class="display table bordered striped" cellspacing="0" width="100%">
+                      <thead>
+                          <tr>
+                              <th>ID</th>
+                              <th>nama barang</th>
+                              <th>harga</th>
+                              <th>stock</th>
+                              <th>berat</th>
+                              <th>warna</th>
+                              {% if aktif == 'edit data barang' %}
+                              <th>action</th>
+                              {% endif %}
+                          </tr>
+                      </thead>
+                   
+                      <tfoot>
+                          <tr>
+                             <th>ID</th>
+                              <th>nama barang</th>
+                              <th>harga</th>
+                              <th>stock</th>
+                              <th>berat</th>
+                              <th>warna</th>
+                               {% if aktif == 'edit data barang' %}
+                              <th>action</th>
+                              {% endif %}
+                          </tr>
+                      </tfoot>
+                   
+                      <tbody>
+                      {% for data in dbg %}
+                          <tr>
+                              <td>{{ data.id }}</td>
+                              <td>{{ data.nm_barang|title }}</td>
+                              <td>Rp.{{ data.harga_satuan|intcomma }}.00</td>
+                              <td>{{ data.stock }}</td>
+                              <td>{{ data.berat }}</td>
+                              <td>{{ data.warna }}</td>
+                               {% if aktif == 'edit data barang' %}
+                              <td><div class="col s12 m12">
+                                      <a href="{% url 'f_barang' %}?edit={{ data.id }}" class="btn-floating waves-effect waves-light tooltipped" {% include 'widget/web_setting/web_color' %} data-position="bottom" data-delay="50" data-tooltip="Edit barang">
+                                          <i class="mdi-editor-border-color"></i></a>
+                                          <a href="{% url 'dbarang' %}?delete={{ data.id }}" class="btn-floating waves-effect waves-light tooltipped" {% include 'widget/web_setting/web_color' %} data-position="bottom" data-delay="50" data-tooltip="Hapus barang">
+                                          <i class="mdi-content-clear"></i>
+                                          </a>
+                                                    
+                                  </div>
+                              </td>
+                              {% endif %}
+                          </tr>
+                      {% endfor %}
+                      </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>

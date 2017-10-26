@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load humanize %}
+
+    <div id="main">
+        
+<div class="wrapper">
+  <section id="content">
+    <div class="parallax-container" style="height: 200px">
+      <div class="parallax"><img src="{{ STATIC_URL }}images/shemura-bg.jpg"></div>
+    </div>
+        <div class="container">
+          <div class="section">
+            <div class="row card">
+               <div class="col s12 m6 l6">
+                <div class="card">
+                  <div class="card-image purple waves-effect">
+                    <img src="{{ STATIC_URL }}images/vg.jpg">
+                  </div>
+                  <div class="card-content">
+                    <ul class="collection">
+                      <li class="collection-item flow-text center-align">Pupuk cair {{ barang.nm_barang }}</li>
+                      <li class="collection-item flow-text"><i class="mdi-image-nature-people prefix"></i> Berat : <div class="right"> {{ barang.berat }}</div></li>
+                      <li class="collection-item flow-text"><i class="mdi-editor-attach-money prefix"></i> Harga satuan :  <div class="right">Rp. {{ barang.harga_satuan|intcomma }}.00</div></li>
+                      <li class="collection-item flow-text"><i class="mdi-maps-store-mall-directory prefix"></i> Warna : <div class="right">  {{ barang.warna }} </div></li>
+                    </ul>
+                  </div>
+                 
+                </div>
+              </div>
+              <div class="col s12 m6 l6">
+                <p class="flow-text">Harga produk pupuk cair bisa berubah kapan saja tanpa pemberitahuan sebelumnya, kecuali yang tercantum dalam fakthur pemesanan</p>
+
+          <div id="multi-color-tab" class="section">
+
+                <div class="row">
+                  <div class="col s12">
+                    <ul class="tabs tab-demo-active z-depth-1">
+                      <li class="tab col s3"><a class="white-text red darken-1 waves-effect waves-light" href="#sapien1"><i class="mdi-action-perm-identity"></i> Stock</a>
+                      </li>
+                      <li class="tab col s3"><a class="white-text darken-1 waves-effect waves-light active" style="background-color: #{{ warna.config }}" href="#activeone1"><i class="mdi-action-settings-display"></i> Kelebihan</a>
+                      </li>
+                      <li class="tab col s3"><a class="white-text light-blue darken-1 waves-effect waves-light" href="#vestibulum1"><i class="mdi-action-speaker-notes"></i> Kekuranagn</a>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="col s12">
+                    <div class="col l4 m4 s12">
+                      <p class="flow-text"><center><b>{{ barang.stock }}</b> Tersedia</center></p>
+                     
+
+                    </div>
+                   
+                    <div class="col l4 m4 s12">
+                      <dl>
+                        <dt><center><b>Praktis</b></center></dt>
+                      
+                      </dl>
+                      </div>
+                 
+                    <div class="col l4 m4 s12">
+                      <p><center><b>mudah terbakar </b></center></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+      
+          
+                 <form class="col s12" action="{% url 'add_chart' %}" method="POST">
+                 {% csrf_token %}
+
+                      <div class="row">
+                          <div class="input-field col s12 l4 m4">
+                            <input id="n" type="hidden" name="id_barang" class="validate" value="{{ barang.pk }}">
+                          </div>
+                      </div>
+                      <div class="row">
+                          <div class="input-field col s12 l4 m4">
+                            <input id="age_input1" type="number" name="jumlah" class="validate" value="1">
+                            <label for="age_input1" data-error="Silahkan masukkan jumlah.">Jumlah</label>
+                          </div>
+                      </div>
+                      <div class="row">
+                        <div class="row">
+                          <div class="card-action center-align">                      
+                          <button {% if barang.stock < 1 %} disabled {% endif %} type="submit" style="background-color: #{{ warna.config }}" class="waves-effect waves-light btn">Tambah ke keranjang</button>
+                        </div>
+                        </div>
+                      </div>
+                    </form>
+              </div>
+            </div>
+            
+           
+
+              </div>
+            </div>            
+          </div>
+        </div>
+      
+      </section>
+      <div class="row white">
+         <div class="col s12 m12 l12">
+         <h4 class="center-align">Produk lainnya</h4>
+                <div class="blog-sizer"></div>
+                
+                {% for select in db_barang %}
+
+                <div class="blog col m2 l2" style="margin-bottom: 20px">
+                    <div class="card z-depth-2">
+                        <div class="card-image waves-effect waves-block waves-light">
+                            <a href="#"><img src="{{ STATIC_URL }}images/vg.jpg" alt="blog-img">
+                            </a>
+                        </div>
+                        <ul class="card-action-buttons">
+                            <li><a href="pemesanan?id={{ select.id }}" class="btn-floating btn-large waves-effect waves-light green accent-4"><i class="mdi-action-shopping-cart"></i></a>
+                            </li>                            
+                        </ul>
+                        <div class="card-content">
+                            <p class="row">
+                              <span class="left"><a href="pemesanan?id={{ select.id }}">{{ select.nm_barang }}</a></span>
+                              <span class="right">{{ today|date:"D d M Y" }}</span>
+                            </p>
+                            <h4 class="card-title grey-text text-darken-4"><a href="#" class="grey-text text-darken-4">{{ select.nm_barang }}</a>
+                            </h4>
+                            <p class="blog-post-content">Pupuk cair {{ select.nm_barang }}.</p>
+                            
+                        </div>
+                    </div>
+                </div>
+                {%  endfor %}
+              </div>
+            </div>
+          </div>
+          <div class="row">
+          <div class="col m12 l12 s12">
+             <p class="caption">Punya pertanyaan jangan ragu untuk menghubungi kami, silahkan <a href="{% url 'hub_kami' %}">klik disini</a> customer service kami dengan senang hati membantu anda?</p>
+
+            <div class="divider"></div>
+            </div>
+    </div>
+  </div>
+
+{% endblock %}

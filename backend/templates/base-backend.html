@@ -1,0 +1,226 @@
+
+{% block header %}
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+    <title>BackEnd | {{ aktif|title }}</title>
+    {% include 'assets/style.html' %}
+</head>
+
+<body>
+
+    <header id="header" class="page-topbar">
+        <div class="navbar-fixed">
+            <nav {% include 'widget/web_setting/web_color' %}>
+                <div class="nav-wrapper">
+                    <ul class="left">                      
+                      <li><h1 class="logo-wrapper"><a href="{% url 'index' %}" class="brand-logo darken-1 white-text">Shemura MT</a> <span class="logo-text">Shemura Mikasa Tani</span></h1></li>
+                    </ul>
+                    <div class="header-search-wrapper hide-on-med-and-down">
+                        <i class="mdi-action-search"></i>
+                        <form method="get" action="{% url 'search_for_something' %}">
+                        <input type="text" name="q" id="id_q" class="header-search-input z-depth-2" placeholder="Cari sesuatu"/>
+                        </form>
+                    </div>
+                    <ul class="right hide-on-med-and-down">
+                        <li><a href="#" class="waves-effect waves-block waves-light translation-button" data-activates="translation-dropdown"><img src="{{ STATIC_URL }}images/flag-icons/Indonesia.png" width="45" /></a>
+                        </li>
+                        <li><a href="#" class="waves-effect waves-block waves-light toggle-fullscreen"><i class="mdi-action-settings-overscan"></i></a>
+                        </li>
+                        <li><a href="{% url 't_aktif' %}" class="waves-effect waves-block waves-light notification-button" data-activates="notifications-dropdown"><i class="mdi-social-notifications"><small class="notification-badge">1</small></i>
+                        
+                        </a>
+                        </li>                        
+                        <li><a href="{% url 'mail' %}" class="waves-effect waves-block waves-light"><i class="mdi-communication-quick-contacts-mail"></i></a>
+                        </li>
+                    </ul>
+                 
+                    <ul id="translation-dropdown" class="dropdown-content">
+                      <li>
+                        <a href="#!"><img src="{{ STATIC_URL }}images/flag-icons/United-States.png" width="40" />  <span class="language-select">English</span></a>
+                      </li>
+                     
+                      
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div id="main">
+        
+        <div class="wrapper">
+{% endblock %}
+          
+        {% block left-sidebar %}
+   <aside id="left-sidebar-nav">
+                <ul id="slide-out" class="side-nav fixed leftside-navigation">
+                <li class="user-details red darken-2">
+                <div class="row">
+                    <div class="col col s4 m4 l4">
+                        <img src="{{ STATIC_URL }}images/avatar.jpg" alt="" class="circle responsive-img valign profile-image">
+                    </div>
+                    <div class="col col s8 m8 l8">
+                        <ul id="profile-dropdown" class="dropdown-content">
+                            <li><a href="#"><i class="mdi-action-face-unlock"></i> Profile</a>
+                            </li>
+                            <li><a href="{% url 'setting' %}"><i class="mdi-action-settings"></i> Settings</a>
+                            </li>
+                            <li><a href="#"><i class="mdi-communication-live-help"></i> Help</a>
+                            </li>
+                            <li class="divider"></li>
+                            <li><a href="{% url 'lock' %}"><i class="mdi-action-lock-outline"></i> Lock</a>
+                            </li>
+                            <li><a href="{% url 'logout' %}"><i class="mdi-hardware-keyboard-tab"></i> Logout</a>
+                            </li>
+                        </ul>
+                        <a class="btn-flat dropdown-button waves-effect waves-light white-text profile-btn" href="#" data-activates="profile-dropdown">{{ data.username|truncatechars:7 }}<i class="mdi-navigation-arrow-drop-down right"></i></a>
+                        <p class="user-roal">{{ data.jabatan }}</p>
+                    </div>
+                </div>
+                </li>
+                <li class="bold {% if aktif == 'Dashboard' %}active{% endif %}"><a href="{% url 'backend' %}" class="waves-effect waves-red"><i class="mdi-action-dashboard"></i> Dashboard</a>
+                </li>
+                <li class="no-padding">
+                    <ul class="collapsible collapsible-accordion">
+                         <li class="bold">
+                             <a class="collapsible-header  waves-effect waves-cyan {% if aktif == 'Tambah distributor' or aktif == 'data distributor' or aktif == 'edit data distributor' %}active{% endif %}"><i class="mdi-social-people"></i> Distributor</a>
+                            <div class="collapsible-body">
+                                <ul>
+                                    <li class="{% if aktif == 'Tambah distributor' %}active{% endif %}"><a href="{% url 't_distributor' %}" class="waves-effect waves-red"> Tambah distributor</a>
+                                    </li>
+                                    <li class="{% if aktif == 'data distributor' %}active{% endif %}"><a href="{% url 'd_distributor' %}" class="waves-effect waves-red"> Data distributor</a>
+                                    </li>
+                                    <li class="{% if aktif == 'edit data distributor' %}active{% endif %}"><a href="{% url 'd_distributor' %}?edit" class="waves-effect waves-red">Edit Data distributor</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+                <li class="bold {% if aktif == 'data penjualan' %}active{% endif %}"><a href="{% url 'd_penjualan' %}" class="waves-effect waves-red"><i class="mdi-action-trending-up"></i>Data Penjualan</a>
+                </li>
+                <li class="no-padding">
+                    <ul class="collapsible collapsible-accordion">
+                         <li class="bold">
+                             <a class="collapsible-header  waves-effect waves-cyan {% if aktif == 'tambah petugas' or aktif == 'data petugas' or aktif == 'edit data petugas' %}active{% endif %}"><i class="mdi-social-person-outline"></i> Devisi </a>
+                            <div class="collapsible-body">
+                                <ul>
+                                    <li class="{% if aktif == 'data petugas' %}active{% endif %}"><a href="{% url 'data-petugas' %}" class="waves-effect waves-red"> Data petugas</a>
+                                     </li>
+                                    <li class="{% if aktif == 'tambah petugas' %}active{% endif %}"><a href="{% url 'f_petugas' %}" class="waves-effect waves-red"> Tambah petugas</a>
+                                    </li>
+                                    <li class="{% if aktif == 'edit data petugas' %}active{% endif %}"><a href="{% url 'data-petugas' %}?edit" class="waves-effect waves-red">Edit Data petugas</a>
+                                     </li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+                
+                <li class="bold {% if aktif == 'transaksi aktif' %}active{% endif %}"><a href="{% url 't_aktif' %}" class="waves-effect waves-red"><i class="mdi-social-notifications-paused"></i> Transaksi aktif</a>
+                </li>
+                <li class="bold {% if aktif == 'fps' %}active{% endif %}"><a href="{% url 'fps' %}" class="waves-effect waves-red"><i class="mdi-social-notifications"></i> Transaksi suplier</a>
+                </li>
+                <li class="no-padding">
+                    <ul class="collapsible collapsible-accordion">
+                         <li class="bold">
+                             <a class="collapsible-header  waves-effect waves-cyan {% if aktif == 'data barang' or aktif == 'tambah barang' or aktif == 'edit data barang' %}active{% endif %}"><i class="mdi-action-view-list"></i> Barang</a>
+                            <div class="collapsible-body">
+                                <ul>
+                                    <li class="{% if aktif == 'data barang' %}active{% endif %}"><a href="{% url 'dbarang' %}" class="waves-effect waves-red">Data barang</a>
+                                    </li>
+                                    <li class="{% if aktif == 'tambah barang' %}active{% endif %}"><a href="{% url 'f_barang' %}" class="waves-effect waves-red"> Tambah barang</a>
+                                    </li>
+                                    <li class="{% if aktif == 'edit data barang' %}active{% endif %}"><a href="{% url 'dbarang' %}?edit" class="waves-effect waves-red">Edit Data barang</a>
+                                     </li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+                <li class="bold {% if aktif == 'pengiriman barang' %}active{% endif %}"><a href="{% url 'pbarang' %}" class="waves-effect waves-red"><i class="mdi-maps-local-shipping"></i> Pengiriman barang</a>
+                </li>
+                <li class="bold {% if aktif == 'email' %}active{% endif %}"><a href="{% url 'mail' %}" class="waves-effect waves-red"><i class="mdi-communication-quick-contacts-mail"></i> Email</a>
+                </li>
+                <li class="no-padding">
+                    <ul class="collapsible collapsible-accordion">
+                         <li class="bold">
+                             <a class="collapsible-header  waves-effect waves-cyan"><i class="mdi-action-settings"></i> Web setting </a>
+                            <div class="collapsible-body">
+                                <ul>
+                                    <li class="{% if aktif == 'web preference' %}active{% endif %}"><a href="{% url 'setting' %}" class="waves-effect waves-red">Preference</a>
+                                    </li>
+                                    <li class="{% if aktif == 'web setting' %}active{% endif %}"><a href="{% url 'setting' %}" class="waves-effect waves-red">Web setting</a>
+                                    </li>
+                                    
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+                
+
+                <li class="li-hover"><p class="ultra-small margin more-text">Penjualan harian</p></li>
+                <li class="li-hover">
+                    <div class="row">
+                        <div class="col s12 m12 l12">
+                            <div class="sample-chart-wrapper">                            
+                                <div class="ct-chart ct-golden-section" id="ct2-chart"></div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+                <a href="#" data-activates="slide-out" class="sidebar-collapse btn-floating btn-medium waves-effect waves-light hide-on-large-only red"><i class="mdi-navigation-menu"></i></a>
+            </aside>
+{% endblock %}
+    
+            {% block content %}
+            <section id="content">
+                <div class="container">
+                <div class="white">
+                        {% include 'widget/report-card.html' %}
+                </div>
+                        {% include "widget/grafik-penjualan.html" %}
+                </div>
+            </section>
+      
+    
+    {% endblock %}
+
+
+
+    {% block footer %}
+      </div>
+    </div>
+    <footer class="page-footer" {% include 'widget/web_setting/web_color' %}>
+        <div class="footer-copyright">
+            <div class="container">
+                 © {% now "Y" as current_year %}
+              Copyright {{ current_year }}<a class="grey-text text-lighten-4" href="http://shemura.com" target="_blank"> Shemura-MT.co.id </a> All rights reserved.
+            </div>
+        </div>
+    </footer>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/plugins/jquery-1.11.2.min.js"></script>    
+    <script type="text/javascript" src="{{ STATIC_URL }}js/materialize.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/plugins/chartist-js/chartist.min.js"></script>   
+    <script type="text/javascript" src="{{ STATIC_URL }}js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/plugins/chartist-js/chartist.min.js"></script>   
+    <script type="text/javascript" src="{{ STATIC_URL }}js/plugins/chartjs/chart.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/plugins/chartjs/chart-script.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/plugins/sparkline/jquery.sparkline.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/plugins/sparkline/sparkline-script.js"></script>   
+    <script type="text/javascript" src="{{ STATIC_URL }}js/plugins.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/plugins/sweetalert/sweetalert.min.js"></script>  
+    {% endblock %}
+    {% block custom_js %}
+    <script type="text/javascript" src="{{ STATIC_URL }}js/custom-script.js"></script>
+    {% endblock %}
+    {% block endbody %}
+</body>
+
+</html>
+{% endblock %}

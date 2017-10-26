@@ -1,0 +1,119 @@
+   {% load humanize %}
+                   
+                    <div id="chart-dashboard">
+                        <div class="row">
+                            <div class="col s12 m12 l12">
+                                <div class="card">
+                                    <div class="card-move-up waves-effect waves-block waves-light">
+                                        <div class="move-up darken-1" {% include 'widget/web_setting/web_color' %}>
+                                            <div>
+                                                <span class="chart-title white-text">Grafik penjualan</span>
+                                                <div class="chart-revenue darken-2 white-text" {% include 'widget/web_setting/web_color' %}>
+                                                    <p class="chart-revenue-total">Rp. {{ laba|intcomma}}.00</p>
+                                                    <p class="chart-revenue-per"><i class="mdi-navigation-arrow-drop-up"></i> 40.00 %</p>
+                                                </div>
+                                                <div class="switch chart-revenue-switch right">
+                                                    <label class="purple-text text-lighten-5">
+                                                      Month
+                                                      <input type="checkbox">
+                                                      <span class="lever"></span> Year
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div class="trending-line-chart-wrapper">
+                                                <canvas id="trending-line-chart" height="70"></canvas>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-content">
+                                        <a class="btn-floating btn-move-up waves-effect waves-light darken-2 right" {% include 'widget/web_setting/web_color' %}><i class="mdi-action-trending-up activator"></i></a>
+                                        <div class="col s12 m3 l3">
+                                            <div id="doughnut-chart-wrapper">
+                                                <canvas id="doughnut-chart" height="200"></canvas>
+                                                <div class="doughnut-chart-status">{{ canvas }} Barang
+                                                    <p class="ultra-small center-align">Terjual</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col s12 m2 l2">
+                                            <ul class="doughnut-chart-legend">
+                                                <li class="mobile ultra-small"><span class="legend-color"></span>5 Liter</li>
+                                                <li class="kitchen ultra-small"><span class="legend-color"></span> 10 Liter</li>
+                                                <li class="home ultra-small"><span class="legend-color"></span> 15 Liter</li>
+                                            </ul>
+                                        </div>
+                                        <div class="col s12 m5 l6">
+                                            <div class="trending-bar-chart-wrapper">
+                                                <canvas id="trending-bar-chart" height="90"></canvas>                                                
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="card-reveal">
+                                        <span class="card-title grey-text text-darken-4">Penjualan bulan {{ bulan }}<i class="mdi-navigation-close right"></i></span>
+                                        <table class="responsive-table">
+                                           <thead>
+                                              <tr>
+                                                  <th>ID</th>
+                                                  <th>Waktu transaksi</th>
+                                                  <th>Nama barang</th>
+                                                  <th>Harga</th>
+                                                  <th>Nama</th>
+                                              </tr>
+                                          </thead>
+                                       
+                                          <tbody>
+                                          {% for data in penjualan %}
+                                          {% load humanize %}
+                                              <tr>
+                                                  <td>{{ data.id }}</td>
+                                                  <td>{{ data.waktu_transaksi }}</td>
+                                                  <td>{{ data.nm_barang }}</td>
+                                                  <td>Rp.{{ data.harga|intcomma }}.00</td>
+                                                  <td>{{ data.id_dist.nama }}</td>
+                                              </tr>
+                                          {% endfor %}
+                                          </tbody>
+                                        </table>
+                                    </div>
+
+
+                                </div>
+                            </div>
+                    </div>
+                    <!--chart dashboard end-->
+                    <div class="row">
+                        <div class="col m12 s12 l12">
+                    <h5>Daftar top 10 distributor</h5>
+                        <table id="data-table-simple" class="card responsive-table striped table display" cellspacing="0">
+                                <thead>
+
+                                    <tr>
+                                        <th>Nama</th>
+                                        <th>Alamat</th>
+                                        <th>telpon</th>
+                                        
+                                        <th>Jenis kelamin</th>
+                                        <th>Email</th>
+                                    </tr>
+                                </thead>
+                             
+                                <tbody>
+                                    {% for user in users %}
+                                        <tr>
+                                            <td>{{user.nama}}</td>
+                                            <td>{{user.alamat}}</td>
+                                            <td>{{user.telp}}</td>
+                                            
+                                            <td>{%if user.jenis_kelamin == 'l' %}
+                                            Laki -laki
+                                            {% else %}
+                                            Perempuan
+                                            {% endif %}
+                                            </td>
+                                            <td>{{user.umail}}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                        </table>
+                        </div>

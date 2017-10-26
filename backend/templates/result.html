@@ -1,0 +1,111 @@
+{% extends 'base-backend.html' %}
+
+{% block content %}
+{% load humanize %}
+{% if found_entries %}
+
+ <div class="row">
+              <div class="row">
+              <p class="center-align"><b><i>Ditemukan di daftar distributor untuk hasil pencarian "{{ query_string }}"</i></b></p>
+                <ul class="collection" style="border: 0px solid #000">
+
+                   {% for field in found_entries %}
+                <div class="col m6 l6 s12">
+                  <div class="card">
+                  <li class="collection-item avatar">
+                    <i class="mdi-social-person circle"></i>
+                    <span class="title">{{ field.nama }}</span>
+                    <p>{{ field.umail }}
+                      <br> {{ field.alamat }} <span class="badge">ID {{ field.pk }}</span>
+                    </p>
+
+                    <a href="#!" class="secondary-content"><i class="mdi-action-search"></i></a>
+                  </li>
+                  </div>
+                </div>
+                  {% endfor %}
+                </ul>
+              </div>
+            </div>
+{% endif %}
+
+{% if barang %}
+
+ <div class="row">
+              <div class="row">
+              <p class="center-align bold"><b><i>Ditemukan di daftar barang untuk hasil pencarian "{{ query_string }}"</i></b></p>
+                <ul class="collection" style="border: 0px solid #000">
+
+                   {% for field in barang %}
+                <div class="col m6 l6 s12">
+                <div class="card">
+                  <li class="collection-item avatar">
+                    <i class="mdi-action-view-list circle"></i>
+                    <span class="title">{{ field.nm_barang }}</span>
+                    <p>Rp.{{ field.harga_satuan|intcomma }}.00
+                    </p>
+
+                    <a href="#!" class="secondary-content"><i class="mdi-action-search"></i></a>
+                  </li>
+                  </div>
+                </div>
+                  {% endfor %}
+                </ul>
+              </div>
+            </div>
+{% endif %}
+
+{% if transaksi %}
+
+ <div class="row">
+              <div class="row">
+              <p class="center-align"><b><i>Ditemukan di daftar transaksi untuk hasil pencarian "{{ query_string }}"</i></b></p>
+                <ul class="collection" style="border: 0px solid #000">
+
+                   {% for field in transaksi %}
+                <div class="col m6 l6 s12">
+                <div class="card">
+                  <li class="collection-item avatar">
+                    <i class="mdi-action-description circle green"></i>
+                     <span class="title">{{ field.pk }}</span>
+                    <p>{{ field.id_dist.nama }}
+                      <br> {{ field.waktu_transaksi }}<br>Rp. {{ field.total_pembayaran|intcomma }}.00 <span class="badge">{{ field.nm_barang }}</span>
+                    </p>
+
+                    <a href="#!" class="secondary-content"><i class="mdi-action-search"></i></a>
+                  </li>
+                  </div>
+                </div>
+                  {% endfor %}
+                </ul>
+              </div>
+            </div>
+{% endif %}
+
+{% if user %}
+
+ <div class="row">
+              <div class="row">
+              <p class="center-align"><b><i>Ditemukan di daftar devisi untuk hasil pencarian "{{ query_string }}"</i></b></p>
+                <ul class="collection" style="border: 0px solid #000">
+
+                   {% for field in user %}
+                <div class="col m6 l6 s12">
+                 <div class="card">
+                  <li class="collection-item avatar">
+                   <i class="mdi-social-person-outline circle"></i>
+                     <span class="title">{{ field.pk }}</span>
+                    <p>{{ field.username }}
+                      <br> {{ field.jabatan }}<br>{{ field.umail }} <span class="badge">ID {{ field.pk }}</span>
+                    </p>
+
+                    <a href="#!" class="secondary-content"><i class="mdi-action-search"></i></a>
+                  </li>
+                  </div>
+                </div>
+                  {% endfor %}
+                </ul>
+              </div>
+            </div>
+{% endif %}
+{% endblock %}

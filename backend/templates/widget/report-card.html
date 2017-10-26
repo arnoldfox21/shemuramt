@@ -1,0 +1,60 @@
+{% load custom_tags %}
+            <div id="card-stats" class="seaction">
+              
+              <div class="row">
+                            <div class="col s12 m6 l3">
+                                <div class="card">
+                                    <div class="card-content  green white-text">
+                                        <p class="card-stats-title"><i class="mdi-social-group-add"></i> Distributor baru</p>
+                                        <h4 class="card-stats-number">566</h4>
+                                        <p class="card-stats-compare"><i class="mdi-hardware-keyboard-arrow-up"></i> 15% <span class="green-text text-lighten-5">Dari bulan lalu</span>
+                                        </p>
+                                    </div>
+                                    <div class="card-action  green darken-2">
+                                        <div id="clients-bar" class="center-align"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col s12 m6 l3">
+                                <div class="card">
+                                    <div class="card-content white-text" {% include 'widget/web_setting/web_color' %}>
+                                        <p class="card-stats-title"><i class="mdi-editor-attach-money"></i> Total Penjualan</p>
+                                        <h4 class="card-stats-number">{{ total_p|convert }} Lebih</h4>
+                                        <p class="card-stats-compare"><i class="mdi-hardware-keyboard-arrow-up"></i>{{ percent }}%  <span class="purple-text text-lighten-5">Dari bulan lalu</span>
+                                        </p>
+                                    </div>
+                                    <div class="card-action darken-2" {% include 'widget/web_setting/web_color' %}>
+                                        <div id="sales-compositebar" class="center-align"></div>
+
+                                    </div>
+                                </div>
+                            </div>                            
+                            <div class="col s12 m6 l3">
+                                <div class="card">
+                                    <div class="card-content blue-grey white-text">
+                                        <p class="card-stats-title"><i class="mdi-action-trending-up"></i> Keuntungan</p>
+                                        <h6 class="card-stats-number">{{ laba|convert }} Lebih</h6>
+                                        <p class="card-stats-compare"><i class="mdi-hardware-keyboard-arrow-up"></i> {{ percent }}% <span class="blue-grey-text text-lighten-5">Dari bulan lalu</span>
+                                        </p>
+                                    </div>
+                                    <div class="card-action blue-grey darken-2">
+                                        <div id="profit-tristate" class="center-align"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col s12 m6 l3">
+                                <div class="card">
+                                    <div class="card-content deep-purple white-text">
+                                        <p class="card-stats-title"><i class="mdi-editor-insert-drive-file"></i> Transaksi baru</p>
+                                        <h4 class="card-stats-number">{{ count }}</h4>
+                                        <p class="card-stats-compare"><i class="mdi-hardware-keyboard-arrow-down"></i> 3% <span class="deep-purple-text text-lighten-5">Dari bulan lalu</span>
+                                        </p>
+                                    </div>
+                                    <div class="card-action  deep-purple darken-2">
+                                        <div id="invoice-line" class="center-align"></div>
+                                    </div>
+                                </div>
+                            </div>                            
+                        </div>
+            </div>
+            <!--card stats end-->

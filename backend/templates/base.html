@@ -1,0 +1,440 @@
+{% block header %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <title>{% block site_title %}Shemura MT | {{ page }}{% endblock %}</title>
+
+    <link rel="icon" href="{{ STATIC_URL }}images/s.png" sizes="32x32">
+    
+ 
+    <link href="{{ STATIC_URL }}css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection">
+    <link href="{{ STATIC_URL }}css/style.min.css" type="text/css" rel="stylesheet" media="screen,projection">
+   
+    <link href="{{ STATIC_URL }}css/layouts/style-horizontal.css" type="text/css" rel="stylesheet" media="screen,projection">
+ 
+    <link href="{{ STATIC_URL }}css/custom/custom.min.css" type="text/css" rel="stylesheet" media="screen,projection">
+    <link href="{{ STATIC_URL }}js/plugins/sweetalert/sweetalert.css" type="text/css" rel="stylesheet" media="screen,projection">
+    <link href="{{ STATIC_URL }}js/plugins/perfect-scrollbar/perfect-scrollbar.css" type="text/css" rel="stylesheet" media="screen,projection">
+
+
+</head>
+
+<body>
+<div style="background-color: #af1ccf">
+   <div class="white-text" style="height: 30px; text-align: right">
+      <font style="font-size: 20px; margin-right: 50px">Shemura MT V 1.0.0 <font style="font-size: 15px; font-style: italic;"> available on <a href="http://github.com/arnoldfox21/shemuramt">Github</a></font></font>
+
+    </div>
+</div>
+                <nav {% include 'widget/web_setting/web_color' %}>
+
+                  <div class="nav-wrapper">
+                    <div class="col s12">
+                    <ul id="dropdown1" class="dropdown-content">
+                      <li><a href="{% url 'p_distributor' %}" class="purple-text">Profil</a></li>
+                      <li><a href="{% url 'index' %}" class="purple-text">Belanja</a></li>
+                      <li class="divider"></li>
+                      <li><a href="{% url 'logout_d' %}" class="purple-text">Logout</a></li>
+                    </ul>
+                    {% if page != 'Shemura MT' %}
+                    <a class="brand-logo center">{{ page }}</a>
+                    {% endif %}
+                    <a href="{% url 'index' %}" class="brand-logo left" style="margin-left: 20px"> Shemura MT</a>
+                    
+                    <ul class="right">
+                      <li>
+                        <a href="{% url 'index' %}" tooltipped data-position="bottom" data-delay="50" data-tooltip="Halaman depan"><i class="mdi-action-home"></i></a>
+                      </li>
+                      <li><a href="{% url 'hub_kami' %}"><i class="mdi-hardware-headset-mic"></i></a>
+                      </li>
+                      <li><a href="{% url 'keranjang' %}"><i class="mdi-action-shopping-cart"></i></a></li>
+                      <li><a href="{% url 'login_distributor' %}"><i class="mdi-social-person"></i></a></li>
+                      <li><a href="{% url 'loginpage' %}"><i class="mdi-action-verified-user"></i></a></li>
+
+                      {% if 'id' in request.session %}
+                      <li><a class="dropdown-button" href="#!" data-activates="dropdown1"><i class="mdi-navigation-more-vert"></i></a>
+                      </li>
+                    {% endif %}
+        
+                    </ul>
+                    </div>
+                  </div>
+                </nav>
+{% endblock %}
+{% block content %}
+                    <div class="slider" slider>
+                        <ul class="slides">
+                            <li>
+                                <img src="http://lorempixel.com/580/250/nature/1"> 
+                                <div class="caption center-align">
+                                    <h3>Selamat datang di situs resmi</h3>
+                                    <h5 class="light grey-text text-lighten-3">Shemura Mikasa Tani</h5>
+                                </div>
+                            </li>
+                            <li>
+                                <img src="http://lorempixel.com/580/250/nature/2"> 
+                                <div class="caption left-align">
+                                    <h3>Pabrik pupuk cair</h3>
+                                    <h5 class="light grey-text text-lighten-3">Solusi cerdas untuk petani.</h5>
+                                </div>
+                            </li>
+                            <li>
+                                    <img src="http://lorempixel.com/580/250/nature/3"> 
+                                    <div class="caption right-align">
+                                <h3>Lebih efisien</h3>
+                                <h5 class="light grey-text text-lighten-3">mudah dan tidak terlalu menguras tenaga.</h5>
+                                </div>
+                            </li>
+                            <li>
+                                <img src="http://lorempixel.com/580/250/nature/4"> 
+                                <div class="caption center-align">
+                                    <h3>This is our big Tagline!</h3>
+                                    <h5 class="light grey-text text-lighten-3">Here's our small slogan.</h5>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+
+ <!-- START MAIN -->
+    <div id="main">
+        <!-- START WRAPPER -->
+        <div class="wrapper">
+
+         
+
+          
+      <section id="content">        
+        <!--start container-->
+        <div class="container">
+
+          <div class="section">
+            <div class="row">
+
+              <div class="col s12 m9 l9">
+                <div class="blog-sizer"></div>
+                
+                {% for select in barang %}
+
+                <div class="blog col m4 l4" style="margin-bottom: 20px">
+                    <div class="card">
+                        <div class="card-image waves-effect waves-block waves-light">
+                            <a href="#"><img src="{{ STATIC_URL }}images/office.jpg" alt="blog-img">
+                            </a>
+                        </div>
+                        <ul class="card-action-buttons">
+                            <li><a href="pemesanan?id={{ select.id }}" class="btn-floating waves-effect waves-light green accent-4"><i class="mdi-action-shopping-cart"></i></a>
+                            </li>                            
+                            <li><a class="btn-floating waves-effect waves-light light-blue"><i class="mdi-action-info activator"></i></a>
+                            </li>
+                        </ul>
+                        <div class="card-content">
+                            <p class="row">
+                              <span class="left"><a href="pemesanan?id={{ select.id }}">{{ select.nm_barang }}</a></span>
+                              <span class="right">18th June, 2017</span>
+                            </p>
+                            <h4 class="card-title grey-text text-darken-4"><a href="#" class="grey-text text-darken-4">{{ select.nm_barang }}</a>
+                            </h4>
+                            <p class="blog-post-content">Pupuk cair {{ select.nm_barang }}.</p>
+                            
+                        </div>
+                        <div class="card-reveal">
+                            <span class="card-title grey-text text-darken-4"><i class="mdi-navigation-close right"></i> Pupuk cair {{ select.nm_barang }}."</span>
+                            <p>Pupuk cair {{ select.nm_barang }}..</p>
+                        </div>
+                    </div>
+                </div>
+                {%  endfor %}
+              </div>
+              <!--/ profile-page-wall -->
+            <div id="profile-page-sidebar" class="col s12 m3">
+               
+                <!-- Profile About  -->
+                <div class="card darken-2" {% include 'widget/web_setting/web_color' %}>
+                  <div class="card-content white-text center-align">
+                    <p class="card-title"><i class="mdi-social-group-add"></i> 36</p>
+                    <p>Distributor terbaru</p>
+                  </div>                  
+                </div>
+                <!-- Profile About  -->
+
+                <!-- Profile feed  -->
+                <ul id="profile-page-about-feed" class="collection z-depth-1">
+
+                  <li class="collection-item avatar">
+                   <a href="#" class="black-text">
+                   <i class="mdi-av-play-arrow circle" {% include 'widget/web_setting/web_color' %}></i>
+                    <span class="title">Kurniawan</span>
+                    <p>Task assigned to new changes.
+                      <br> <span class="ultra-small">Second Line</span>
+                    </p>
+                    </a>
+                    <a href="#!" class="secondary-content"><i class="mdi-editor-attach-money"></i></a>
+                    
+                  </li>
+                  <li class="collection-item avatar">
+                    <i class="mdi-av-play-arrow circle" {% include 'widget/web_setting/web_color' %}></i>
+                    <span class="title">Jainal</span>
+                    <p>First Line of Project Work 
+                      <br> <span class="ultra-small">Second Line</span>
+                    </p>
+                    <a href="#!" class="secondary-content"><i class="mdi-editor-attach-money"></i></a>
+                  </li>
+                  <li class="collection-item avatar">
+                    <i class="mdi-av-play-arrow circle" {% include 'widget/web_setting/web_color' %}></i>
+                    <span class="title">Muhaimin</span>
+                    <p>Last UK Project Payment
+                      <br> <span class="ultra-small">$ 3,684.00</span>
+                    </p>
+                    <a href="#!" class="secondary-content"><i class="mdi-editor-attach-money"></i></a>
+                  </li>
+                  <li class="collection-item avatar">
+                    <i class="mdi-av-play-arrow circle" {% include 'widget/web_setting/web_color' %}></i>
+                    <span class="title">Hu</span>
+                    <p>company management news
+                      <br> <span class="ultra-small">Second Line</span>
+                    </p>
+                    <a href="#!" class="secondary-content"><i class="mdi-editor-attach-money"></i></a>
+                  </li>
+                </ul>
+                <!-- Profile feed  -->
+
+
+
+                <!-- Profile Total sell -->
+                <div class="card center-align">
+                  <div class="card-content white-text" {% include 'widget/web_setting/web_color' %}>
+                      <p class="card-stats-title"><i class="mdi-editor-attach-money"></i>Keuntungan distributor bulan ini rata - rata</p>
+                      <h4 class="card-stats-number">$8990.63</h4>
+                      <p class="card-stats-compare"><i class="mdi-hardware-keyboard-arrow-up"></i> 70% <span class="purple-text text-lighten-5">last month</span>
+                      </p>
+                  </div>
+                  <div class="card-action darken-2" {% include 'widget/web_setting/web_color' %}>
+                      <div id="sales-compositebar"></div>
+                  </div>
+                </div>
+
+
+               
+
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+        <!--end container-->
+      </section>
+      <!-- END CONTENT -->
+
+ <!-- START RIGHT SIDEBAR NAV-->
+            <aside id="right-sidebar-nav">
+                <ul id="chat-out" class="side-nav rightside-navigation">
+                    <li class="li-hover">
+                    <a href="#" data-activates="chat-out" class="chat-close-collapse right"><i class="mdi-navigation-close"></i></a>
+                    <div id="right-search" class="row">
+                        <form class="col s12">
+                            <div class="input-field">
+                                <i class="mdi-action-search prefix"></i>
+                                <input id="icon_prefix" type="text" class="validate">
+                                <label for="icon_prefix">Search</label>
+                            </div>
+                        </form>
+                    </div>
+                    </li>
+                    <li class="li-hover">
+                        <ul class="chat-collapsible" data-collapsible="expandable">
+                        <li>
+                            <div class="collapsible-header red white-text active"><i class="mdi-social-whatshot"></i>Recent Activity</div>
+                            <div class="collapsible-body recent-activity">
+                                <div class="recent-activity-list chat-out-list row">
+                                    <div class="col s3 recent-activity-list-icon"><i class="mdi-action-add-shopping-cart"></i>
+                                    </div>
+                                    <div class="col s9 recent-activity-list-text">
+                                        <a href="#">just now</a>
+                                        <p>Jim Doe Purchased new equipments for zonal office.</p>
+                                    </div>
+                                </div>
+                                <div class="recent-activity-list chat-out-list row">
+                                    <div class="col s3 recent-activity-list-icon"><i class="mdi-device-airplanemode-on"></i>
+                                    </div>
+                                    <div class="col s9 recent-activity-list-text">
+                                        <a href="#">Yesterday</a>
+                                        <p>Your Next flight for USA will be on 15th August 2015.</p>
+                                    </div>
+                                </div>
+                                <div class="recent-activity-list chat-out-list row">
+                                    <div class="col s3 recent-activity-list-icon"><i class="mdi-action-settings-voice"></i>
+                                    </div>
+                                    <div class="col s9 recent-activity-list-text">
+                                        <a href="#">5 Days Ago</a>
+                                        <p>Natalya Parker Send you a voice mail for next conference.</p>
+                                    </div>
+                                </div>
+                                <div class="recent-activity-list chat-out-list row">
+                                    <div class="col s3 recent-activity-list-icon"><i class="mdi-action-store"></i>
+                                    </div>
+                                    <div class="col s9 recent-activity-list-text">
+                                        <a href="#">Last Week</a>
+                                        <p>Jessy Jay open a new store at S.G Road.</p>
+                                    </div>
+                                </div>
+                                <div class="recent-activity-list chat-out-list row">
+                                    <div class="col s3 recent-activity-list-icon"><i class="mdi-action-settings-voice"></i>
+                                    </div>
+                                    <div class="col s9 recent-activity-list-text">
+                                        <a href="#">5 Days Ago</a>
+                                        <p>Natalya Parker Send you a voice mail for next conference.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="collapsible-header light-blue white-text active"><i class="mdi-editor-attach-money"></i>Sales Repoart</div>
+                            <div class="collapsible-body sales-repoart">
+                                <div class="sales-repoart-list  chat-out-list row">
+                                    <div class="col s8">Target Salse</div>
+                                    <div class="col s4"><span id="sales-line-1"></span>
+                                    </div>
+                                </div>
+                                <div class="sales-repoart-list chat-out-list row">
+                                    <div class="col s8">Payment Due</div>
+                                    <div class="col s4"><span id="sales-bar-1"></span>
+                                    </div>
+                                </div>
+                                <div class="sales-repoart-list chat-out-list row">
+                                    <div class="col s8">Total Delivery</div>
+                                    <div class="col s4"><span id="sales-line-2"></span>
+                                    </div>
+                                </div>
+                                <div class="sales-repoart-list chat-out-list row">
+                                    <div class="col s8">Total Progress</div>
+                                    <div class="col s4"><span id="sales-bar-2"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="collapsible-header red darken-2 white-text"><i class="mdi-action-stars"></i>Favorite Associates</div>
+                            <div class="collapsible-body favorite-associates">
+                                <div class="favorite-associate-list chat-out-list row">
+                                    <div class="col s4"><img src="images/avatar.jpg" alt="" class="circle responsive-img online-user valign profile-image">
+                                    </div>
+                                    <div class="col s8">
+                                        <p>Eileen Sideways</p>
+                                        <p class="place">Los Angeles, CA</p>
+                                    </div>
+                                </div>
+                                <div class="favorite-associate-list chat-out-list row">
+                                    <div class="col s4"><img src="images/avatar.jpg" alt="" class="circle responsive-img online-user valign profile-image">
+                                    </div>
+                                    <div class="col s8">
+                                        <p>Zaham Sindil</p>
+                                        <p class="place">San Francisco, CA</p>
+                                    </div>
+                                </div>
+                                <div class="favorite-associate-list chat-out-list row">
+                                    <div class="col s4"><img src="images/avatar.jpg" alt="" class="circle responsive-img offline-user valign profile-image">
+                                    </div>
+                                    <div class="col s8">
+                                        <p>Renov Leongal</p>
+                                        <p class="place">Cebu City, Philippines</p>
+                                    </div>
+                                </div>
+                                <div class="favorite-associate-list chat-out-list row">
+                                    <div class="col s4"><img src="images/avatar.jpg" alt="" class="circle responsive-img online-user valign profile-image">
+                                    </div>
+                                    <div class="col s8">
+                                        <p>Weno Carasbong</p>
+                                        <p>Tokyo, Japan</p>
+                                    </div>
+                                </div>
+                                <div class="favorite-associate-list chat-out-list row">
+                                    <div class="col s4"><img src="images/avatar.jpg" alt="" class="circle responsive-img offline-user valign profile-image">
+                                    </div>
+                                    <div class="col s8">
+                                        <p>Nusja Nawancali</p>
+                                        <p class="place">Bangkok, Thailand</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        </ul>
+                    </li>
+                </ul>
+            </aside>
+            <!-- LEFT RIGHT SIDEBAR NAV-->
+
+    </div>
+    <!-- END WRAPPER -->
+
+  </div>
+  <!-- END MAIN -->
+  {% endblock %}
+
+{% block footer %}
+        <footer class="page-footer" {% include 'widget/web_setting/web_color' %}>
+          <div class="container">
+            <div class="row">
+              <div class="col l4 s12">
+                <h5 class="white-text">Shemura MT</h5>
+                <p class="grey-text text-lighten-4">Selamat datang di Situs resmi Pabrik shemura MT</p>
+              </div>
+               <div class="col l4 s12">
+                <h5 class="white-text">Perusahaan</h5>
+                <ul>
+                  <li><a class="grey-text text-lighten-3" href="{%url 'tentangkami'%}">Tentang kami</a></li>
+                  <li><a class="grey-text text-lighten-3" href="{%url 'hub_kami'%}">Hubungi kami</a></li>
+                  <li><a class="grey-text text-lighten-3" href="#!">Testemonials</a></li>
+                  <li><a class="grey-text text-lighten-3" href="#!">@</a></li>
+                </ul>
+              </div>
+              <div class="col l4 s12">
+                <h5 class="white-text">Temukan kami</h5>
+                <ul>
+                  <li><a class="grey-text text-lighten-3" href="#!">Facebook</a></li>
+                  <li><a class="grey-text text-lighten-3" href="#!">Twiter</a></li>
+                  <li><a class="grey-text text-lighten-3" href="#!">Linkdn</a></li>
+                  <li><a class="grey-text text-lighten-3" href="#!">Instagram</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="footer-copyright">
+            <div class="container">
+           
+            © {% now "Y" as current_year %}
+              Copyright {{ current_year }} Shemura-MT.co.id
+          
+            <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
+            </div>
+          </div>
+        </footer>
+            
+
+
+
+    
+    <script type="text/javascript" src="{{ STATIC_URL }}js/plugins/jquery-1.11.2.min.js"></script>
+  
+    <script type="text/javascript" src="{{ STATIC_URL }}js/materialize.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/plugins/prism/prism.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/plugins.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}js/plugins/sweetalert/sweetalert.min.js"></script>   
+    <script type="text/javascript">
+      $(document).ready(function(){
+      $('.parallax').parallax();
+    });
+    </script>
+    {% endblock %}
+   
+    {% block custom_js %}
+    <script type="text/javascript" src="{{ STATIC_URL }}js/custom-script.js"></script>
+    {% endblock %}
+
+    {% block endbody %}
+</body>
+</html>
+    {% endblock %}

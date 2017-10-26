@@ -1,0 +1,51 @@
+{% extends 'base-backend.html' %}
+{% block content %}
+      <section id="content">
+
+
+
+          {% if confirm %}
+
+                    <div class="section card" style="height: 600px">
+                      <p><center><h1>
+                      {{ confirm }}</h1></center>
+                      </p>
+                      </div>
+          {% else %}     
+          <div class="row">
+            <div class="col s12 m12 l12">
+              <div class="card-panel">
+                <h4 class="header2">{{ aksi }} Petugas {{ ambil.nama }}</h4>
+                <div class="row">
+                  
+                  <form class="col s12" method="POST" action="">
+                  {% csrf_token %}
+                    {{ form }}
+                    <input type="hidden" value="{{ get_id }}" name="idk">
+                      <div class="row">
+                        <div class="input-field col s12">
+                         <div class="g-recaptcha" data-sitekey="6Lfbly8UAAAAAOMIGVEqPYd1Os9GYD3WA2RbQhUB"></div>
+                          <button class="btn purple waves-effect waves-light right" type="submit" name="action">Submit
+                            <i class="mdi-content-send right"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+      </div>
+      {% endif %}
+  </section>
+
+  </div>
+  <!-- END WRAPPER -->
+
+  </div>
+ {% endblock %}
+ {% block custom_js %}
+<script src='https://www.google.com/recaptcha/api.js'></script>
+
+ {% endblock %}

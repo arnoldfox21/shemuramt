@@ -1,0 +1,47 @@
+{% load custom_tags %}
+{% load humanize %}  
+  <table id="data-table-simple" class="responsive-table display bordered striped" cellspacing="0">
+                              <thead>
+                                  <tr>
+                                      <th>ID</th>
+                                      <th>nama</th>
+                                      <th>Jumlah barang</th>
+                                      <th>Total pembayaran</th>
+                                      <th>Waktu transaksi</th>
+                                      <th>Action</th>
+                                  </tr>
+                              </thead>
+                           
+                              <tfoot>
+                                  <tr>
+                                      <th>ID</th>
+                                      <th>nama</th>
+                                      <th>Jumlah barang</th>
+                                      <th>Total pembayaran</th>
+                                      <th>Waktu transaksi</th>
+                                      <th>Action</th>
+                                  </tr>
+                              </tfoot>
+                           
+                              <tbody>
+                            {% for data in get %}
+                                  <tr>
+                                      <td>{{ data.id }}</td>
+                                      <td>{{ data.id_dist.nama }}</td>
+                                      <td>{{ data|jumlahb }}</td>
+                                      <td>Rp. {{ data|totalShoppingValue|intcomma }}.00</td>
+                                      <td>{{ data.id_waktu }}</td>
+                                      <td><div class="col s12 m12">
+                                              <a href="{% url 'h_t' %}?hapus-transaksi={{ data.pk }}" class="btn-floating waves-effect waves-light tooltipped" {% include 'widget/web_setting/web_color' %} data-position="bottom" data-delay="50" data-tooltip="Hapus">
+                                                  <i class="mdi-action-delete"></i></a>
+
+                                                  <a href="{% url 'h_t' %}?verifikasi={{ data.pk }}" class="btn-floating waves-effect waves-light tooltipped" {% include 'widget/web_setting/web_color' %} data-position="bottom" data-delay="50" data-tooltip="Konfirmasi transaksi">
+                                                  <i class="mdi-navigation-check"></i>
+                                                  </a>
+                                                            
+                                          </div>
+                                      </td>
+                                  </tr>
+                            {% endfor %}
+                              </tbody>
+                          </table>

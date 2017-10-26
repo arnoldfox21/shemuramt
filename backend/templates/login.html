@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Login | Shemura Mikasa Tani</title>
+
+  <link rel="icon" href="{{ STATIC_URL }}images/admin-login.jpg" sizes="32x32">
+  <link href="{{ STATIC_URL }}css/materialize.min.css" type="text/css" rel="stylesheet" media="screen,projection">
+  <link href="{{ STATIC_URL }}css/style.min.css" type="text/css" rel="stylesheet" media="screen,projection">
+  <link href="{{ STATIC_URL }}css/custom/custom.min.css" type="text/css" rel="stylesheet" media="screen,projection">
+  <link href="{{ STATIC_URL }}css/layouts/page-center.css" type="text/css" rel="stylesheet" media="screen,projection">
+  <link href="{{ STATIC_URL }}js/plugins/prism/prism.css" type="text/css" rel="stylesheet" media="screen,projection">
+  <link href="{{ STATIC_URL }}js/plugins/perfect-scrollbar/perfect-scrollbar.css" type="text/css" rel="stylesheet" media="screen,projection">
+</head>
+
+<body class="purple">
+
+
+  <div id="login-page" class="row">
+    <div class="col s12 z-depth-4 card-panel">
+        {% if pesan %}
+        <div id="card-alert" class="card red">
+          <div class="card-content white-text">
+            <p><i class="mdi-alert-error"></i> {{pesan}}</p>
+          </div>
+          <button type="button" class="close white-text" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+    {% else %}
+
+    {% endif %}
+      <form class="login-form" action='{% url "cek" %}' method="post">
+      {% csrf_token %}
+        <div class="row">
+          <div class="input-field col s12 center">
+            <img src="{{ STATIC_URL }}images/admin-login.jpg" alt="" class="circle responsive-img valign profile-image-login">
+            <p class="center login-form-text">LOGIN ADMINISTRATOR</p>
+          </div>
+        </div>
+        <div class="row margin">
+          <div class="input-field col s12">
+            <i class="mdi-social-person-outline prefix"></i>
+            <input id="username" placeholder="Demo: please contact owner" name="mail" type="text">
+            <label for="username" class="center-align">Email</label>
+          </div>
+        </div>
+        <div class="row margin">
+          <div class="input-field col s12">
+            <i class="mdi-action-lock-outline prefix"></i>
+            <input id="password" placeholder="******" name="password" type="password">
+            <label for="password">Password</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12 m12 l12  login-text">
+              <input type="checkbox" id="remember-me" />
+              <label for="remember-me">Remember me</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <input type="submit" class="btn purple waves-effect waves-light col s12" name="login" value="Login">
+          </div>
+        </div>
+         <div class="row">
+          <div class="input-field col s6 m6 l6">
+              <p class="margin right-align medium-small"><a href="page-forgot-password.html">Forgot password ?</a></p>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script type="text/javascript" src="{{ STATIC_URL }}js/plugins/jquery-1.11.2.min.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}js/materialize.min.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}js/plugins/prism/prism.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}js/plugins/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}js/plugins.min.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}js/custom-script.js"></script>
+
+</body>
+
+</html>

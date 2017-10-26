@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="parallax-container" style="height: 250px">
+      <div class="parallax">
+      <img src="{{ STATIC_URL }}images/slide1.jpg">
+      </div>
+    </div>
+
+
+    <div id="main">
+
+        <div class="wrapper">
+
+      <section id="content">
+
+        <div class="container">
+          <div class="section">
+
+            <p class="caption">Punya pertanyaan? jangan ragu untuk mengirmkan pesan. team kami akan dengan senang hati melayani anda.</p>
+
+            <div class="divider"></div>
+            
+            <div id="contact-page" class="card">
+                <div class="card-content">                    
+                   
+
+                    <div class="row">
+                      <div class="col s12 m6">
+                      {% if confirm %}
+                     <div id="card-alert" class="card {% if confirm == 'Pesan berhasil dikirim ke database kami silahkan tunggu balasan email dari kami secepatnya' %}green{% else %}red{% endif %}">
+                        <div class="card-content white-text">
+                          <p>{% if confirm == 'Pesan berhasil dikirim ke database kami silahkan tunggu balasan email dari kami secepatnya' %}<i class="mdi-navigation-check"></i>{% else %}<i class="mdi-alert-error"></i>{% endif %} {{confirm}}</p>
+                        </div>
+                        <button type="button" class="close white-text" data-dismiss="alert" aria-label="Close">
+                          <span aria-hidden="true">×</span>
+                        </button>
+                      </div>
+                      {% endif %}
+                        <form action="" method="POST" class="contact-form">
+                        {% csrf_token %}
+                       
+                        {{ form.as_p }}
+                        <input type="hidden" name="id_d" value="{{ gt.pk }}">
+                         <div class="row">
+                              <div class="input-field col s12">
+                                <div class="g-recaptcha" data-sitekey="6Lfbly8UAAAAAOMIGVEqPYd1Os9GYD3WA2RbQhUB"></div> <button class="btn waves-effect waves-light right" {% include 'widget/web_setting/web_color' %} type="submit" name="action">Send
+                                  <i class="mdi-content-send right"></i>
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </form>
+                                          
+                      <div class="col s12 m6">
+                        <ul class="collapsible collapsible-accordion" data-collapsible="accordion">
+                          <li>
+                            <div class="collapsible-header"><i class="mdi-communication-live-help"></i> Syarat dan ketentuan</div>
+                            <div class="collapsible-body" style="">
+                              <p>Dengan mengakses Platform dan / atau menggunakan Layanan, Anda setuju untuk terikat dengan Syarat Penggunaan ini. Jika Anda tidak menyetujui Syarat Penggunaan ini, maka Anda jangan/berhenti mengakses dan/atau menggunakan Platform atau Layanan ini.</p>
+                            </div>
+                          </li>
+                          <li class="active">
+                            <div class="collapsible-header active"><i class="mdi-communication-phone"></i> Hubungi kami?</div>
+                            <div class="collapsible-body" style="display: none;">
+                              <p> Silahkan hubungi kami lewat email resmi kami di <a mailto="support@shemura-mt.co.id">support@shemura-mt.co.id</a>. kami dengan senang membalasnya. Atau hubungi kami lewat telepon<br/> <a href="tel:+6294452652687">+62 944 526 526 87</a></p>
+                             
+                            </div>
+                          </li>
+                          <li>
+                            <div class="collapsible-header"><i class="mdi-editor-insert-emoticon"></i> Testimonial</div>
+                            <div class="collapsible-body" style="">
+                              <blockquote>Fantastis produk, sebagai distributor sangat menguntungkan berjualan produk ini karena pemasarannya mudah </blockquote>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+
+                </div>
+            </div>            
+          </div>
+        </div>
+        <!--end container-->
+      </section>
+      <!-- END CONTENT -->
+
+         
+
+    </div>
+  
+
+  </div>
+ 
+   <script src='https://www.google.com/recaptcha/api.js'></script>
+
+{% endblock %}
