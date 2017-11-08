@@ -1,0 +1,50 @@
+<script type="text/javascript">
+        
+        var trendingLineChart;
+        var data = {
+            labels : ["1Liter","10Liter","15Liter","3Liter","5Liter","7Liter"],
+            datasets : [
+                {
+                    label: "First dataset",
+                    fillColor : "rgba(128, 222, 234, 0.6)",
+                    strokeColor : "#ffffff",
+                    pointColor : "#00bcd4",
+                    pointStrokeColor : "#ffffff",
+                    pointHighlightFill : "#ffffff",
+                    pointHighlightStroke : "#ffffff",
+                    data: [ {% for fck in Graphicchart %} {{ fck.total }}, {% endfor %} ]
+                },
+                {
+                 label: "Second dataset",
+                 fillColor : "rgba(128, 222, 234, 0.3)",
+                 strokeColor : "#80deea",
+                 pointColor : "#512da8",
+                 pointStrokeColor : "#80deea",
+                 pointHighlightFill : "#80deea",
+                 pointHighlightStroke : "#80deea",
+                 data: [ {% for pull in Gethelperbarang %} {{ pull.stock }}, {% endfor %} ]
+                }
+            ]
+        };
+        var doughnutData = [
+            {
+                value: {{ Sumstock }},
+                color:"#754bda",
+                highlight: "#512da8",
+                label: "Stock barang"
+            },
+            {
+                value: {{ canvas }},
+                color: "#46BFBD",
+                highlight: "#34a09f",
+                label: "Barang terjual"
+            },
+            // {
+            //  value: 1000,
+            //  color: "#FDB45C",
+            //  highlight: "#FFC870",
+            //  label: "Home"
+            // }
+
+        ];
+    </script>

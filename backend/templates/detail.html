@@ -1,0 +1,204 @@
+{% extends 'base-backend.html' %}
+{% load humanize %}
+{% block content %}
+ <section id="content" class="white">
+<center><h3>Profil {{ fdata.nama }}</h3></center>
+	<div class="row">
+		<div class="col m7">
+		    <ul class="collection card">
+		      <li class="collection-item avatar" style="border-bottom: 1px solid #{{ border.config }};">
+		        <img src="images/avatar.jpg" alt="" class="circle">
+		        <span class="title">Bergabung sebagai distributor Shemura MT</span>
+		        <p><b>pada tanggal {{ fdata.joined_time }}</b>
+		        </p>
+		        
+		      </li>
+		        <li class="collection-item avatar" style="border-bottom: 1px solid #{{ border.config }};">
+		        <i class="mdi-social-person circle green"></i>
+		        <span class="title">Jenis kelamin</span>
+		        <p><b>{% if fdata.jenis_kelamin == 'l'%}Laki laki{% else %}Perempuan{% endif %}</b>
+		        </p>
+		        
+		      </li>
+		      <li class="collection-item avatar" style="border-bottom: 1px solid #{{ border.config }};">
+		        <i class="mdi-content-mail circle"></i>
+		        <span class="title">Email</span>
+		        <p><b>{{ fdata.umail }}</b>
+		        </p>
+		        
+		      </li>
+		       <li class="collection-item avatar" style="border-bottom: 1px solid #{{ border.config }};">
+		        <img class="circle" src="{{ STATIC_URL }}images/map-marker.png"/>
+		        <span class="title">Alamat</span>
+		        <p><b>{{ fdata.alamat }}</b>
+		        </p>
+		        
+		      </li>
+		      <li class="collection-item avatar" style="border-bottom: 1px solid #{{ border.config }};">
+		        <i class="mdi-editor-insert-invitation circle green"></i>
+		        <span class="title">Tgl Lahir</span>
+		        <p><b>{{ fdata.tgl_lahir }}</b>
+		        </p>
+		        
+		      </li>
+		      <li class="collection-item avatar" style="border-bottom: 1px solid #{{ border.config }};">
+		        <i class="mdi-action-perm-phone-msg circle purple"></i>
+		        <span class="title">No. Telephon</span>
+		        <p><b>{{ fdata.telp }}</b>
+		        </p>
+		        
+		      </li>
+		       <li class="collection-item avatar" style="border-bottom: 1px solid #{{ border.config }};">
+		        <i class="mdi-action-assessment circle green"></i>
+		        <span class="title">Jumlah transaksi berhasil</span>
+		        <p><b>{{ count }}</b>
+		        </p>
+		        <a href="#modal2" class="secondary-content btn modal-trigger" {% include 'widget/web_setting/web_color' %}>Detail transaksi</a>
+		      </li>
+		    
+		    </ul>
+		</div>
+		<div class="col m5">
+			<div id="profile-card" class="card">
+                    <div class="card-image waves-effect waves-block waves-light" style="height: 405px">
+                      <img class="activator" src="{{ STATIC_URL }}media/{{ fdata.foto }}" alt="user bg">
+                    </div>
+                    <div class="card-content">
+                      <img src="images/avatar.jpg" alt="" class="circle responsive-img activator card-profile-image">
+                  
+
+                      <span class="card-title activator grey-text text-darken-4">{{ fdata.nama }}</span>
+                      
+                      <p><i class="mdi-action-perm-phone-msg"></i> {{ fdata.telp }}</p>
+                      <p><a href="#Sendtodistributor" {% include 'widget/web_setting/web_color' %} class="btn modal-trigger left">Send email</a>
+                      	{% if fdata.status == '1' %}
+                      	<a href="{% url 'h_t' %}?update_status=0&id={{ fdata.pk }}" class="btn red right" id="link" onclick="falert(this); return false;">Lock account</a>
+                      	{% else %}
+                      	<a href="{% url 'h_t' %}?update_status=1&id={{ fdata.pk }}" class="btn red right" id="link" onclick="falert_unlock(this); return false;">Unlock account</a>
+                      	{% endif %}
+                      </p>
+                      <br><br>
+                    </div>
+                   
+                  </div>
+		</div>
+	</div>
+ </section>
+	  <div id="Sendtodistributor" class="modal bottom-sheet white">
+	    <form action="" method="POST">
+	      <div class="modal-content" style="padding: 0px">
+	      {% csrf_token %}
+	        <div class="modal-footer purple white-text">
+	        <center><h5>Kirim email ke {{ fdata.nama }} <<i> {{ fdata.umail }}</i> ></span></h5></center>
+	        </div>
+	         <div>
+	        <div class="row">
+	            <div class="input-field col m4 l4 ">
+	            <div class="container">
+	            </div>
+	            </div>
+	            <input type="hidden" value="{{ fdata.pk }}" name="ci_d">
+	           <div class="input-field col m8 l8">
+	              {{ form_r }}
+	              <div class="left">
+	               <div class="g-recaptcha" data-sitekey="6Lfbly8UAAAAAOMIGVEqPYd1Os9GYD3WA2RbQhUB"></div>
+	               </div><div class="right">
+	            <button type="submit" class="waves-effect purple btn">Kirim</button></div>
+	            </div>
+	          </div>
+	        </div>
+	      </div>
+	   </form>
+	</div>
+  <div id="modal2" class="modal white" style="height: 100%">
+  	  <h4 class="header center-align">Data Transaksi {{ fdata.nama }}</h4>
+	  <div class="row">
+	    <div class="col s12 m12 l12">
+	      <table class="display striped bordered" cellspacing="0" width="100%">
+	      	<thead>
+	      		<tr>
+                  <th>ID</th>
+                  <th>waktu transaksi</th>
+                  <th>nama barang</th>
+                  <th>jumlah barang</th>
+                  <th>Jumlah pembayaran</th>
+                </tr>
+                {% for data_transaksi in d_t %}
+                <tr>
+                	<td>{{ data_transaksi.id }}</td>
+                	<td>{{ data_transaksi.waktu_transaksi }}</td>
+                	<td>{{ data_transaksi.nm_barang }}</td>
+                	<td>{{ data_transaksi.jumlah_barang }}</td>
+                	<td>Rp. {{ data_transaksi.total_pembayaran|intcomma }}.00</td>
+                </tr>
+                {% endfor %}
+                <tr>
+                	<td colspan="3"><center>Total</center></td>
+                	<td>{{ fcountb }}</td>
+                	<td>Rp. {{ fcount|intcomma }}.00</td>
+                </tr>
+	      	</thead>
+	      </table>
+	    </div>
+	  </div>
+
+  </div>
+{% endblock %}
+{% block custom_js %}
+
+     <script>
+        function falert(obj) {
+            swal({
+                title: "Apa anda yakin?",
+                text: "Kamu akan mengunci Account ini!",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: '#DD6B55',
+                confirmButtonText: 'Ya, kunci ini',
+                cancelButtonText: "Batal, batalkan ini",
+                closeOnConfirm: false,
+                closeOnCancel: false
+              },
+              function(isConfirm){
+                if (isConfirm){
+                  swal("Locked!", "Account berhasil dikunci!", "success");
+                  setTimeout(function()
+                    {location.href=obj.getAttribute("href")} , 1000);
+                } else {
+                  swal("Dibatalkan", "Kunci telah dibatalkan", "error");
+                }
+              });
+        }
+    </script>
+    <script>
+        function falert_unlock(obj) {
+            swal({
+                title: "Apa anda yakin?",
+                text: "Kamu akan membuka kunci Account ini!",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: '#DD6B55',
+                confirmButtonText: 'Ya, Aktifkan account',
+                cancelButtonText: "Batal, batalkan ini",
+                closeOnConfirm: false,
+                closeOnCancel: false
+              },
+              function(isConfirm){
+                if (isConfirm){
+                  swal("Activated!", "Account berhasil diaktifkan!", "success");
+                  setTimeout(function()
+                    {location.href=obj.getAttribute("href")} , 1000);
+                } else {
+                  swal("Dibatalkan", "Activasi telah dibatalkan", "error");
+                }
+              });
+        }
+    </script>
+
+     <script type="text/javascript">
+      $(document).ready(function(){
+      $('.parallax').parallax();
+    });
+
+    </script>
+{% endblock %}

@@ -1,4 +1,7 @@
-from backend.models import Settings, Barang
+from itertools import *
+from django.db import connection
+from django.db.models import Avg, Sum, Q
+from backend.models import Settings, Barang, Transaksi
 import re
 from django.db.models import Q
 
@@ -30,8 +33,20 @@ def get_query(query_string, search_fields):
 	return query
 
 def db_barang(row):
-
 	get_barang = Barang.objects.all()[:row]
-
 	return get_barang
 
+
+def Helper_ObjectRaw(var):
+	with connection.cursor() as cursor:
+		cursor.execute(var)
+		col_names = [desc[0] for desc in cursor.description]
+		row = cursor.fetchall()
+		
+	return row
+
+
+# def icontain(alpha, beta, delta):
+# 	val = "%s__icontains" % (beta)
+# 	p = alpha.objects.filter(val = delta)
+# 	return p

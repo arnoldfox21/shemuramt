@@ -7,18 +7,18 @@
                                     <div class="card-move-up waves-effect waves-block waves-light">
                                         <div class="move-up darken-1" {% include 'widget/web_setting/web_color' %}>
                                             <div>
-                                                <span class="chart-title white-text">Grafik penjualan</span>
+                                                <span class="chart-title white-text">Graphic Stock barang dan Penjualan barang</span>
                                                 <div class="chart-revenue darken-2 white-text" {% include 'widget/web_setting/web_color' %}>
-                                                    <p class="chart-revenue-total">Rp. {{ laba|intcomma}}.00</p>
-                                                    <p class="chart-revenue-per"><i class="mdi-navigation-arrow-drop-up"></i> 40.00 %</p>
+                                                    <p class="chart-revenue-total">Kuntungan bulan ini <br> Rp. {{ laba|intcomma}}.00</p>
+                                                    <p class="chart-revenue-per"><i class="mdi-navigation-arrow-drop-up"></i> {{ percent }} % dari bulan lalu</p>
                                                 </div>
-                                                <div class="switch chart-revenue-switch right">
+                                               <!--  <div class="switch chart-revenue-switch right">
                                                     <label class="purple-text text-lighten-5">
                                                       Month
                                                       <input type="checkbox">
                                                       <span class="lever"></span> Year
                                                     </label>
-                                                </div>
+                                                </div> -->
                                             </div>
                                             <div class="trending-line-chart-wrapper">
                                                 <canvas id="trending-line-chart" height="70"></canvas>
@@ -30,16 +30,16 @@
                                         <div class="col s12 m3 l3">
                                             <div id="doughnut-chart-wrapper">
                                                 <canvas id="doughnut-chart" height="200"></canvas>
-                                                <div class="doughnut-chart-status">{{ canvas }} Barang
-                                                    <p class="ultra-small center-align">Terjual</p>
+                                                <div class="doughnut-chart-status">Diagram
+                                                    <p class="ultra-small center-align">Pie</p>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col s12 m2 l2">
                                             <ul class="doughnut-chart-legend">
-                                                <li class="mobile ultra-small"><span class="legend-color"></span>5 Liter</li>
-                                                <li class="kitchen ultra-small"><span class="legend-color"></span> 10 Liter</li>
-                                                <li class="home ultra-small"><span class="legend-color"></span> 15 Liter</li>
+                                               
+                                                <li class="kitchen ultra-small"><span class="legend-color"></span> Jumlah terjual</li>
+                                                <li class="home ultra-small"><span class="legend-color"></span> Stock barang</li>
                                             </ul>
                                         </div>
                                         <div class="col s12 m5 l6">
@@ -92,9 +92,9 @@
                                         <th>Nama</th>
                                         <th>Alamat</th>
                                         <th>telpon</th>
-                                        
                                         <th>Jenis kelamin</th>
                                         <th>Email</th>
+                                        <th>Detail</th>
                                     </tr>
                                 </thead>
                              
@@ -112,8 +112,36 @@
                                             {% endif %}
                                             </td>
                                             <td>{{user.umail}}</td>
+                                            <td><td><a href="{% url 'detail_d' %}?id={{ user.pk }}" class="btn btn-primary" {% include 'widget/web_setting/web_color' %}>Detail</td></td>
                                         </tr>
                                     {% endfor %}
                                 </tbody>
                         </table>
+                       <div class="col m12 s12 l12">
+                         <h5>Laporan barang terjual</h5>
+                         <table id="data-table-simple" class="card responsive-table striped table display" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                      
+                                        <th>Nama barang</th>
+                                        <th>Jumlah terjual</th>
+                                        <th>Jumlah pembayaran</th>
+                                   
+                                    </tr>
+                                </thead>
+                         
+                                <tbody>
+                                    {% for chart in chart %}
+                                        <tr>
+                                          
+                                            <td>{{ chart.nm_barang }}</td>
+                                             <td>{{ chart.total }}</td>
+                                            <td>Rp. {{ chart.totalw|intcomma }}.00</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                        </table>
+                        <form><input type="hidden" id="reporthelper" value="{% for fck in chart %} {{ fck.total }}, {% endfor %}" name="helper"></form>
+                      <!--   end chart -->
+                    </div>
                         </div>

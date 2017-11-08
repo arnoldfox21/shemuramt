@@ -122,4 +122,4 @@ from decimal import Decimal
 money = '$6,150,593.22'
 value = Decimal(sub(r'[^\d.]', '', money))
 
-This has some advantages since it uses Decimal instead of float (which is better for representing currency) and it also avoids any locale issues by not hard-coding a specific currency symbol.
+# This has some advantages since it uses Decimal instead of float (which is better for representing currency) and it also avoids any locale issues by not hard-coding a specific currency symbol.

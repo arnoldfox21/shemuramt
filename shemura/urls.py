@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
-from backend.views import dashboard, charge, hub_suplier, lock_user, pbarang, search_for_something, f_petugas, setting, data_barang, loginpage, index_page, handler500, handler404, f_barang, t_distributor, email, data_distributor, data_petugas, data_penjualan, tentang_kami, keranjang, profil_distributor, login_d, fakthur_p, hub_kami, pemesanan, t_aktif
+from backend.views import dashboard, charge, hub_suplier, detail, lock_user, pbarang, search_for_something, f_petugas, setting, data_barang, loginpage, index_page, handler500, handler404, f_barang, t_distributor, email, data_distributor, data_petugas, data_penjualan, tentang_kami, keranjang, profil_distributor, login_d, fakthur_p, hub_kami, pemesanan, t_aktif
 from backend.core import h_dist, login, login_validasi_dist, logout, logout_d, add_chart, cetak_fakthur 
 
 
@@ -55,6 +55,7 @@ urlpatterns = [
     url(r'^form-barang/$', f_barang, name='f_barang'),
     url(r'^settings/$', setting, name='setting'),
     url(r'^results/$', search_for_something, name='search_for_something'),
+    url(r'^detail-distributor$', detail, name="detail_d"),
     url(r'^handler404/$', handler404),
     url(r'^handler500/$', handler500)
 

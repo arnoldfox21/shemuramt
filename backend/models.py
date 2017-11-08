@@ -22,6 +22,7 @@ class Distributor(models.Model):
 	foto = models.CharField(max_length = 200, null=True)
 	joined_time = models.CharField(max_length = 20, null=True)
 	j_transaksi = models.IntegerField(null=True)
+	status = models.CharField(max_length=20, null=True)
 
 class Transaksi(models.Model):
 

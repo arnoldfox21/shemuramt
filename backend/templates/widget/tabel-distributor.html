@@ -11,6 +11,7 @@
                               <th>alamat</th>
                               <th>telp</th>
                               <th>Email</th>
+                              {% if aktif == 'data distributor' %} <th>Action</th>{% endif %}
                               {% if aktif == 'edit data distributor' %} <th>Action</th>{% endif %}
                           </tr>
                       </thead>
@@ -22,6 +23,7 @@
                               <th>alamat</th>
                               <th>telp</th>
                               <th>Email</th>
+                              {% if aktif == 'data distributor' %} <th>Action</th>{% endif %}
                               {% if aktif == 'edit data distributor' %} <th>Action</th>{% endif %}
                           </tr>
                       </tfoot>
@@ -34,6 +36,7 @@
                               <td>{{ data.alamat }}</td>
                               <td>{{ data.telp }}</td>
                               <td>{{ data.umail }}</td>
+                              {% if aktif == 'data distributor' %} <td><a href="{% url 'detail_d' %}?id={{ data.pk }}" class="btn btn-primary" {% include 'widget/web_setting/web_color' %}>Detail</td>{% endif %}
                                {% if aktif == 'edit data distributor' %}
                               <td><div class="col s12 m12">
                                       <a href="{% url 't_distributor' %}?edit={{ data.id }}" class="btn-floating waves-effect waves-light tooltipped" {% include 'widget/web_setting/web_color' %} data-position="left" data-delay="50" data-tooltip="Edit distributor">

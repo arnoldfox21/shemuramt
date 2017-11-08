@@ -17,7 +17,7 @@ from backend.sessionservice import getUserLogined, getDistributorLogined, webcon
 from django.db.models import Avg, Sum
 from backend.custom_datetime import getdate, getmonth, getyear, gethour
 from django.views.generic.edit import FormView
-from backend.helper import getcolor, normalize_query, get_query, db_barang
+from backend.helper import getcolor, normalize_query, get_query, db_barang, Helper_ObjectRaw
 from backend.forms import ContactForm, Petugas, Form_barang, Contact_r, distributor
 from django.db.models import Q
 from backend.stripe_form import SalePaymentForm
@@ -41,6 +41,10 @@ def dashboard(request):
 	count = Transaksi.objects.filter(waktu_transaksi__icontains = ym).count()
 	Canvas = Transaksi.objects.all().aggregate(Sum('jumlah_barang')).get('jumlah_barang__sum') or 0
 	totalp = Transaksi.objects.filter(waktu_transaksi__icontains = ym).aggregate(Sum('total_pembayaran')).get('total_pembayaran__sum') or 0
+	Graphicchart = Transaksi.objects.values('nm_barang').annotate(total=Sum('jumlah_barang')).annotate(totalw=Sum('total_pembayaran')).order_by('nm_barang')
+	Helperchart = Transaksi.objects.values('nm_barang').annotate(total=Sum('jumlah_barang')).annotate(totalw=Sum('total_pembayaran')).order_by('-total')
+	Helperbarang = Barang.objects.all().order_by('nm_barang')
+	Stocksum = Barang.objects.all().aggregate(Sum('stock')).get('stock__sum') or 0
 	Laba = 10 * totalp / 100
 
 	year = getyear()
@@ -66,9 +70,11 @@ def dashboard(request):
 		'total_p': totalp,
 		'alert': 'Akun dikunci',
 		'percent': getpercent,
-		'warna': color
-
-
+		'warna': color,
+		'chart': Helperchart,
+		'Graphicchart': Graphicchart,
+		'Gethelperbarang': Helperbarang,
+		'Sumstock' : Stocksum
 		})
 
 def loginpage(request):
@@ -796,6 +802,42 @@ def handler404(request):
 def handler500(request):
 	return render(request, 'error.html', status=500)
 
+def detail(request):
+	color = getcolor(7)
+	template = 'detail.html'
+	if not 'nama' in request.session:
+		return redirect('loginpage')
+	if request.method == 'GET' and not 'id' in request.GET:
+		go = 'Page not found'
+	else:
+		if request.method == 'POST':
+			form = Contact_r(request.POST)
+			new_form = form.save(commit=False)
+			new_form.customer_id = request.POST.get('ci_d')
+			new_form.save()
+		form_r = Contact_r()
+		d = Distributor.objects.filter(pk=request.GET['id'])
+		if d.exists():
+			go = d.first()
+			data_t = Transaksi.objects.select_related('id_dist').filter(id_dist=go.pk).order_by('-pk')
+			count = data_t.count()
+			fcount = Transaksi.objects.filter(id_dist_id=d).aggregate(Sum('total_pembayaran')).get('total_pembayaran__sum') or 0	
+			fcountb = Transaksi.objects.filter(id_dist_id=d).aggregate(Sum('jumlah_barang')).get('jumlah_barang__sum') or 0			
+			border = Settings.objects.filter(pk= 7).first()
+		else:
+			go = 'id tidak ditemukan'
+	return render(request, template, {
+		'warna': color,
+		'data': getUserLogined(request.session['nama']),
+		'aktif': 'detail',
+		'fdata': go,
+		'd_t': data_t,
+		'count': count,
+		'form_r': form_r,
+		'border': border,
+		'fcount': fcount,
+		'fcountb': fcountb
+		})
 
 def search_for_something(request):
 

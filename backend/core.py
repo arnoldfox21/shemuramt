@@ -33,9 +33,12 @@ def h_dist(request):
 
 	elif request.method == 'GET' and 'delete' in request.GET:
 		q = request.GET['delete']
-		hapus = Distributor.objects.filter(pk = q).delete()
-		
+		hapus = Distributor.objects.filter(pk = q).delete()	
 		return redirect(reverse('d_distributor'))
+
+	elif request.method == 'GET' and 'update_status' in request.GET:
+		Distributor.objects.filter(pk=request.GET['id']).update(status=request.GET['update_status'])
+		return redirect('%sdetail-distributor?id=%s' % (domain(), request.GET['id']))
 
 	elif request.method == 'POST' and 'request_setting' in request.GET:
 

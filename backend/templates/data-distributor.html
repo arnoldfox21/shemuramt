@@ -15,13 +15,19 @@
 
            
           </div>
-       
+       {% if aktif == 'data distributor' %}
             <div class="fixed-action-btn" style="bottom: 50px; right: 19px;">
-                <a href="{% url 'd_distributor' %}?edit" {% include 'widget/web_setting/web_color' %} class="btn-floating btn-large tooltipped" data-position="left" data-delay="50" data-tooltip="Tambah distributor">
+                <a href="{% url 'd_distributor' %}?edit" {% include 'widget/web_setting/web_color' %} class="btn-floating btn-large tooltipped" data-position="left" data-delay="50" data-tooltip="Edit distributor">
                    <i class="mdi-editor-border-color"></i>
                 </a>
             </div>
-        
+        {% elif aktif == 'edit data distributor' %}
+         <div class="fixed-action-btn" style="bottom: 50px; right: 19px;">
+                <a href="{% url 't_distributor' %}" {% include 'widget/web_setting/web_color' %} class="btn-floating btn-large tooltipped" data-position="left" data-delay="50" data-tooltip="Tambah distributor">
+                   <i class="mdi-content-add"></i>
+                </a>
+            </div>
+        {% endif %}
         </div>
        
 

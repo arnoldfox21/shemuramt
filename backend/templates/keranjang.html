@@ -52,7 +52,7 @@
                         <td>Rp. {{ chart|totalise|intcomma }}.00</td>
                         {# <td>10000</td> #}
                         <td><div class="col s12 m12">
-                                          <a href="http://shemura.pythonanywhere.com{% url 'h_t' %}?hapus-keranjang={{ chart.pk }}" class="btn-floating waves-effect waves-light" {% include 'widget/web_setting/web_color' %} id="link" onclick="doalert(this); return false;">
+                                          <a href="{% url 'h_t' %}?hapus-keranjang={{ chart.pk }}" class="btn-floating waves-effect waves-light" {% include 'widget/web_setting/web_color' %} id="link" onclick="doalert(this); return false;">
                                           <i class="mdi-content-clear"></i>
                                           </a>
 

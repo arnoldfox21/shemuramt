@@ -51,7 +51,7 @@ class Contact_r(ModelForm):
 		model = Contact_reply
 		fields = ['pesan']
 		labels = {
-			"pesan": "Balas pesan"
+			"pesan": "Tulis pesan"
 					}
 		widgets = {
 			'pesan': forms.Textarea(attrs={'class': 'materialize-textarea'}),
