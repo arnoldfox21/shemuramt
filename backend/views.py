@@ -17,7 +17,7 @@ from backend.sessionservice import getUserLogined, getDistributorLogined, webcon
 from django.db.models import Avg, Sum
 from backend.custom_datetime import getdate, getmonth, getyear, gethour
 from django.views.generic.edit import FormView
-from backend.helper import getcolor, normalize_query, get_query, db_barang, Helper_ObjectRaw
+from backend.helper import getcolor, normalize_query, get_query, select_limit, select_icontain
 from backend.forms import ContactForm, Petugas, Form_barang, Contact_r, distributor
 from django.db.models import Q
 from backend.stripe_form import SalePaymentForm
@@ -35,10 +35,10 @@ def dashboard(request):
 		template = 'home.html'
 	color = getcolor(7)
 	Url = Session_user.objects.filter(user_id=request.session['nama']).update(url=request.path)
-	d = Distributor.objects.filter()[:10]
+	d = select_limit(Distributor, 10)
 	ym = datetime.datetime.now().strftime("%Y-%m")
-	p = Transaksi.objects.filter(waktu_transaksi__icontains = ym)
-	count = Transaksi.objects.filter(waktu_transaksi__icontains = ym).count()
+	p = select_icontain(Transaksi, ym, 'waktu_transaksi')
+	count = select_icontain(Transaksi, ym, 'waktu_transaksi').count()
 	Canvas = Transaksi.objects.all().aggregate(Sum('jumlah_barang')).get('jumlah_barang__sum') or 0
 	totalp = Transaksi.objects.filter(waktu_transaksi__icontains = ym).aggregate(Sum('total_pembayaran')).get('total_pembayaran__sum') or 0
 	Graphicchart = Transaksi.objects.values('nm_barang').annotate(total=Sum('jumlah_barang')).annotate(totalw=Sum('total_pembayaran')).order_by('nm_barang')
@@ -437,8 +437,7 @@ def pemesanan(request):
 				'barang': barang,
 				'page': barang.nm_barang,
 				'warna': color,
-				'db_barang': db_barang(6)
-
+				'db_barang': select_limit(Barang, 6)
 				})
 		else:
 			return render(request, 'pemesanan.html', {

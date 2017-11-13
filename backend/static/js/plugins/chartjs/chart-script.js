@@ -5,14 +5,14 @@ Trending Bar Chart
 */
 
 var dataBarChart = {
-    labels : ["Jan","Feb","Mar","Apr","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"],
+    labels : ["Jan","Feb","Mar","Apr","Mei","Juni","Juli","Agust","Sept","Okt","Nov","Des"],
     datasets: [
         {
             label: "Bar dataset",
-            fillColor: "#46BFBD",
-            strokeColor: "#46BFBD",
-            highlightFill: "rgba(70, 191, 189, 0.4)",
-            highlightStroke: "rgba(70, 191, 189, 0.9)",
+            fillColor: "#4caf50",
+            strokeColor: "#4caf50",
+            highlightFill: "#60d865",
+            highlightStroke: "#60d865",
             data: [23, 19, 82, 41, 62, 71, 0, 0, 18, 10, 6, 0]
         }
     ]

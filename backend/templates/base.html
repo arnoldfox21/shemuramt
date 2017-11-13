@@ -15,17 +15,18 @@
     <link href="{{ STATIC_URL }}css/custom/custom.min.css" type="text/css" rel="stylesheet" media="screen,projection">
     <link href="{{ STATIC_URL }}js/plugins/sweetalert/sweetalert.css" type="text/css" rel="stylesheet" media="screen,projection">
     <link href="{{ STATIC_URL }}js/plugins/perfect-scrollbar/perfect-scrollbar.css" type="text/css" rel="stylesheet" media="screen,projection">
-
+    {% block custom_css %}
+    {% endblock %}
 
 </head>
 
 <body>
-<!-- <div style="background-color: #af1ccf">
-   <div class="white-text" style="height: 30px; text-align: right">
-      <font style="font-size: 20px; margin-right: 50px">Shemura MT V 1.0.0 <font style="font-size: 15px; font-style: italic;"> available on <a href="http://github.com/arnoldfox21/shemuramt">Github</a></font></font>
+              <div style="background-color: #000000">
+                 <div class="white-text" style="height: 30px; text-align: right">
+                    <font style="font-size: 20px; margin-right: 50px">Shemura MT V 1.0.0 <font style="font-size: 15px; font-style: italic;"> available on <a href="http://github.com/arnoldfox21/shemuramt">Github</a></font></font>
 
-    </div>
-</div> -->
+                  </div>
+              </div>
                 <nav {% include 'widget/web_setting/web_color' %}>
 
                   <div class="nav-wrapper">
@@ -158,46 +159,31 @@
                 </div>
                 <!-- Profile About  -->
 
-                <!-- Profile feed  -->
-                <ul id="profile-page-about-feed" class="collection z-depth-1">
+                {% for select in barang %}
 
-                  <li class="collection-item avatar">
-                   <a href="#" class="black-text">
-                   <i class="mdi-av-play-arrow circle" {% include 'widget/web_setting/web_color' %}></i>
-                    <span class="title">Kurniawan</span>
-                    <p>Task assigned to new changes.
-                      <br> <span class="ultra-small">Second Line</span>
-                    </p>
-                    </a>
-                    <a href="#!" class="secondary-content"><i class="mdi-editor-attach-money"></i></a>
-                    
-                  </li>
-                  <li class="collection-item avatar">
-                    <i class="mdi-av-play-arrow circle" {% include 'widget/web_setting/web_color' %}></i>
-                    <span class="title">Jainal</span>
-                    <p>First Line of Project Work 
-                      <br> <span class="ultra-small">Second Line</span>
-                    </p>
-                    <a href="#!" class="secondary-content"><i class="mdi-editor-attach-money"></i></a>
-                  </li>
-                  <li class="collection-item avatar">
-                    <i class="mdi-av-play-arrow circle" {% include 'widget/web_setting/web_color' %}></i>
-                    <span class="title">Muhaimin</span>
-                    <p>Last UK Project Payment
-                      <br> <span class="ultra-small">$ 3,684.00</span>
-                    </p>
-                    <a href="#!" class="secondary-content"><i class="mdi-editor-attach-money"></i></a>
-                  </li>
-                  <li class="collection-item avatar">
-                    <i class="mdi-av-play-arrow circle" {% include 'widget/web_setting/web_color' %}></i>
-                    <span class="title">Hu</span>
-                    <p>company management news
-                      <br> <span class="ultra-small">Second Line</span>
-                    </p>
-                    <a href="#!" class="secondary-content"><i class="mdi-editor-attach-money"></i></a>
-                  </li>
-                </ul>
-                <!-- Profile feed  -->
+                <div class="blog col m4 l4" style="margin-bottom: 20px">
+                    <div class="card z-depth-2">
+                        <div class="card-image waves-effect waves-block waves-light">
+                            <a href="#"><img src="{{ STATIC_URL }}images/vg.jpg" alt="blog-img">
+                            </a>
+                        </div>
+                        <ul class="card-action-buttons">
+                            <li><a href="pemesanan?id={{ select.id }}" class="btn-floating btn-large waves-effect waves-light green accent-4"><i class="mdi-action-shopping-cart"></i></a>
+                            </li>                            
+                        </ul>
+                        <div class="card-content">
+                            <p class="row">
+                              <span class="left"><a href="pemesanan?id={{ select.id }}">{{ select.nm_barang }}</a></span>
+                              <span class="right">{{ today|date:"D d M Y" }}</span>
+                            </p>
+                            <h4 class="card-title grey-text text-darken-4"><a href="#" class="grey-text text-darken-4">{{ select.nm_barang }}</a>
+                            </h4>
+                            <p class="blog-post-content">Pupuk cair {{ select.nm_barang }}.</p>
+                            
+                        </div>
+                    </div>
+                </div>
+                {%  endfor %}
 
 
 

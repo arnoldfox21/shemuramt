@@ -32,21 +32,16 @@ def get_query(query_string, search_fields):
 			query = query & or_query
 	return query
 
-def db_barang(row):
-	get_barang = Barang.objects.all()[:row]
+def select_limit(db, row):
+	get_barang = db.objects.all()[:row]
 	return get_barang
 
+def select_icontain(db, value, dbfield):
+	return db.objects.filter(**{'%s__icontains' % (dbfield): value})
 
 def Helper_ObjectRaw(var):
 	with connection.cursor() as cursor:
 		cursor.execute(var)
 		col_names = [desc[0] for desc in cursor.description]
-		row = cursor.fetchall()
-		
+		row = cursor.fetchall()	
 	return row
-
-
-# def icontain(alpha, beta, delta):
-# 	val = "%s__icontains" % (beta)
-# 	p = alpha.objects.filter(val = delta)
-# 	return p
