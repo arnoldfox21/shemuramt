@@ -3,7 +3,7 @@
     <div class="parallax-container" style="height: 200px">
       <div class="parallax"><img src="{{ STATIC_URL }}images/slide5.jpg"></div>
     </div>
-                <div class="col s12 m12 l12" style="margin:-20px">
+                <div class="col s12 m12 l12">
                      <center>
                      <div class="col s12 m6 l6 card-panel">
                       <div class="right top medium-small"><a href="{% url 'hub_kami' %}">Butuh bantuan?</a></div>
@@ -51,11 +51,13 @@
                             <label for="password">Password</label>
                           </div>
                         </div>
+                        
                          <div class="row">          
                           <div class="input-field col s12 m12 l12  login-text">
                             <div class="g-recaptcha" data-sitekey="6Lfbly8UAAAAAOMIGVEqPYd1Os9GYD3WA2RbQhUB"></div>
                           </div>
                          </div>
+
                          <div class="row">          
                           <div class="input-field col s12 m12 l12  login-text">
                               <input id="remember-me" type="checkbox">
@@ -64,16 +66,20 @@
                         </div>
                         <div class="row">
                           <div class="input-field col s12">
-                            <i class="btn purple waves-effect waves-light col s12 waves-input-wrapper" style=""><input class="waves-button-input" name="login" value="Login" type="submit"></i>
+                            <i class="btn purple waves-effect waves-light col s12 waves-input-wrapper" style=""><input class="waves-button-input" name="login" value="Masuk" type="submit"></i>
                           </div>
                         </div>
-                        <div class="row col s6 m6 l6">
-                        </div>
                         <div class="row">
+                          <div class="input-field col s12">
+                            <b class="grey-text">atau masuk melalui akun google<b><br><br>
+                             <a href=""><img style="width: 100%" class="z-depth-1 waves-light waves-effect" src="{{ STATIC_URL }}images/g.png"></a>
+                          </div>
+                        </div>
+                        <!-- <div class="row">
                           <div class="input-field col s6 m6 l6">
                               <p class="margin right-align medium-small"><a href="page-forgot-password.html">Forgot password ?</a></p>
                           </div>          
-                        </div>
+                        </div> -->
                       </form>
                     
                       </div>

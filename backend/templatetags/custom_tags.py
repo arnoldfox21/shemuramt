@@ -86,5 +86,5 @@ def convert(val):
 		wth = 'juta'
 		wtf = Get
 	
-	holyshit = wtf + wth
-	return holyshit
+	vf = wtf + wth
+	return vf

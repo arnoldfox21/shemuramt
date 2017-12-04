@@ -8,6 +8,7 @@ class User(models.Model):
 	username = models.CharField(max_length = 50, null = True)
 	pswd = models.CharField(max_length = 50, null = True)
 	umail = models.CharField(max_length = 200, null= True)
+	nama_lengkap = models.CharField(max_length=200, null=True)
 	jabatan = models.CharField(max_length = 200, null=True)
 
 class Distributor(models.Model):
@@ -69,6 +70,7 @@ class Bahan(models.Model):
 
 	nama_bahan = models.CharField(max_length=200, null=True)
 	stock = models.IntegerField(null=True)
+	harga_satuan = models.IntegerField(null = True)
 
 class Companyprofile(models.Model):
 	
@@ -82,6 +84,7 @@ class Session_distributor(models.Model):
 	distributor = models.ForeignKey(Distributor)
 	start_time = models.CharField(max_length= 20)
 	url = models.CharField(max_length=200)
+	last_activity = models.CharField(max_length=50, null=True)
 
 class Session_user(models.Model):
 	
@@ -127,10 +130,16 @@ class Contact_reply(models.Model):
 
 	customer = models.ForeignKey(Distributor, null=True)
 	contact = models.ForeignKey(Contact, null=True)
-	pesan = models.CharField(max_length=1000, null=True)
+	subject = models.CharField(max_length=200, null=True)
+	pesan = models.TextField(null=True)
 
 class Settings(models.Model):
 
 	setting = models.CharField(max_length=200, null=True)
 	config = models.CharField(max_length=200, null=True)
 	info = models.CharField(max_length=300, null=True)
+
+class Pembelian(models.Model):
+	bahan = models.ForeignKey(Bahan)
+	jumlah = models.IntegerField(null=True)
+	t_harga = models.IntegerField(null=True)

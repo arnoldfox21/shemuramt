@@ -90,7 +90,7 @@
                               </a>
                           </div>
                           <ul class="card-action-buttons">
-                              <li><a href="#modal1" class="btn-floating btn-large modal-trigger waves-effect waves-light green accent-4"><i class="mdi-action-shopping-cart"></i></a>
+                              <li><a onclick="get_id(this); return false;" id="idbarang" href="#modal1" data="{{ select.id }}" class="btn-floating btn-large modal-trigger waves-effect waves-light green accent-4"><i class="mdi-action-shopping-cart"></i></a>
                               </li>                            
                           </ul>
                           <div class="card-content">
@@ -199,7 +199,7 @@
                           Target penjualan kami sudah semakin luas, <strong>Shemura</strong> membutuhkan system seperti ini agar pelayanan distributor kami lebih mudah <a href=""><strong>Hubungi kami</strong></a> kapan saja kami siap melayani anda.
                           
                           <br><br>
-                          <div itemprop="author" itemscope="" itemtype="http://schema.org/Person"><p class="name" itemprop="name">Hartono SH. MH.</p></div>
+                          <div itemprop="author" itemscope="" itemtype="http://schema.org/Person"><p class="name" itemprop="name">Hari H.</p></div>
                           <div class="divider"></div>
                          
 
@@ -217,7 +217,7 @@
                            Target penjualan kami sudah semakin luas, <strong>Shemura</strong> membutuhkan system seperti ini agar pelayanan distributor kami lebih mudah <a href=""><strong>Hubungi kami</strong></a> kapan saja kami siap melayani anda.
                             <br><br>
 
-                            <p class="name" itemprop="name">Gita Kumalasari H.</p>
+                            <p class="name" itemprop="name">Andy haru.</p>
 
                             <div class="divider">
                       
@@ -273,25 +273,54 @@
 
 <!-- modal cart -->
 <div id="modal1" class="modal">
-   <div class="modal-content">
+   <div id="loadermodal" class="modal-content">
     <div id="range_01"></div>
   </div>
-  <div class="hide">
-    <div class="modal-content">
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
-    </div>
-    <div class="modal-footer">
-      <a href="#" class="waves-effect waves-red btn-flat modal-action modal-close">Disagree</a>
-      <a href="#" class="waves-effect waves-green btn-flat modal-action modal-close">Agree</a>
-    </div>
-  </div>
+  <div class="row">
+    <table class="table" id="tabelbarang" class="hide">
+      <tr>
+        <td>nama barang</td>
+        <td>Harga satuan</td>
+      </tr>
+      <tr>
+        <td></td>
+      </tr>
+    </table>
+     <div id="al" class="progress">
+        <div class="indeterminate"></div>
+     </div>
+   </div>
 </div>
 
 {% endblock %}
 {% block custom_js %}
-<script type="text/javascript" src="{{ STATIC_URL }}js/plugins/ionRangeSlider/js/ion.rangeSlider.js"></script>
-<script type="text/javascript">
-  $("#range_01").ionRangeSlider();
-</script>
+  <script type="text/javascript">
+        function get_id() { 
+            document.getElementById("al").classList.remove('hide');
+            document.getElementById("req").classList.add('hide');
+            var idb = getAttribute("data");
+            var dataString = {'idb': idb };
+            console.log(dataString)
+                $.ajax({
+                type: "GET",
+                url: "{% url 'Selectbarang' %}?id='"idb"'",
+                data: dataString,
+                dataType: 'json',
+                success: function(data) {
+                    console.log(data)                    
+                    if(data.status == 200){
+                        // $('#sector_refresh').load(document.URL +  ' #sector_refresh');
+                        document.getElementById("req").classList.add('hide');
+                        document.getElementById("alerts").classList.remove('hide');
+                    }else{
+                        document.getElementById("beta").classList.remove('hidden'); 
+                        document.getElementById("delta").classList.add('hidden');
+                    }
+                }
+            });
+            
+            return false;
+        }
+    </script>
+
 {% endblock %}

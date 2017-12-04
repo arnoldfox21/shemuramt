@@ -120,7 +120,22 @@
                 
                 <li class="bold {% if aktif == 'transaksi aktif' %}active{% endif %}"><a href="{% url 't_aktif' %}" class="waves-effect waves-red"><i class="mdi-social-notifications-paused"></i> Transaksi aktif</a>
                 </li>
-                <li class="bold {% if aktif == 'fps' %}active{% endif %}"><a href="{% url 'fps' %}" class="waves-effect waves-red"><i class="mdi-social-notifications"></i> Transaksi suplier</a>
+                
+                 <li class="no-padding">
+                    <ul class="collapsible collapsible-accordion">
+                         <li class="bold">
+                             <a class="collapsible-header  waves-effect waves-cyan {% if aktif == 'ob' or aktif == 'data pembelian' %}active{% endif %}"><i class="mdi-action-view-list"></i> Transaksi suplier</a>
+                            <div class="collapsible-body">
+                                <ul>
+                                    <li class="{% if aktif == 'ob' %}active{% endif %}"><a href="{% url 'fps' %}" class="waves-effect waves-red">Order bahan</a>
+                                    </li>
+                                    <li class="{% if aktif == 'data pembelian' %}active{% endif %}"><a href="{% url 'd_pembelian' %}" class="waves-effect waves-red"> Data pembelian</a>
+                                    </li>
+                                    
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
                 </li>
                 <li class="no-padding">
                     <ul class="collapsible collapsible-accordion">

@@ -1,7 +1,7 @@
 from itertools import *
 from django.db import connection
 from django.db.models import Avg, Sum, Q
-from backend.models import Settings, Barang, Transaksi
+from backend.models import Settings, Barang, Transaksi, Bahan
 import re
 from django.db.models import Q
 
@@ -30,14 +30,30 @@ def get_query(query_string, search_fields):
 			query = or_query
 		else:
 			query = query & or_query
-	return query
+	return querys
 
 def select_limit(db, row):
 	get_barang = db.objects.all()[:row]
 	return get_barang
 
+def Helper_selectAll(db):
+	return db.objects.all()
+
+def Helper_obj(var, field_value):
+	try:
+		obj = var.objects.get(pk = field_value)
+	except Exception as e:
+		raise 
+	return obj
+
+def Helper_order_by(model, value):
+	return model.objects.all().order_by('%s' % value)
+
 def select_icontain(db, value, dbfield):
 	return db.objects.filter(**{'%s__icontains' % (dbfield): value})
+
+def Helper_save(db, value):
+	return "n"
 
 def Helper_ObjectRaw(var):
 	with connection.cursor() as cursor:

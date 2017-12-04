@@ -9,65 +9,79 @@
               <div class="card-panel">
                 <h4 class="header2">Pesan bahan ke suplier</h4>
                 <div class="row">
-                  <form class="col s12" method="POST" action="{% url 'fps' %}?code=404">
+                  <h2>{{ attr }}</h2>
+                  <form class="col s12" method="POST" action="">
                   {% csrf_token %}
                     <div class="row">
                       <div class="input-field col s6 m4 l4">
-                        <input id="first_name" name="nama" value="{{ ambil.nama }}" type="number">
+                        <input id="1" name="1" type="number" value="0">
                         <label for="first_name">N</label>
                       </div>
                     
                       <div class="input-field col s6 m4 l4">
-                        <input name="telp" id="last_name" value="{{ ambil.telp }}" type="number">
+                        <input name="2" id="2" type="number" value="0">
                         <label for="last_name">PK</label>
                       </div>
         
                   
                       <div class="input-field col s6 m4 l4">
-                        <input id="first_name" name="nama" value="{{ ambil.nama }}" type="number">
+                        <input id="3" name="3" type="number" value="0">
                         <label for="first_name">MN</label>
                       </div>
                     
                       <div class="input-field col s6 m4 l4">
-                        <input name="telp" id="last_name" value="{{ ambil.telp }}" type="number">
+                        <input name="4" id="4" type="number" value="0">
                         <label for="last_name">CU</label>
                       </div>
                 
                       <div class="input-field col s4 m4 l4">
-                        <input id="first_name" name="nama" value="{{ ambil.nama }}" type="number">
+                        <input id="5" name="5" type="number" value="0">
                         <label for="first_name">MG</label>
                       </div>
                     
                       <div class="input-field col s4 m4 l4">
-                        <input name="telp" id="last_name" value="{{ ambil.telp }}" type="number">
+                        <input name="6" id="6" type="number" value="0">
                         <label for="last_name">ZN</label>
                       </div>
                   
                       <div class="input-field col s4 m4 l4">
-                        <input id="first_name" name="nama" value="{{ ambil.nama }}" type="number">
+                        <input id="7" name="7" type="number" value="0">
                         <label for="first_name">FE</label>
                       </div>
                     
                       <div class="input-field col s4 m4 l4">
-                        <input name="telp" id="last_name" value="{{ ambil.telp }}" type="number">
+                        <input name="8" id="8" type="number" value="0">
                         <label for="last_name">CA</label>
                       </div>
                     
                     <div class="input-field col s6 m4 l4">
-                        <input name="telp" id="last_name" value="{{ ambil.telp }}" type="number">
+                        <input name="9" id="9" type="number" value="0">
                         <label for="last_name">K</label>
                       </div>
                     </div>
                       <div class="input-field col s12 l12">
-                        <textarea id="message5" class="materialize-textarea" length="120"></textarea>
+                        <textarea id="message5" name="pesan" class="materialize-textarea" length="120"></textarea>
                         <label for="message">Message</label>
                       </div>
                       <div class="row">
                         <div class="input-field col s12">
                         <div class="g-recaptcha" data-sitekey="6Lfbly8UAAAAAOMIGVEqPYd1Os9GYD3WA2RbQhUB"></div>
-                         <a href="{% url 'fps' %}?code=404" {% include 'widget/web_setting/web_color' %} class="btn waves-effect waves-light right"> Request  <i class="mdi-content-send right"></i></a>
-                           
-                          </button>
+                         <div id="req" class="">
+                            <button type="button" onclick="orb()" {% include 'widget/web_setting/web_color' %} class="btn waves-effect waves-light right"> Request  <i class="mdi-content-send right"></i>
+                            </button>
+                        </div>
+                          
+                            <div id="al" class="progress hide">
+                                <div class="indeterminate"></div>
+                            </div>
+                            <div id="alerts" class="card green hide">
+                              <div class="card-content white-text">
+                                <p><i class="mdi-alert-error"></i> Permintaan bahan berhasil dikirim ke suplier </p>
+                              </div>
+                              <button type="button" class="close white-text" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                              </button>
+                            </div>
                         </div>
                       </div>
                     </div>
@@ -84,5 +98,45 @@
   <!-- END WRAPPER -->
 
   </div>
-    <script src='https://www.google.com/recaptcha/api.js'></script>
- {% endblock %}
+  <script src='https://www.google.com/recaptcha/api.js'></script>
+{% endblock %}
+{% block custom_js %}
+  <script type="text/javascript">
+        function orb() { 
+            document.getElementById("al").classList.remove('hide');
+            document.getElementById("req").classList.add('hide');
+            var n = $('#1').val();
+            var pk = $("#2").val();
+            var mn = $("#3").val();
+            var cu = $("#4").val();
+            var mg = $("#5").val();
+            var zn = $("#6").val();
+            var fe = $("#7").val();
+            var ca = $("#8").val();
+            var k = $("#9").val();
+            var msg = $("#message5").val();
+            var dataString = {'n': n, 'pk': pk, 'mn': mn, 'cu': cu, 'mg': mg, 'zn': zn, 'fe': fe, 'ca': ca, 'k': k, 'msg': msg };
+            console.log(dataString)
+                $.ajax({
+                type: "POST",
+                url: "{% url 'orderb' %}",
+                data: dataString,
+                dataType: 'json',
+                success: function(data) {
+                    console.log(data)                    
+                    if(data.status == 201){
+                        // $('#sector_refresh').load(document.URL +  ' #sector_refresh');
+                        document.getElementById("req").classList.add('hide');
+                        document.getElementById("alerts").classList.remove('hide');
+                    }else{
+                        document.getElementById("beta").classList.remove('hidden'); 
+                        document.getElementById("delta").classList.add('hidden');
+                    }
+                }
+            });
+            
+            return false;
+        }
+    </script>
+
+{% endblock %}

@@ -1,7 +1,7 @@
 
 from django import forms
 from django.forms import ModelForm
-from backend.models import Contact, Distributor, User, Barang, Contact_reply
+from backend.models import Contact, Distributor, User, Barang, Contact_reply, Bahan
 
 
 class ContactForm(ModelForm):

@@ -11,13 +11,13 @@ from django.core.mail import send_mail
 from django.shortcuts import render_to_response
 from django.http import HttpResponse, HttpRequest
 from django.template import RequestContext
-from backend.models import User, Distributor, Session_user, Transaksi, Barang, Keranjang, Fakthur, Settings, Companyprofile, Sale, Contact, Session_user, Contact_reply
+from backend.models import User, Distributor, Session_user, Transaksi, Barang, Keranjang, Fakthur, Settings, Companyprofile, Sale, Contact, Session_user, Contact_reply, Pembelian
 from django.core.urlresolvers import reverse
 from backend.sessionservice import getUserLogined, getDistributorLogined, webconfig, getlock
 from django.db.models import Avg, Sum
 from backend.custom_datetime import getdate, getmonth, getyear, gethour
 from django.views.generic.edit import FormView
-from backend.helper import getcolor, normalize_query, get_query, select_limit, select_icontain
+from backend.helper import getcolor, normalize_query, get_query, Helper_obj, select_limit, select_icontain, Helper_order_by, Helper_selectAll
 from backend.forms import ContactForm, Petugas, Form_barang, Contact_r, distributor
 from django.db.models import Q
 from backend.stripe_form import SalePaymentForm
@@ -38,15 +38,14 @@ def dashboard(request):
 	d = select_limit(Distributor, 10)
 	ym = datetime.datetime.now().strftime("%Y-%m")
 	p = select_icontain(Transaksi, ym, 'waktu_transaksi')
-	count = select_icontain(Transaksi, ym, 'waktu_transaksi').count()
 	Canvas = Transaksi.objects.all().aggregate(Sum('jumlah_barang')).get('jumlah_barang__sum') or 0
 	totalp = Transaksi.objects.filter(waktu_transaksi__icontains = ym).aggregate(Sum('total_pembayaran')).get('total_pembayaran__sum') or 0
 	Graphicchart = Transaksi.objects.values('nm_barang').annotate(total=Sum('jumlah_barang')).annotate(totalw=Sum('total_pembayaran')).order_by('nm_barang')
 	Helperchart = Transaksi.objects.values('nm_barang').annotate(total=Sum('jumlah_barang')).annotate(totalw=Sum('total_pembayaran')).order_by('-total')
 	Helperbarang = Barang.objects.all().order_by('nm_barang')
+	
 	Stocksum = Barang.objects.all().aggregate(Sum('stock')).get('stock__sum') or 0
 	Laba = 10 * totalp / 100
-
 	year = getyear()
 	month = int(getmonth())
 	prev_month = month - 1
@@ -62,7 +61,7 @@ def dashboard(request):
 		'aktif': 'Dashboard',
 		'data': getUserLogined(request.session['nama']),
 		'users': d,
-		'count': count,
+		'count': p.count(),
 		'penjualan': p,
 		'bulan': calendar.month_name[month],
 		'canvas': Canvas,
@@ -371,7 +370,8 @@ def keranjang(request):
 			'total': tot,
 			'reply': Reply,
 			'alert': 'Sold out',
-			'warna': color
+			'warna': color,
+			'aktif': ob
 			})
 
 def profil_distributor(request):
@@ -686,9 +686,9 @@ def hub_suplier(request):
 		Url = Session_user.objects.filter(user_id=request.session['nama']).update(url=request.path)
 		return render(request, template, {
 			'data': getUserLogined(request.session['nama']),
-			'aktif': 'fps',
+			'aktif': 'ob',
 			'status': Status,
-			'warna': color
+			'warna': color,
 			})
 
 def data_barang(request):
@@ -867,3 +867,22 @@ def search_for_something(request):
 
 		})
 
+def data_pembelian(request):
+	status = getlock(getUserLogined(request.session['nama']))
+	if not 'nama' in request.session:
+		return redirect('loginpage')
+	if status.lock == 1:
+		template = 'lock.html'
+	else:
+		template = 'data_pembelian.html'
+
+	color = getcolor(7)
+	Url = Session_user.objects.filter(user_id=request.session['nama']).update(url=request.path)
+	data = Transaksi.objects.select_related('id_dist').order_by('-pk')
+	return render(request, template, {
+		'aktif': 'data pembelian',
+		'penjualan': data,
+		'data': getUserLogined(request.session['nama']),
+		'warna': color,
+		'alert': 'Akun dikunci'
+		})
