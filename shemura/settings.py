@@ -24,7 +24,7 @@ EMAIL_HOST_PASSWORD = 'arnold2012'
 EMAIL_PORT = '25'
 EMAIL_USE_TLS = True
 
-
+APPEND_SLASH= False
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 

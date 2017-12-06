@@ -72,7 +72,7 @@ urlpatterns = [
     url(r'^handler500/$', handler500),
 
     url(r'^orderb/$', OrderBahan.as_view(), name='orderb'),
-    url(r'^Select-barang/(?P<id>[\w.+_-]+)/$', Selectitem.as_view(), name='Selectbarang'),
+    url(r'^barang/select/$', Selectitem.as_view(), name='selectbarang'),
     url(r'^Selectallbarang/$', SelectAll.as_view(), name='Selectallbarang'),
     url(r'^User/List/$', ReadUser.as_view(), name='Read-User'),
     url(r'^User/Add/$', RegisterUser.as_view(), name='Add-User'),

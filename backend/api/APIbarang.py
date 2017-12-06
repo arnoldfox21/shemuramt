@@ -2,7 +2,8 @@ from rest_framework.generics import (
 	CreateAPIView,		
 	ListAPIView,	
 	UpdateAPIView,		
-	DestroyAPIView,		
+	DestroyAPIView,	
+	ListCreateAPIView,	
 )
 from rest_framework.exceptions import (APIException)
 
@@ -22,16 +23,16 @@ class SelectAll(ListAPIView):
 	def get_serializer_class(self):
 		return select_item
 		
-class Selectitem(ListAPIView):
-	lookup_field = 'id'
+class Selectitem(ListCreateAPIView):
+
 	permission_classes = []
 
-	def get_queryset(self, serializer):
+	def get_queryset(self):
 		id_item = self.request.POST.get('id')
 		if id_item == '':
 			raise APIException('id is required')
 		else:
-			return Barang.objects.filter(pk = id_item)
+			return Barang.objects.filter(pk = id_item).first()
 
 	def get_serializer_class(self):
 		return select_item

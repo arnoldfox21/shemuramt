@@ -1,10 +1,10 @@
 
 			Task
-- upload
-- supllier
+- respon status json
+- select listapiview
+- for insert post
+- list data json
 - mailer
-- forgot password
-
 
 						!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 

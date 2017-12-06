@@ -14,48 +14,48 @@
                   {% csrf_token %}
                     <div class="row">
                       <div class="input-field col s6 m4 l4">
-                        <input id="1" name="1" type="number" value="0">
+                        <input id="1" name="1" type="number" >
                         <label for="first_name">N</label>
                       </div>
                     
                       <div class="input-field col s6 m4 l4">
-                        <input name="2" id="2" type="number" value="0">
+                        <input name="2" id="2" type="number" >
                         <label for="last_name">PK</label>
                       </div>
         
                   
                       <div class="input-field col s6 m4 l4">
-                        <input id="3" name="3" type="number" value="0">
+                        <input id="3" name="3" type="number" >
                         <label for="first_name">MN</label>
                       </div>
                     
                       <div class="input-field col s6 m4 l4">
-                        <input name="4" id="4" type="number" value="0">
+                        <input name="4" id="4" type="number" >
                         <label for="last_name">CU</label>
                       </div>
                 
                       <div class="input-field col s4 m4 l4">
-                        <input id="5" name="5" type="number" value="0">
+                        <input id="5" name="5" type="number" >
                         <label for="first_name">MG</label>
                       </div>
                     
                       <div class="input-field col s4 m4 l4">
-                        <input name="6" id="6" type="number" value="0">
+                        <input name="6" id="6" type="number" >
                         <label for="last_name">ZN</label>
                       </div>
                   
                       <div class="input-field col s4 m4 l4">
-                        <input id="7" name="7" type="number" value="0">
+                        <input id="7" name="7" type="number" >
                         <label for="first_name">FE</label>
                       </div>
                     
                       <div class="input-field col s4 m4 l4">
-                        <input name="8" id="8" type="number" value="0">
+                        <input name="8" id="8" type="number" >
                         <label for="last_name">CA</label>
                       </div>
                     
                     <div class="input-field col s6 m4 l4">
-                        <input name="9" id="9" type="number" value="0">
+                        <input name="9" id="9" type="number" >
                         <label for="last_name">K</label>
                       </div>
                     </div>
@@ -125,9 +125,39 @@
                 success: function(data) {
                     console.log(data)                    
                     if(data.status == 201){
-                        // $('#sector_refresh').load(document.URL +  ' #sector_refresh');
-                        document.getElementById("req").classList.add('hide');
-                        document.getElementById("alerts").classList.remove('hide');
+                         swal({
+                              title: "Berhasil",
+                              text: "Permintaan berhasil dikirim ke suplier",
+                              type: "warning",
+                              showCancelButton: true,
+                              confirmButtonColor: '#DD6B55',
+                              confirmButtonText: 'lihat fakthur',
+                              cancelButtonText: "Order lagi",
+                              closeOnConfirm: false,
+                              closeOnCancel: false
+                            },
+                            function(isConfirm){
+                              if (isConfirm){
+                                document.getElementById("req").classList.add('hide');
+                                var dataString = {'id_': idb };
+                                console.log(dataString)
+                                    $.ajax({
+                                    type: "GET",
+                                    url: "{% url 'selectbarang' %}",
+                                    data: dataString,
+                                    dataType: 'json',
+                                    success: function(data) {
+                                        console.log(data) 
+                                        if (data.status == 201){
+                                          "???????"
+                                         }
+                                       }
+                                     })
+                               
+                              } else {
+                                swal("Dibatalkan", "Kunci telah dibatalkan", "error");
+                              }
+                            });
                     }else{
                         document.getElementById("beta").classList.remove('hidden'); 
                         document.getElementById("delta").classList.add('hidden');
