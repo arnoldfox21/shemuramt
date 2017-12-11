@@ -24,6 +24,8 @@ EMAIL_HOST_PASSWORD = 'arnold2012'
 EMAIL_PORT = '25'
 EMAIL_USE_TLS = True
 
+CORS_ORIGIN_ALLOW_ALL=True
+
 APPEND_SLASH= False
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
@@ -58,12 +60,14 @@ INSTALLED_APPS = (
     'backend',
     'django.contrib.humanize',
     'rest_framework',
+    'corsheaders',
 
 )
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',

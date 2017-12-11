@@ -17,19 +17,10 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from backend.views import dashboard, data_pembelian, charge, hub_suplier, detail, lock_user, pbarang, search_for_something, f_petugas, setting, data_barang, loginpage, index_page, handler500, handler404, f_barang, t_distributor, email, data_distributor, data_petugas, data_penjualan, tentang_kami, keranjang, profil_distributor, login_d, fakthur_p, hub_kami, pemesanan, t_aktif
 from backend.core import h_dist, login, login_validasi_dist, logout, logout_d, add_chart, cetak_fakthur 
-from backend.api_views import (
-    ReadUser,
-    RegisterUser,
-    UpdateUser,
-)
-
-from backend.api.APIsupplier import (
-    OrderBahan,
-    )
-from backend.api.APIbarang import (
-    Selectitem,
-    SelectAll,
-    )
+from backend.api_views import (ReadUser, RegisterUser, UpdateUser)
+from backend.api.APIdistributor import (SelectAllDistributor, loginview)
+from backend.api.APIsupplier import (OrderBahan)
+from backend.api.APIbarang import (Selectitem, SelectAll)
 
 
 urlpatterns = [
@@ -75,6 +66,8 @@ urlpatterns = [
     url(r'^barang/select/$', Selectitem.as_view(), name='selectbarang'),
     url(r'^Selectallbarang/$', SelectAll.as_view(), name='Selectallbarang'),
     url(r'^User/List/$', ReadUser.as_view(), name='Read-User'),
+    url(r'^alldistributor/$', SelectAllDistributor.as_view(), name='alldist'),
+    url(r'^loginrequest/$', loginview.as_view(), name='loginrequest'),
     url(r'^User/Add/$', RegisterUser.as_view(), name='Add-User'),
     url(r'^User/Update/(?P<username>[\w.+_-]+)/$', UpdateUser.as_view(), name='Edit-User'),
 ]

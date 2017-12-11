@@ -25,7 +25,7 @@ export function fetchData(url) {
 		dispatch(requestData());
 		return axios({
 			url: url,
-			timeout: 20000,
+			timeout: 50000,
 			method: 'get',
 			responseType: 'json'
 		})

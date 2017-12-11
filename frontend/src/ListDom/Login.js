@@ -1,6 +1,31 @@
 import React, { Component } from "react";
  
 class Login extends React.Component {
+  constructor(props){
+    super(props)
+    
+    this.state = {
+      email: null,
+      pass : null,
+      loginOperations: []
+    }
+
+  }
+
+  handleLogin(e) {
+    e.preventDefault();
+    console.log(this.state.email)
+    console.log(this.state.pass)
+    localStorage.setItem("email", this.state.email);
+  }
+
+  componentDidMount() {
+    fetch("http://127.0.0.1:8000/alldistributor/?format=json")
+    .then(result => {
+      
+    })
+  }
+
   render() {
     return (
              <div>
@@ -25,14 +50,24 @@ class Login extends React.Component {
                           <div className="input-field col s12 m12 l12">
                             <i className="mdi-social-person-outline prefix"></i>
                             <input type="hidden" name="from_url" value=""/>
-                            <input id="username" placeholder="demo: demo@shemura.com" name="umail" type="text"/>
+                            <input 
+                              id="username" 
+                              placeholder="demo: demo@shemura.com" 
+                              name="umail" 
+                              type="text"
+                              onChange={(e)=>this.setState({email: e.target.value}) }/>
                             <label for="username" className="center-align">Email</label>
                           </div>
                         </div>
                         <div className="row margin">
                           <div className="input-field col s12 m12 l12">
                             <i className="mdi-action-lock-outline prefix"></i>
-                            <input id="password" placeholder="demo: demo" name="pswd" type="password"/>
+                            <input 
+                              id="password" 
+                              placeholder="demo: demo" 
+                              name="pswd" 
+                              type="password"
+                              onChange={(e)=>this.setState({pass: e.target.value})}/>
                             <label for="password">Password</label>
                           </div>
                         </div>
@@ -52,7 +87,7 @@ class Login extends React.Component {
                         <div className="row">
                           <div className="input-field col s12">
                             <i className="btn purple waves-effect waves-light col s12 waves-input-wrapper">
-                                <input className="waves-button-input" name="login" value="Masuk" type="submit"/>
+                                <input className="waves-button-input" onClick={(e)=>this.handleLogin(e)} name="login" value="Masuk" type="submit"/>
                             </i>
                           </div>
                         </div>
