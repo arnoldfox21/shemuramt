@@ -3,7 +3,7 @@ import SingleProduct from '../assets/Singleproduct'
 import ListProductHorizontal from '../assets/ListProducthorizontal'
 import LoaderPage from '../assets/LoaderComponent'
 import Home from './Home'
-import Axios from 'axios'
+import axios from 'axios'
 
 class DetailProduct extends React.Component{
 
@@ -13,32 +13,12 @@ class DetailProduct extends React.Component{
 	      dataOperations: [],
         isLoading: true
 	    };
-      var Agentx = {
-        id: this.state.idf
-      }
-  // Axios({
-  //     url: "http://127.0.0.1:8000/barang/select/",
-  //     dataType: 'json',
-  //     type: 'POST',
-  //     data: Agentx,
-  //     success: function(data) {
-  //       this.setState({data: data});
-  //     }.bind(this),
-  //     error: function(xhr, status, err) {
-  //       console.error(this.props.url, status, err.toString());
-  //     }.bind(this)
-  //   });
-  //   Axios({
-  //       url: this.props.url,
-  //       dataType: 'json',
-  //       cache: false,
-  //       success: function(data) {
-  //         this.setState({data: data});
-  //       }.bind(this),
-  //       error: function(xhr, status, err) {
-  //         console.error(this.props.url, status, err.toString());
-  //       }.bind(this)
-  //     });
+      console.log(this.state.idf)
+
+    axios.post('http://127.0.0.1:8000/barang/select/', { id: 1 })
+    .then(function(response){
+      console.log(response.data)
+    });  
 	}
   componentDidMount() {
 
@@ -65,7 +45,6 @@ class DetailProduct extends React.Component{
 
   }
  render(){
-  console.log(this.state.idf)
   if(this.state.isLoading) {
       return(<LoaderPage/>)
     } else { if (this.state.idf != '') {
@@ -91,7 +70,7 @@ class DetailProduct extends React.Component{
 
   )}
   else{
-    return(<h1>cc</h1>)
+    return(<h1><center>Please select the item</center></h1>)
   }
  }
 }

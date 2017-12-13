@@ -1,10 +1,9 @@
 
-			Task
-- respon status json
-- select listapiview
-- for insert post
-- list data json
+			Task remaining
+
+- looping js POST
 - mailer
+- interface react.js
 
 						!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 

@@ -1,9 +1,7 @@
 {% extends 'base-backend.html' %}
 {% block content %}
       <section id="content">
-       {% if status != 'ok' %}
-       {% include 'widget/error.html' with alert=status %}
-       {% else %}
+      
           <div class="row">
             <div class="col s12 m12 l12">
               <div class="card-panel">
@@ -13,52 +11,40 @@
                   <form class="col s12" method="POST" action="">
                   {% csrf_token %}
                     <div class="row">
-                      <div class="input-field col s6 m4 l4">
-                        <input id="1" name="1" type="number" >
-                        <label for="first_name">N</label>
+                       {% if pesan == 1 %}
+                      <div id="card-alert" class="card green">
+                        <div class="card-content white-text">
+                          <p><i class="mdi-alert-error"></i>Permintaan bahan berhasil dikirim ke email suplier</p>
+                        </div>
+                        <button type="button" class="close white-text" data-dismiss="alert" aria-label="Close">
+                          <span aria-hidden="true">×</span>
+                        </button>
                       </div>
-                    
-                      <div class="input-field col s6 m4 l4">
-                        <input name="2" id="2" type="number" >
-                        <label for="last_name">PK</label>
+                      
+                      {% endif %}
+                      <div class="input-field col s6">
+                        <select name="bi">
+                          <option selected="" disabled="">Pilih</option>
+                          {% for name in status %}
+                          <option value="{{ name.pk }}">{{ name.nama_bahan }}</option>
+                        {% endfor %}
+                        </select>
+                        <label>Pilih bahan</label>
+                      </div>                        
+                      <div class="input-field col s6">
+                        <input type="number" name="jb">
+                        <label for="jb">Jumlah</label>
                       </div>
-        
-                  
-                      <div class="input-field col s6 m4 l4">
-                        <input id="3" name="3" type="number" >
-                        <label for="first_name">MN</label>
-                      </div>
-                    
-                      <div class="input-field col s6 m4 l4">
-                        <input name="4" id="4" type="number" >
-                        <label for="last_name">CU</label>
-                      </div>
-                
-                      <div class="input-field col s4 m4 l4">
-                        <input id="5" name="5" type="number" >
-                        <label for="first_name">MG</label>
-                      </div>
-                    
-                      <div class="input-field col s4 m4 l4">
-                        <input name="6" id="6" type="number" >
-                        <label for="last_name">ZN</label>
-                      </div>
-                  
-                      <div class="input-field col s4 m4 l4">
-                        <input id="7" name="7" type="number" >
-                        <label for="first_name">FE</label>
-                      </div>
-                    
-                      <div class="input-field col s4 m4 l4">
-                        <input name="8" id="8" type="number" >
-                        <label for="last_name">CA</label>
-                      </div>
-                    
-                    <div class="input-field col s6 m4 l4">
-                        <input name="9" id="9" type="number" >
-                        <label for="last_name">K</label>
-                      </div>
-                    </div>
+                      <div class="input-field col s6">
+                        <select name="supl">
+                          <option selected="" disabled="">Pilih</option>
+                          {% for go in Sup %}
+                          <option value="{{ go.pk }}">{{ go.nama }}</option>
+                        {% endfor %}
+                        </select>
+                        <label>Pilih suplier</label>
+                      </div>    
+                   
                       <div class="input-field col s12 l12">
                         <textarea id="message5" name="pesan" class="materialize-textarea" length="120"></textarea>
                         <label for="message">Message</label>
@@ -67,7 +53,7 @@
                         <div class="input-field col s12">
                         <div class="g-recaptcha" data-sitekey="6Lfbly8UAAAAAOMIGVEqPYd1Os9GYD3WA2RbQhUB"></div>
                          <div id="req" class="">
-                            <button type="button" onclick="orb()" {% include 'widget/web_setting/web_color' %} class="btn waves-effect waves-light right"> Request  <i class="mdi-content-send right"></i>
+                            <button type="submit" {% include 'widget/web_setting/web_color' %} class="btn waves-effect waves-light right"> Request  <i class="mdi-content-send right"></i>
                             </button>
                         </div>
                           
@@ -91,7 +77,7 @@
             </div>
           </div>
       </div>
-      {% endif %}
+    
   </section>
 
   </div>
@@ -99,74 +85,4 @@
 
   </div>
   <script src='https://www.google.com/recaptcha/api.js'></script>
-{% endblock %}
-{% block custom_js %}
-  <script type="text/javascript">
-        function orb() { 
-            document.getElementById("al").classList.remove('hide');
-            document.getElementById("req").classList.add('hide');
-            var n = $('#1').val();
-            var pk = $("#2").val();
-            var mn = $("#3").val();
-            var cu = $("#4").val();
-            var mg = $("#5").val();
-            var zn = $("#6").val();
-            var fe = $("#7").val();
-            var ca = $("#8").val();
-            var k = $("#9").val();
-            var msg = $("#message5").val();
-            var dataString = {'n': n, 'pk': pk, 'mn': mn, 'cu': cu, 'mg': mg, 'zn': zn, 'fe': fe, 'ca': ca, 'k': k, 'msg': msg };
-            console.log(dataString)
-                $.ajax({
-                type: "POST",
-                url: "{% url 'orderb' %}",
-                data: dataString,
-                dataType: 'json',
-                success: function(data) {
-                    console.log(data)                    
-                    if(data.status == 201){
-                         swal({
-                              title: "Berhasil",
-                              text: "Permintaan berhasil dikirim ke suplier",
-                              type: "warning",
-                              showCancelButton: true,
-                              confirmButtonColor: '#DD6B55',
-                              confirmButtonText: 'lihat fakthur',
-                              cancelButtonText: "Order lagi",
-                              closeOnConfirm: false,
-                              closeOnCancel: false
-                            },
-                            function(isConfirm){
-                              if (isConfirm){
-                                document.getElementById("req").classList.add('hide');
-                                var dataString = {'id_': idb };
-                                console.log(dataString)
-                                    $.ajax({
-                                    type: "GET",
-                                    url: "{% url 'selectbarang' %}",
-                                    data: dataString,
-                                    dataType: 'json',
-                                    success: function(data) {
-                                        console.log(data) 
-                                        if (data.status == 201){
-                                          "???????"
-                                         }
-                                       }
-                                     })
-                               
-                              } else {
-                                swal("Dibatalkan", "Kunci telah dibatalkan", "error");
-                              }
-                            });
-                    }else{
-                        document.getElementById("beta").classList.remove('hidden'); 
-                        document.getElementById("delta").classList.add('hidden');
-                    }
-                }
-            });
-            
-            return false;
-        }
-    </script>
-
 {% endblock %}

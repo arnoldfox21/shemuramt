@@ -11,7 +11,7 @@ from django.core.mail import send_mail
 from django.shortcuts import render_to_response
 from django.http import HttpResponse, HttpRequest
 from django.template import RequestContext
-from backend.models import User, Distributor, Session_user, Transaksi, Barang, Keranjang, Fakthur, Settings, Companyprofile, Sale, Contact, Session_user, Contact_reply, Pembelian
+from backend.models import User, Distributor, Bahan, Session_user, Transaksi, Barang, Keranjang, Fakthur, Settings, Companyprofile, Sale, Contact, Session_user, Contact_reply, Pembelian, Suplier
 from django.core.urlresolvers import reverse
 from backend.sessionservice import getUserLogined, getDistributorLogined, webconfig, getlock
 from django.db.models import Avg, Sum
@@ -21,7 +21,7 @@ from backend.helper import getcolor, normalize_query, get_query, Helper_obj, sel
 from backend.forms import ContactForm, Petugas, Form_barang, Contact_r, distributor
 from django.db.models import Q
 from backend.stripe_form import SalePaymentForm
-
+from backend.mail_template import template_mail
 
 
 def dashboard(request):
@@ -115,6 +115,19 @@ def lock_user(request):
 		return render(request, template, {
 			'data': get
 			})
+
+def forgot_pass(request):
+	template = 'forgot-password.html'
+	if request.method == 'POST':
+		if User.objects.filter(umail= request.POST.get('mail')).exists():
+			sa = 'Password was send to your email'
+		else:
+			sa = 'Email tidak terdaftar'
+		return render(request, template,{
+			'alert': sa
+			})
+	return render(request, template,{
+		})
 
 def t_distributor(request):
 
@@ -370,8 +383,7 @@ def keranjang(request):
 			'total': tot,
 			'reply': Reply,
 			'alert': 'Sold out',
-			'warna': color,
-			'aktif': ob
+			'warna': color
 			})
 
 def profil_distributor(request):
@@ -577,6 +589,36 @@ def hub_kami(request):
 		
 		})
 
+def data_suplier(request):
+	color = getcolor(7)
+	template = 'data-suplier.html'
+	op = Suplier.objects.all()
+	if request.method == 'GET' and 'edit' in request.GET:
+		ac = 'edit data suplier'
+	else:
+		ac = 'data suplier'
+	return render(request, template, {
+		'data': getUserLogined(request.session['nama']),
+		'datas': op,
+		'aktif': ac,
+		'warna': color
+		})
+
+def form_suplier(request):
+	color = getcolor(7)
+	template = 'form-suplier.html'
+	if request.method == 'GET' and 'edit' in request.GET:
+		Alpha = Suplier.objects.filter(pk=request.GET['edit']).first()
+		ac = 'Edit data suplier'
+	else:
+		Alpha = 'no data'
+		ac = 'Tambah suplier'
+	return render(request, template,{
+		'data': getUserLogined(request.session['nama']),
+		'ambil': Alpha,
+		'aktif': ac,
+		'warna': color
+		})
 def t_aktif(request):
 	color = getcolor(7)
 	tr = Fakthur.objects.select_related('id_dist').all()
@@ -676,19 +718,36 @@ def hub_suplier(request):
 	if not 'nama' in request.session:
 		return redirect('loginpage')
 	else:
+		if request.method == 'POST':
+			hrg = Bahan.objects.filter(pk=request.POST.get('bi')).first()
+			supl = Suplier.objects.filter(pk=request.POST.get('supl')).first()
+			op = Pembelian()
+			op.bahan_id = request.POST.get('bi')
+			op.jumlah = request.POST.get('jb')
+			op.t_harga = hrg.harga_satuan * request.POST.get('jb')
+			op.waktu_permintaan = datetime.datetime.now()
+			op.save()
+			send_mail(
+				'Permintaan bahan %s' % (hrg.nama_bahan),
+				'Noreply',
+				'Noreply@shemuramt.com',
+				[supl.email],
+				fail_silently= False, html_message=template_mail(supl.nama,  request.POST.get('jb'), hrg.nama_bahan))
+			pesan = 1
+		else:
+			pesan = 0
 		color = getcolor(7)
-		if request.method == 'GET' and 'code' in request.GET:
-			Status = request.GET['code']
-		elif not 'code' in request.GET:
-			Status = 'ok'
-
+		Status = Bahan.objects.all()
+		Sup = Suplier.objects.all()
 		template = 'form-ps.html'
 		Url = Session_user.objects.filter(user_id=request.session['nama']).update(url=request.path)
 		return render(request, template, {
 			'data': getUserLogined(request.session['nama']),
-			'aktif': 'ob',
+			'aktif': 'Order bahan',
 			'status': Status,
+			'Sup': Sup,
 			'warna': color,
+			'pesan': pesan
 			})
 
 def data_barang(request):

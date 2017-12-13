@@ -1,0 +1,37 @@
+{% extends 'base-backend.html' %}
+{% block content %}
+
+  
+      <section id="content">
+        <div class="container">
+          <div class="section">
+
+    
+            <div class="divider"></div>
+            
+          
+           {% include "widget/tabel-suplier.html" %}
+
+
+           
+          </div>
+       {% if aktif == 'data suplier' %}
+            <div class="fixed-action-btn" style="bottom: 50px; right: 19px;">
+                <a href="{% url 'data-suplier' %}?edit" {% include 'widget/web_setting/web_color' %} class="btn-floating btn-large tooltipped" data-position="left" data-delay="50" data-tooltip="Edit suplier">
+                   <i class="mdi-editor-border-color"></i>
+                </a>
+            </div>
+        {% elif aktif == 'edit data suplier' %}
+         <div class="fixed-action-btn" style="bottom: 50px; right: 19px;">
+                <a href="{% url 'data-suplier' %}" {% include 'widget/web_setting/web_color' %} class="btn-floating btn-large tooltipped" data-position="left" data-delay="50" data-tooltip="Tambah suplier">
+                   <i class="mdi-content-add"></i>
+                </a>
+            </div>
+        {% endif %}
+        </div>
+       
+
+      </section>
+
+
+{% endblock %}

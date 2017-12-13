@@ -61,3 +61,4 @@ def Helper_ObjectRaw(var):
 		col_names = [desc[0] for desc in cursor.description]
 		row = cursor.fetchall()	
 	return row
+

@@ -33,13 +33,9 @@ class Selectitem(GenericAPIView):
 
 		getb = Barang.objects.filter(pk = request.POST.get('id'))
 		if getb.exists():
-			return Response({'nama_barang': '2'}, status=status.HTTP_200_OK)
+			f = getb.first()
+			return Response({'nama_barang': f.nm_barang, 'harga_satuan': f.harga_satuan}, status=status.HTTP_200_OK)
 		else:
-			return Response({"message": "What you were looking for isn't here."})
+			return Response({"message": "What you were looking for isn't here."}, status=status.HTTP_400_BAD_REQUEST)
 	def get_serializer_class(self):
 		return SelectItem
-
-	def empty_view(self):
-
-	    content = {'please move along': 'nothing to see here'}
-	    return Response(content, status=status.HTTP_404_NOT_FOUND)

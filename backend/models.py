@@ -127,14 +127,12 @@ class Sale(models.Model):
 		return True, response
 
 class Contact_reply(models.Model):
-
 	customer = models.ForeignKey(Distributor, null=True)
 	contact = models.ForeignKey(Contact, null=True)
 	subject = models.CharField(max_length=200, null=True)
 	pesan = models.TextField(null=True)
 
 class Settings(models.Model):
-
 	setting = models.CharField(max_length=200, null=True)
 	config = models.CharField(max_length=200, null=True)
 	info = models.CharField(max_length=300, null=True)
@@ -143,3 +141,10 @@ class Pembelian(models.Model):
 	bahan = models.ForeignKey(Bahan)
 	jumlah = models.IntegerField(null=True)
 	t_harga = models.IntegerField(null=True)
+	waktu_permintaan = models.CharField(max_length=300, null=True)
+
+class Suplier(models.Model):
+	nama = models.CharField(max_length=300, null=True)
+	email = models.CharField(max_length=300, null=True)
+	alamat = models.CharField(max_length=300, null=True)
+	telp = models.IntegerField(null=True)

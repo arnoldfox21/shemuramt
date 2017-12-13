@@ -29,7 +29,7 @@
                         </li>
                         <li><a href="#" class="waves-effect waves-block waves-light toggle-fullscreen"><i class="mdi-action-settings-overscan"></i></a>
                         </li>
-                        <li><a href="{% url 't_aktif' %}" class="waves-effect waves-block waves-light notification-button" data-activates="notifications-dropdown"><i class="mdi-social-notifications"><small class="notification-badge">1</small></i>
+                        <li><a href="{% url 't_aktif' %}" class="waves-effect waves-block waves-light notification-button" data-activates="notifications-dropdown"><i class="mdi-social-notifications"><!-- <small class="notification-badge">1</small> --></i>
                         
                         </a>
                         </li>                        
@@ -81,6 +81,7 @@
                 </li>
                 <li class="bold {% if aktif == 'Dashboard' %}active{% endif %}"><a href="{% url 'backend' %}" class="waves-effect waves-red"><i class="mdi-action-dashboard"></i> Dashboard</a>
                 </li>
+                {% if data.jabatan == 'pimpinan' or data.jabatan == 'devisi penjualan' %}
                 <li class="no-padding">
                     <ul class="collapsible collapsible-accordion">
                          <li class="bold">
@@ -98,8 +99,11 @@
                         </li>
                     </ul>
                 </li>
+                {% endif %}
+                {% if data.jabatan == 'pimpinan' %}
                 <li class="bold {% if aktif == 'data penjualan' %}active{% endif %}"><a href="{% url 'd_penjualan' %}" class="waves-effect waves-red"><i class="mdi-action-trending-up"></i>Data Penjualan</a>
                 </li>
+                
                 <li class="no-padding">
                     <ul class="collapsible collapsible-accordion">
                          <li class="bold">
@@ -117,26 +121,33 @@
                         </li>
                     </ul>
                 </li>
-                
+                {% endif %}
+                {% if data.jabatan == 'devisi penjualan' or data.jabatan == 'pimpinan' %}
                 <li class="bold {% if aktif == 'transaksi aktif' %}active{% endif %}"><a href="{% url 't_aktif' %}" class="waves-effect waves-red"><i class="mdi-social-notifications-paused"></i> Transaksi aktif</a>
                 </li>
-                
+                {% endif %}
+                {% if data.jabatan == 'devisi pembelian' or data.jabatan == 'pimpinan' %}
                  <li class="no-padding">
                     <ul class="collapsible collapsible-accordion">
                          <li class="bold">
-                             <a class="collapsible-header  waves-effect waves-cyan {% if aktif == 'ob' or aktif == 'data pembelian' %}active{% endif %}"><i class="mdi-action-view-list"></i> Transaksi suplier</a>
+                             <a class="collapsible-header  waves-effect waves-cyan {% if aktif == 'ob' or aktif == 'Tambah suplier' or aktif == 'data suplier' or aktif == 'data pembelian' %}active{% endif %}"><i class="mdi-action-description"></i> Suplier</a>
                             <div class="collapsible-body">
                                 <ul>
                                     <li class="{% if aktif == 'ob' %}active{% endif %}"><a href="{% url 'fps' %}" class="waves-effect waves-red">Order bahan</a>
                                     </li>
                                     <li class="{% if aktif == 'data pembelian' %}active{% endif %}"><a href="{% url 'd_pembelian' %}" class="waves-effect waves-red"> Data pembelian</a>
                                     </li>
-                                    
+                                    <li class="{% if aktif == 'Tambah suplier' %}active{% endif %}"><a href="{% url 'fes' %}" class="waves-effect waves-red"> Tambah suplier</a>
+                                    </li>
+                                    <li class="{% if aktif == 'data suplier' or aktif == 'detail' %}active{% endif %}"><a href="{% url 'data-suplier' %}" class="waves-effect waves-red"> Data suplier</a>
+                                    </li>
                                 </ul>
                             </div>
                         </li>
                     </ul>
                 </li>
+                {% endif %}
+                {% if data.jabatan == 'pimpinan' or data.jabatan == 'devisi gudang' %}
                 <li class="no-padding">
                     <ul class="collapsible collapsible-accordion">
                          <li class="bold">
@@ -154,18 +165,22 @@
                         </li>
                     </ul>
                 </li>
+                {% endif %}
+                {% if data.jabatan == 'pimpinan' or data.jabatan == 'devisi gudang' %}
                 <li class="bold {% if aktif == 'pengiriman barang' %}active{% endif %}"><a href="{% url 'pbarang' %}" class="waves-effect waves-red"><i class="mdi-maps-local-shipping"></i> Pengiriman barang</a>
                 </li>
+                {% endif %}
                 <li class="bold {% if aktif == 'email' %}active{% endif %}"><a href="{% url 'mail' %}" class="waves-effect waves-red"><i class="mdi-communication-quick-contacts-mail"></i> Email</a>
                 </li>
+                {% if data.jabatan == 'pimpinan' %}
                 <li class="no-padding">
                     <ul class="collapsible collapsible-accordion">
                          <li class="bold">
                              <a class="collapsible-header  waves-effect waves-cyan"><i class="mdi-action-settings"></i> Web setting </a>
                             <div class="collapsible-body">
                                 <ul>
-                                    <li class="{% if aktif == 'web preference' %}active{% endif %}"><a href="{% url 'setting' %}" class="waves-effect waves-red">Preference</a>
-                                    </li>
+                                    <!-- <li class="{% if aktif == 'web preference' %}active{% endif %}"><a href="{% url 'setting' %}" class="waves-effect waves-red">Preference</a>
+                                    </li> -->
                                     <li class="{% if aktif == 'web setting' %}active{% endif %}"><a href="{% url 'setting' %}" class="waves-effect waves-red">Web setting</a>
                                     </li>
                                     
@@ -174,9 +189,9 @@
                         </li>
                     </ul>
                 </li>
-                
+                {% endif %}
 
-                <li class="li-hover"><p class="ultra-small margin more-text">Penjualan harian</p></li>
+               <!--  <li class="li-hover"><p class="ultra-small margin more-text">Penjualan harian</p></li>
                 <li class="li-hover">
                     <div class="row">
                         <div class="col s12 m12 l12">
@@ -185,7 +200,7 @@
                             </div>
                         </div>
                     </div>
-                </li>
+                </li> -->
             </ul>
                 <a href="#" data-activates="slide-out" class="sidebar-collapse btn-floating btn-medium waves-effect waves-light hide-on-large-only red"><i class="mdi-navigation-menu"></i></a>
             </aside>

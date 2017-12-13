@@ -1,3 +1,4 @@
+
 """
 Django settings for shemura project.
 
@@ -12,16 +13,19 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os, time
-
 os.environ['TZ'] = 'Asia/Shanghai'
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+# ADMINS =(
+# 	('kurniawan', 'mail@kurniawan.info'),
+# 	)
+
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'mail.hexca.com'
-EMAIL_HOST_USER = 'admin@hexca.com'
-EMAIL_HOST_PASSWORD = 'arnold2012'
-EMAIL_PORT = '25'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'arnoldfox21@gmail.com'
+EMAIL_HOST_PASSWORD = 'arnold2016'
+EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
 CORS_ORIGIN_ALLOW_ALL=True

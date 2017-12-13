@@ -76,7 +76,7 @@ class Home extends React.Component {
                                 <span className="left"><a href="">{idk.nm_barang}</a></span>
                                 <span className="right">2017</span>
                               </p>
-                              <h4 className="card-title grey-text text-darken-4"><a href={idk.id} onClick={(e)=>this.idFor("1")} className="grey-text text-darken-4">{idk.nm_barang}</a>
+                              <h4 className="card-title grey-text text-darken-4"><a href={idk.id} onClick={(e)=>this.idFor(idk.id)} className="grey-text text-darken-4">{idk.nm_barang}</a>
                               </h4>
                               <p className="blog-post-content">Pupuk cair {idk.nm_barang}.</p>
                               

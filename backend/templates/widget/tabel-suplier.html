@@ -1,0 +1,57 @@
+
+            <div class="section white">
+              <h4 class="header center-align">Data suplier</h4>
+              <div class="row">
+                <div class="col s12 m12 l12">
+                  <table class="display striped bordered" cellspacing="0" width="100%">
+                      <thead>
+                          <tr>
+                              <th>ID</th>
+                              <th>nama</th>
+                              <th>alamat</th>
+                              <th>telp</th>
+                              <th>Email</th>
+                              {% if aktif == 'data suplier' %} <th>Action</th>{% endif %}
+                              {% if aktif == 'edit data suplier' %} <th>Action</th>{% endif %}
+                          </tr>
+                      </thead>
+                   
+                      <tfoot>
+                          <tr>
+                              <th>ID</th>
+                              <th>nama</th>
+                              <th>alamat</th>
+                              <th>telp</th>
+                              <th>Email</th>
+                              {% if aktif == 'data suplier' %} <th>Action</th>{% endif %}
+                              {% if aktif == 'edit data suplier' %} <th>Action</th>{% endif %}
+                          </tr>
+                      </tfoot>
+                   
+                      <tbody>
+                      {% for data in datas %}
+                          <tr>
+                              <td>{{ data.id }}</td>
+                              <td>{{ data.nama|title }}</td>
+                              <td>{{ data.alamat }}</td>
+                              <td>{{ data.telp }}</td>
+                              <td>{{ data.email }}</td>
+                              
+                               {% if aktif == 'data suplier' %}
+                              <td>
+                                <div class="col s12 m12">
+                                      <a href="{% url 'fes' %}?edit={{ data.id }}" class="btn-floating waves-effect waves-light tooltipped" {% include 'widget/web_setting/web_color' %} data-position="left" data-delay="50" data-tooltip="Edit suplier">
+                                          <i class="mdi-editor-border-color"></i></a>
+                                          <a href="{% url 'h_t' %}?delete={{ data.pk }}" class="btn-floating waves-effect waves-light tooltipped" {% include 'widget/web_setting/web_color' %} data-position="bottom" data-delay="50" data-tooltip="Hapus suplier">
+                                          <i class="mdi-content-clear"></i>
+                                      </a>                   
+                                  </div>
+                              </td>
+                              {% endif %}
+                          </tr>
+                      {% endfor %}
+                      </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>

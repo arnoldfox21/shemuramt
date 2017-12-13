@@ -10,14 +10,15 @@ import Login from "./ListDom/Login";
 import About from "./about/About";
 import Contact from "./single_product/Contact";
 import LoaderPage from "./assets/LoaderComponent"
-import { sessionService } from 'redux-react-session';
+import { BrowserRouter as browserHistory } from 'react-router-dom'
+import { sessionService} from 'redux-react-session';
  
 class Main extends Component {
   render() {
     return (
       <HashRouter>
           <div className="content">
-            <Route exact path="/" component={Home}/>
+            <Route history={browserHistory} exact path="/" component={Home}/>
             <Route path="/detail" component={DetailProduct}/>
             <Route path="/contact" component={Contact}/>
             <Route path="/login" component={Login}/>
