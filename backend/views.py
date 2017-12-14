@@ -21,7 +21,8 @@ from backend.helper import getcolor, normalize_query, get_query, Helper_obj, sel
 from backend.forms import ContactForm, Petugas, Form_barang, Contact_r, distributor
 from django.db.models import Q
 from backend.stripe_form import SalePaymentForm
-from backend.mail_template import template_mail
+from backend.mail_template import template_mail, template_forgotpassword
+
 
 
 def dashboard(request):
@@ -120,9 +121,30 @@ def forgot_pass(request):
 	template = 'forgot-password.html'
 	if request.method == 'POST':
 		if User.objects.filter(umail= request.POST.get('mail')).exists():
-			sa = 'Password was send to your email'
+			recaptcha_response = request.POST.get('g-recaptcha-response')
+			url = 'https://www.google.com/recaptcha/api/siteverify'
+			values = {
+				'secret': settings.GOOGLE_RECAPTCHA_SECRET_KEY,
+				'response': recaptcha_response
+			}
+			data = urllib.urlencode(values)
+			req = urllib2.Request(url, data)
+			response = urllib2.urlopen(req)
+			result = json.load(response)
+			if result['success']:
+				pick = User.objects.filter(umail=request.POST.get('mail')).first()
+				send_mail(
+					'Permintaan password',
+					'Noreply',
+					'System@shemuramt.com',
+					[pick.umail],
+					fail_silently= False, 
+					html_message=template_forgotpassword(pick.username, pick.pswd))
+				sa = 1
+			else:
+				sa = 2
 		else:
-			sa = 'Email tidak terdaftar'
+			sa = 0
 		return render(request, template,{
 			'alert': sa
 			})
@@ -719,21 +741,38 @@ def hub_suplier(request):
 		return redirect('loginpage')
 	else:
 		if request.method == 'POST':
-			hrg = Bahan.objects.filter(pk=request.POST.get('bi')).first()
-			supl = Suplier.objects.filter(pk=request.POST.get('supl')).first()
-			op = Pembelian()
-			op.bahan_id = request.POST.get('bi')
-			op.jumlah = request.POST.get('jb')
-			op.t_harga = hrg.harga_satuan * request.POST.get('jb')
-			op.waktu_permintaan = datetime.datetime.now()
-			op.save()
-			send_mail(
-				'Permintaan bahan %s' % (hrg.nama_bahan),
-				'Noreply',
-				'Noreply@shemuramt.com',
-				[supl.email],
-				fail_silently= False, html_message=template_mail(supl.nama,  request.POST.get('jb'), hrg.nama_bahan))
-			pesan = 1
+			recaptcha_response = request.POST.get('g-recaptcha-response')
+			url = 'https://www.google.com/recaptcha/api/siteverify'
+			values = {
+				'secret': settings.GOOGLE_RECAPTCHA_SECRET_KEY,
+				'response': recaptcha_response
+			}
+			data = urllib.urlencode(values)
+			req = urllib2.Request(url, data)
+			response = urllib2.urlopen(req)
+			result = json.load(response)
+			if result['success']:
+				hrg = Bahan.objects.filter(pk=request.POST.get('bi')).first()
+				supl = Suplier.objects.filter(pk=request.POST.get('supl')).first()
+				jl = hrg.harga_satuan * request.POST.get('jb')
+				op = Pembelian()
+				op.bahan_id = request.POST.get('bi')
+				op.jumlah = request.POST.get('jb')
+				op.t_harga = jl
+				op.waktu_permintaan = datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
+				op.sup_id = supl.pk
+				op.save()
+				send_mail(
+					'Permintaan bahan %s' % (hrg.nama_bahan),
+					request.POST.get('msg'),
+					'Noreply@shemuramt.com',
+					[supl.email],
+					fail_silently= False, 
+					html_message=template_mail(supl.nama,  request.POST.get('jb'), hrg.nama_bahan))
+				pesan = 1
+
+			else:
+				pesan = 2
 		else:
 			pesan = 0
 		color = getcolor(7)
@@ -937,7 +976,7 @@ def data_pembelian(request):
 
 	color = getcolor(7)
 	Url = Session_user.objects.filter(user_id=request.session['nama']).update(url=request.path)
-	data = Transaksi.objects.select_related('id_dist').order_by('-pk')
+	data = Pembelian.objects.select_related('bahan').order_by('-pk')
 	return render(request, template, {
 		'aktif': 'data pembelian',
 		'penjualan': data,

@@ -8,10 +8,10 @@
                           <tr>
                               <th>ID</th>
                               <th>Waktu transaksi</th>
-                              <th>Nama barang</th>
-                              <th>Harga</th>
+                              <th>Nama bahan</th>
+                              <th>Total harga</th>
                               <th>Jumlah barang</th>
-                              <th>Nama</th>
+                              <th>Nama suplier</th>
                           </tr>
                       </thead>
                    
@@ -22,7 +22,7 @@
                               <th>Nama barang</th>
                               <th>Harga</th>
                               <th>Jumlah barang</th>
-                              <th>Nama</th>
+                              <th>Nama suplier</th>
                           </tr>
                       </tfoot>
                    
@@ -31,11 +31,11 @@
                       {% load humanize %}
                           <tr>
                               <td>{{ data.id }}</td>
-                              <td>{{ data.waktu_transaksi }}</td>
-                              <td>{{ data.nm_barang }}</td>
-                              <td>Rp. {{ data.harga|intcomma }}.00</td>
-                               <td>{{ data.jumlah_barang }}</td>
-                              <td>{{ data.id_dist.nama }}</td>
+                              <td>{{ data.waktu_permintaan }}</td>
+                              <td>{{ data.bahan.nama_bahan }}</td>
+                              <td>Rp. {{ data.t_harga|intcomma }}.00</td>
+                               <td>{{ data.jumlah }}</td>
+                              <td></td>
                           </tr>
                       {% endfor %}
                       </tbody>

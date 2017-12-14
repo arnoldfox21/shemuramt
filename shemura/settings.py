@@ -29,14 +29,20 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
 CORS_ORIGIN_ALLOW_ALL=True
-
 APPEND_SLASH= False
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
 SECRET_KEY = 'tcx%mq3i=v-dzfy5^5l)b$j(g*7kot+%9$ddkf=o8v*rtc9r+n'
 GOOGLE_RECAPTCHA_SECRET_KEY = '6Lfbly8UAAAAAMYQCARru9Cu27Mhx7RtRCzD84cH'
-
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '781948644440-b0sf2cdcatvu8ohpcp708111djvl7r6g.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '2FcqHSx3IWKcCff9RKEj8qQA'
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.open_id.OpenIdAuth',
+    'social_core.backends.google.GoogleOpenId',
+    'social_core.backends.google.GoogleOAuth2',
+    'social_core.backends.google.GoogleOAuth',
+    'social_core.backends.twitter.TwitterOAuth',
+    'social_core.backends.facebook.FacebookOAuth2',
+)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -61,6 +67,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'social_django',
     'backend',
     'django.contrib.humanize',
     'rest_framework',
@@ -95,6 +102,8 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.static',
                 'django.template.context_processors.media',
+                'social.apps.django_app.context_processors.backends',
+    			'social.apps.django_app.context_processors.login_redirect',
             ],
         },
     },

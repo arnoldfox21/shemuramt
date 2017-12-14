@@ -1,8 +1,7 @@
 
 			Task remaining
 
-- looping js POST
-- mailer
+
 - interface react.js
 
 						!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

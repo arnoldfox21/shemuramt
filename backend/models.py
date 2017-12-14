@@ -137,14 +137,17 @@ class Settings(models.Model):
 	config = models.CharField(max_length=200, null=True)
 	info = models.CharField(max_length=300, null=True)
 
-class Pembelian(models.Model):
-	bahan = models.ForeignKey(Bahan)
-	jumlah = models.IntegerField(null=True)
-	t_harga = models.IntegerField(null=True)
-	waktu_permintaan = models.CharField(max_length=300, null=True)
-
 class Suplier(models.Model):
 	nama = models.CharField(max_length=300, null=True)
 	email = models.CharField(max_length=300, null=True)
 	alamat = models.CharField(max_length=300, null=True)
 	telp = models.IntegerField(null=True)
+
+
+class Pembelian(models.Model):
+	bahan = models.ForeignKey(Bahan)
+	jumlah = models.IntegerField(null=True)
+	t_harga = models.IntegerField(null=True)
+	waktu_permintaan = models.CharField(max_length=300, null=True)
+	sup = models.ForeignKey(Suplier, null=True)
+	status = models.IntegerField(null=True)
