@@ -191,3 +191,88 @@ is_success()        # 2xx
 is_redirect()       # 3xx
 is_client_error()   # 4xx
 is_server_error()   # 5xx
+
+
+
+
+
+
+import random
+
+def roundone(result):
+
+	dice = result
+	if 1 in dice and 6 in dice:
+		dice.remove(6)
+	elif 6 in dice:
+		dice.remove(6)
+	elif 1 in dice:
+		dice.remove(1)
+	return dice
+
+def roundtwo(result):
+	dice = result
+	return result
+
+def roundthree(result):
+	dice = result
+	return result
+
+def finish():
+	return '1'
+
+
+
+def roll(number):
+	NO =[1, 2, 3, 4, 5, 6]
+	res = []
+	for i in range(0, number):
+		res.append(random.choice(NO))
+	dc1 = (random.choice(NO))
+	dc2 = (random.choice(NO))
+	dc3 = (random.choice(NO))
+	dc4 = (random.choice(NO))
+	res = [dc1, dc2, dc3, dc4]
+	return res
+
+print 'masukkan jumlh player : '
+
+choice = input()
+
+if choice >= 1:
+	rolls1 = roll(choice)
+	print rolls1
+	print roundone(rolls1) 
+
+
+
+	# two = input('Tekan angka 0 untuk play round 2 : ')
+
+	# if two == 0:
+	# 	rolls2 = map(str, roll())
+	# 	r2 = ", ".join(rolls2)
+	# 	print roundtwo(r2)
+		
+	# 	three = input('tekan angka 0 untuk play round 3 : ')
+
+	# 	if three == 0:
+	# 		rolls3 = map(str, roll())
+	# 		r3 = ", ".join(rolls3)
+
+	# 		print roundthree(r3)
+			
+	# 		finished = input('tekan angka 0 untuk melihat hasil : ')
+
+	# 		if finished == 0:
+	# 			print finish()
+
+	# 		else:
+	# 			print "dice was restart"
+	# 	else:
+	# 		print "dice was restart"
+
+	# else:
+	# 	print "dice was restart"
+
+else:
+	print "unknow command"

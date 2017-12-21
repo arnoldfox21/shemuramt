@@ -1,5 +1,5 @@
 from django.contrib import admin
-from backend.models import User, Distributor, Transaksi, Barang, Keranjang, Contact, Fakthur, Session_distributor, Session_user, Contact_reply, Settings, Companyprofile
+from backend.models import User, Suplier, Pembelian, Distributor, Transaksi, Barang, Keranjang, Contact, Fakthur, Session_distributor, Session_user, Contact_reply, Settings, Companyprofile
 
 admin.site.register(User)
 admin.site.register(Distributor)
@@ -13,3 +13,5 @@ admin.site.register(Session_user)
 admin.site.register(Contact_reply)
 admin.site.register(Settings)
 admin.site.register(Companyprofile)
+admin.site.register(Pembelian)
+admin.site.register(Suplier)

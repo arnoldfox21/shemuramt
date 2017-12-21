@@ -20,7 +20,7 @@ class SingleProduct extends React.Component{
                                   </div>
                                   <div className="card-content">
                                     <ul className="collection">
-                                      <li className="collection-item flow-text center-align">Pupuk cair </li>
+                                      <li className="collection-item flow-text center-align">Pupuk cair {this.props.takeid.nm_barang}</li>
                                       <li className="collection-item flow-text"><i className="mdi-image-nature-people prefix"></i> Berat : <div className="right"> 5kg</div></li>
                                       <li className="collection-item flow-text"><i className="mdi-editor-attach-money prefix"></i> Harga satuan :  <div className="right">Rp. .00</div></li>
                                       <li className="collection-item flow-text"><i className="mdi-maps-store-mall-directory prefix"></i> Warna : <div className="right">  merah </div></li>

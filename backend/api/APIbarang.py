@@ -36,6 +36,6 @@ class Selectitem(GenericAPIView):
 			f = getb.first()
 			return Response({'nama_barang': f.nm_barang, 'harga_satuan': f.harga_satuan}, status=status.HTTP_200_OK)
 		else:
-			return Response({"message": "What you were looking for isn't here."}, status=status.HTTP_400_BAD_REQUEST)
+			return Response({"message": request.POST.get('id')}, status=status.HTTP_400_BAD_REQUEST)
 	def get_serializer_class(self):
 		return SelectItem

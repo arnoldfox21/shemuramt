@@ -64,10 +64,9 @@ urlpatterns = [
     url(r'^fsuplier$', form_suplier, name='fes'),
     url(r'^handler404/$', handler404),
     url(r'^handler500/$', handler500),
-    url('', include('social_django.urls', namespace='social')),
 
     url(r'^orderb/$', OrderBahan.as_view(), name='orderb'),
-    url(r'^barang/select/$', Selectitem.as_view(), name='selectbarang'),
+    url(r'^items/select/$', Selectitem.as_view(), name='selectbarang'),
     url(r'^Selectallbarang/$', SelectAll.as_view(), name='Selectallbarang'),
     url(r'^User/List/$', ReadUser.as_view(), name='Read-User'),
     url(r'^alldistributor/$', SelectAllDistributor.as_view(), name='alldist'),

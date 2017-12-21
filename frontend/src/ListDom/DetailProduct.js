@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import SingleProduct from '../assets/Singleproduct'
 import ListProductHorizontal from '../assets/ListProducthorizontal'
 import LoaderPage from '../assets/LoaderComponent'
-import Home from './Home'
 import axios from 'axios'
 
 class DetailProduct extends React.Component{
@@ -11,20 +10,45 @@ class DetailProduct extends React.Component{
 	    super();
 	    this.state = {
 	      dataOperations: [],
-        isLoading: true
+        dataSelection:[],
+        isLoading: true,
+        ids: localStorage.getItem('idselectitem')
 	    };
-      console.log(this.state.idf)
-
-    axios.post('http://127.0.0.1:8000/barang/select/', { id: 1 })
-    .then(function(response){
-      console.log(response.data)
-    });  
 	}
   componentDidMount() {
 
-    setTimeout(function() { 
-        this.setState({isLoading: false}) 
-      }.bind(this), 2000);
+    const URL = 'http://127.0.0.1:8000/items/select/';
+    return axios({
+      method: 'POST',
+      url: URL,
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      data: {
+        id: 2
+      },
+    })
+    .then(res => {
+      console.log('Data', res.data);
+     })
+    .catch(error => {
+      console.log('Error', error.response.data);
+     })
+
+    // axios.post('http://127.0.0.1:8000/barang/select/', { id: this.state.ids })
+    // .then(result =>{
+    //   return result.json();
+    // }).then(data => {
+    //   let dataSelection = data.map((idsel, index) =>{
+    //     console(data)
+    //     return(
+
+    //       <SingleProduct takeid={idsel} />    
+          
+    //       )
+    //   })
+    //   this.setState({dataSelection: dataSelection});
+    // })
 
     fetch('http://127.0.0.1:8000/Selectallbarang/?format=json')
    .then(res => { 
@@ -45,13 +69,14 @@ class DetailProduct extends React.Component{
 
   }
  render(){
+
   if(this.state.isLoading) {
       return(<LoaderPage/>)
     } else { if (this.state.idf != '') {
   return(
       <div id="main">        
         <div className="wrapper">
-          <SingleProduct takeid={this.state.idf}/>    
+        {this.state.dataSelection}
           <div className="row white">
             <div className="col s12 m12 l12">
                  <h4 className="center-align">Produk lainnya</h4>

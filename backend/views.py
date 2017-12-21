@@ -601,8 +601,6 @@ def hub_kami(request):
 			
 			})
 
-
-
 	return render(request, "hubungi-kami.html", {
 		'form': form,
 		'gt': gt, 

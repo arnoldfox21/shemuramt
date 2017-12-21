@@ -17,7 +17,8 @@ class Home extends React.Component {
     this.state = {
       dataOperations: [],
       distributorOperations: [],
-      isLoading: true
+      isLoading: true,
+      id: null
     };
   }
 
@@ -25,6 +26,7 @@ class Home extends React.Component {
     this.state = {
       idf: e
     };
+    localStorage.setItem("idselectitem", e);
    window.location = "#/detail";
   }
 
