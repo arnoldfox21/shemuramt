@@ -16,39 +16,24 @@ class DetailProduct extends React.Component{
 	    };
 	}
   componentDidMount() {
+        setTimeout(function() { 
+        this.setState({isLoading: false}) 
+      }.bind(this), 2000);
 
-    const URL = 'http://127.0.0.1:8000/items/select/';
-    return axios({
-      method: 'POST',
-      url: URL,
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      data: {
-        id: 2
-      },
-    })
-    .then(res => {
-      console.log('Data', res.data);
-     })
-    .catch(error => {
-      console.log('Error', error.response.data);
-     })
+    axios.post('http://127.0.0.1:8000/barang/select/', { id: this.state.ids })
+    .then(result =>{
+      return result.json();
+    }).then(data => {
+      let dataSelection = data.map((idsel, index) =>{
+        console(data)
+        return(
 
-    // axios.post('http://127.0.0.1:8000/barang/select/', { id: this.state.ids })
-    // .then(result =>{
-    //   return result.json();
-    // }).then(data => {
-    //   let dataSelection = data.map((idsel, index) =>{
-    //     console(data)
-    //     return(
-
-    //       <SingleProduct takeid={idsel} />    
+          <SingleProduct takeid={idsel} />    
           
-    //       )
-    //   })
-    //   this.setState({dataSelection: dataSelection});
-    // })
+          )
+      })
+      this.setState({dataSelection: dataSelection});
+    })
 
     fetch('http://127.0.0.1:8000/Selectallbarang/?format=json')
    .then(res => { 
