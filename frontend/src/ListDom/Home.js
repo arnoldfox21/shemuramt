@@ -64,7 +64,7 @@ class Home extends React.Component {
                   <div className="blog col m4 l4 margin_bottom20px">
                       <div className="card z-depth-2">
                           <div className="card-image waves-effect waves-block waves-light">
-                              <a href="pemesanan?id=">
+                              <a onClick={(e)=>this.idFor(idk.id)}>
                                 <img src="assets/images/vg.jpg" alt="blog-img"/>
                               </a>
                           </div>
@@ -75,10 +75,10 @@ class Home extends React.Component {
                           </ul>
                           <div className="card-content">
                               <p className="row">
-                                <span className="left"><a href="">{idk.nm_barang}</a></span>
+                                <span className="left"><a onClick={(e)=>this.idFor(idk.id)}>{idk.nm_barang}</a></span>
                                 <span className="right">2017</span>
                               </p>
-                              <h4 className="card-title grey-text text-darken-4"><a href={idk.id} onClick={(e)=>this.idFor(idk.id)} className="grey-text text-darken-4">{idk.nm_barang}</a>
+                              <h4 className="card-title grey-text text-darken-4"><a onClick={(e)=>this.idFor(idk.id)} className="grey-text text-darken-4">{idk.nm_barang}</a>
                               </h4>
                               <p className="blog-post-content">Pupuk cair {idk.nm_barang}.</p>
                               

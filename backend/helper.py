@@ -62,3 +62,6 @@ def Helper_ObjectRaw(var):
 		row = cursor.fetchall()	
 	return row
 
+def Helper_Overload(*args):
+	j = args
+	return j

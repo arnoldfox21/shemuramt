@@ -16,28 +16,27 @@ class DetailProduct extends React.Component{
 	    };
 	}
   componentDidMount() {
-        setTimeout(function() { 
+      setTimeout(function() { 
         this.setState({isLoading: false}) 
       }.bind(this), 2000);
 
-    axios.post('http://127.0.0.1:8000/barang/select/', { id: this.state.ids })
-    .then(result =>{
-      return result.json();
-    }).then(data => {
-      let dataSelection = data.map((idsel, index) =>{
-        console(data)
-        return(
 
-          <SingleProduct takeid={idsel} />    
-          
-          )
+    var params = new URLSearchParams();
+    params.append('id', this.state.ids);
+    axios.post('http://127.0.0.1:8000/items/select/', params)
+        .then((response, data) => {
+            this.setState({dataSelection: response.data});
       })
-      this.setState({dataSelection: dataSelection});
-    })
+      let xxx = this.state.dataSelection.data.map((ic, index)=>{
+          return(
+               <SingleProduct takeid={ic} />    
+            )
+          })
+      this.setState({dataSelection: xxx})
+
 
     fetch('http://127.0.0.1:8000/Selectallbarang/?format=json')
    .then(res => { 
-
     return res.json();
       }).then(mdata => {
          
@@ -45,8 +44,7 @@ class DetailProduct extends React.Component{
             
             return(
             
-                  <ListProductHorizontal pdc={idb} />   
-                               
+                  <ListProductHorizontal pdc={idb} />     
             )
           })
          this.setState({dataOperations: dataOperations});
@@ -54,14 +52,15 @@ class DetailProduct extends React.Component{
 
   }
  render(){
-
+console.log(this.state.dataSelection)
   if(this.state.isLoading) {
       return(<LoaderPage/>)
     } else { if (this.state.idf != '') {
   return(
       <div id="main">        
         <div className="wrapper">
-        {this.state.dataSelection}
+            { this.state.dataSelection
+            }
           <div className="row white">
             <div className="col s12 m12 l12">
                  <h4 className="center-align">Produk lainnya</h4>
