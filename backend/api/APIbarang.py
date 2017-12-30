@@ -34,7 +34,7 @@ class Selectitem(GenericAPIView):
 		getb = Barang.objects.filter(pk = request.POST.get('id'))
 		if getb.exists():
 			f = getb.first()
-			return Response({'nama_barang': f.nm_barang, 'harga_satuan': f.harga_satuan}, status=status.HTTP_200_OK)
+			return Response({'id': f.id,'nama_barang': f.nm_barang, 'harga_satuan': f.harga_satuan, 'stock': f.stock, 'warna': f.warna}, status=status.HTTP_200_OK)
 		else:
 			return Response({"recieved": request.POST.get('id')}, status=status.HTTP_400_BAD_REQUEST)
 	def get_serializer_class(self):

@@ -1,8 +1,15 @@
 import React from 'react'
+import DjangoCSRF from '../assets/DjangoCSRF';
+
 
 class SingleProduct extends React.Component{
+  constructor(props) {
+    super(props)
+  }
+
 
     render(){
+       
         return(
             <section id="content">
                 <div className="parallax-container">
@@ -20,10 +27,11 @@ class SingleProduct extends React.Component{
                                   </div>
                                   <div className="card-content">
                                     <ul className="collection">
-                                      <li className="collection-item flow-text center-align">Pupuk cair {this.props.takeid.nm_barang}</li>
+                                   
+                                      <li className="collection-item flow-text center-align">Pupuk cair {this.props.takeid.nama_barang}</li>
                                       <li className="collection-item flow-text"><i className="mdi-image-nature-people prefix"></i> Berat : <div className="right"> 5kg</div></li>
-                                      <li className="collection-item flow-text"><i className="mdi-editor-attach-money prefix"></i> Harga satuan :  <div className="right">Rp. .00</div></li>
-                                      <li className="collection-item flow-text"><i className="mdi-maps-store-mall-directory prefix"></i> Warna : <div className="right">  merah </div></li>
+                                      <li className="collection-item flow-text"><i className="mdi-editor-attach-money prefix"></i> Harga satuan :  <div className="right">{this.props.takeid.harga_satuan}</div></li>
+                                      <li className="collection-item flow-text"><i className="mdi-maps-store-mall-directory prefix"></i> Warna : <div className="right">  {this.props.takeid.warna} </div></li>
                                     </ul>
                                   </div>
                                 </div>
@@ -44,7 +52,7 @@ class SingleProduct extends React.Component{
                                         </div>
                                         <div className="col s12">
                                             <div className="col l4 m4 s12">
-                                                <p className="flow-text"><center><b>45</b> Tersedia</center></p>
+                                                <p className="flow-text"><center><b>{this.props.takeid.stock}</b> Tersedia</center></p>
                                             </div>
                                         <div className="col l4 m4 s12">
                                           <dl>
@@ -57,22 +65,23 @@ class SingleProduct extends React.Component{
                                         </div>
                                     </div>
                                 </div>
-                                <form className="col s12" method="POST">
+                                <form className="col s12" action="http://127.0.0.1:8000/tambah-ke-keranjang" method="POST">
+                                <input type="hidden" name="csrfmiddlewaretoken" value="8tK25IgH8RI1G3kKvlQPGctgV7HglWxgakEDjXscqmZKApqGwLD7BGYNqVz3wzpV"/>
                                     <div className="row">
                                         <div className="input-field col s12 l4 m4">
-                                            <input id="n" type="hidden" name="id_barang" className="validate" value=""/>
+                                            <input id="n" type="hidden" name="id_barang" className="validate" value={this.props.takeid.id}/>
                                         </div>
                                     </div>
                                     <div className="row">
                                         <div className="input-field col s12 l4 m4">
-                                            <input id="age_input1" type="number" name="jumlah" className="validate" value="1"/>
+                                            <input type="number" name="jumlah" className="validate"/>
                                                 <label for="age_input1" data-error="Silahkan masukkan jumlah.">Jumlah</label>
                                         </div>
                                     </div>
                                     <div className="row">
                                         <div className="row">
                                             <div className="card-action center-align">                      
-                                                <button disabled type="submit" className="purple waves-effect waves-light btn">Tambah ke keranjang</button>
+                                                <button type="submit" className="purple waves-effect waves-light btn">Tambah ke keranjang</button>
                                             </div>
                                         </div>
                                     </div>

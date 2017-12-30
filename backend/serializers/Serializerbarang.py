@@ -10,5 +10,8 @@ class SelectItem(serializers.ModelSerializer):
             'id',
             'harga_satuan',
             'nm_barang',
+            'stock',
+            'berat',
+            'warna'
         ]
 

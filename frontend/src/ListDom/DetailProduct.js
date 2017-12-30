@@ -4,6 +4,7 @@ import ListProductHorizontal from '../assets/ListProducthorizontal'
 import LoaderPage from '../assets/LoaderComponent'
 import axios from 'axios'
 
+
 class DetailProduct extends React.Component{
 
 	constructor(){
@@ -12,7 +13,7 @@ class DetailProduct extends React.Component{
 	      dataOperations: [],
         dataSelection:[],
         isLoading: true,
-        ids: localStorage.getItem('idselectitem')
+        ids: localStorage.getItem('idselectitem'),
 	    };
 	}
   componentDidMount() {
@@ -20,21 +21,17 @@ class DetailProduct extends React.Component{
         this.setState({isLoading: false}) 
       }.bind(this), 2000);
 
-
+// selected product
     var params = new URLSearchParams();
     params.append('id', this.state.ids);
+   
     axios.post('http://127.0.0.1:8000/items/select/', params)
-        .then((response, data) => {
-            this.setState({dataSelection: response.data});
-      })
-      let xxx = this.state.dataSelection.data.map((ic, index)=>{
-          return(
-               <SingleProduct takeid={ic} />    
-            )
-          })
-      this.setState({dataSelection: xxx})
-
-
+    .then((response, data) => {
+      console.log('response axios then')
+           
+        this.setState({dataSelection: <SingleProduct takeid={response.data} />});
+    })
+// related product
     fetch('http://127.0.0.1:8000/Selectallbarang/?format=json')
    .then(res => { 
     return res.json();
@@ -47,20 +44,20 @@ class DetailProduct extends React.Component{
                   <ListProductHorizontal pdc={idb} />     
             )
           })
+
          this.setState({dataOperations: dataOperations});
      })
 
   }
  render(){
-console.log(this.state.dataSelection)
+
   if(this.state.isLoading) {
       return(<LoaderPage/>)
     } else { if (this.state.idf != '') {
   return(
       <div id="main">        
         <div className="wrapper">
-            { this.state.dataSelection
-            }
+        {this.state.dataSelection}
           <div className="row white">
             <div className="col s12 m12 l12">
                  <h4 className="center-align">Produk lainnya</h4>
