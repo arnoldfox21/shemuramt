@@ -27,13 +27,15 @@ from backend.mail_template import template_mail, template_forgotpassword
 
 def dashboard(request):
 	
-	status = getlock(getUserLogined(request.session['nama']))
+
 	if not 'nama' in request.session:
 		return redirect('loginpage')
+	status = getlock(getUserLogined(request.session['nama']))
 	if status.lock == 1:
 		template = 'lock.html'
 	else:
 		template = 'home.html'
+
 	color = getcolor(7)
 	Url = Session_user.objects.filter(user_id=request.session['nama']).update(url=request.path)
 	d = select_limit(Distributor, 10)
@@ -47,9 +49,14 @@ def dashboard(request):
 	
 	Stocksum = Barang.objects.all().aggregate(Sum('stock')).get('stock__sum') or 0
 	Laba = 10 * totalp / 100
-	year = getyear()
+	year = int(getyear())
 	month = int(getmonth())
-	prev_month = month - 1
+	if month == 01:
+		prev_month = 12
+		year -= 1
+	else:
+		prev_month = month - 1
+	
 	if prev_month > 9:
 		darurat = ''
 	else:

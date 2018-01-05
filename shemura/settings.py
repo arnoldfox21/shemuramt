@@ -42,6 +42,7 @@ ALLOWED_HOSTS = []
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
+
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     ]
@@ -107,7 +108,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'shemura',
         'USER': 'root',
-        'PASSWORD': '',
+        'PASSWORD': 'arnold2012',
         'HOST': 'localhost',
         'PORT': '3306'
     }

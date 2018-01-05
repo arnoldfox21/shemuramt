@@ -8,7 +8,7 @@ import Home from "./ListDom/Home";
 import DetailProduct from "./ListDom/DetailProduct";
 import Login from "./ListDom/Login";
 import About from "./about/About";
-import Contact from "./single_product/Contact";
+import Contact from "./ListDom/Contact";
 import LoaderPage from "./assets/LoaderComponent"
 import { BrowserRouter as browserHistory } from 'react-router-dom'
 import { sessionService} from 'redux-react-session';

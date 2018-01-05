@@ -2,13 +2,8 @@
 			Task remaining
 
 
-- interface react.js
-
-						!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-
-
-			note setting
+- login.js
+- django auth token
 
 web color default: #9c27b0
 

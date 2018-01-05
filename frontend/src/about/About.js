@@ -1,6 +1,32 @@
 import React, { Component } from "react";
+import CompanyprofileComponent from './CompanyprofileComponent'
+import axios from 'axios'
  
 class About extends React.Component {
+
+  constructor(){
+    super();
+    this.state = {
+      title: [],
+      article: [],
+      title_post: []
+    }
+  }
+
+  componentDidMount(){
+  
+    axios.get('http://127.0.0.1:8000/getcompanyprofile/1/')
+    .then((response) => {
+      console.log(response)
+      this.setState({title_post: response.data.title})
+      this.setState({article: <CompanyprofileComponent idc={response.data} />});
+    })
+    .catch(function (error) {
+    this.setState({article: <CompanyprofileComponent idc={error} />})
+    });
+    
+  }
+
   render() {
     return (
          <div id="main">
@@ -8,19 +34,12 @@ class About extends React.Component {
               <section id="content">
                 <div className="container">
                   <div className="section">
-                         <div className="card hoverable small full_height">
+                         <div className="card full_height">
                             <div className="card-image">
                               <img src="assets/images/slide1.jpg"/>
-                              <span className="card-title">Hallo l</span>
+                              <span className="card-title">{this.state.title_post}</span>
                             </div>
-                            <div className="card-content">
-                            <span className="card-title grey-text text-darken-4">Hallo</span>
-                              <p>lorem lorem lorem lorem lorem lorem </p>                    
-                              <p><i className="mdi-action-perm-identity cyan-text text-darken-2"></i> Gita kumalasari</p>
-                              <p><i className="mdi-communication-business cyan-text text-darken-2"></i> Kec. Lawang Kab Malang</p>
-                              <p><i className="mdi-action-perm-phone-msg cyan-text text-darken-2"></i> +1 (612) 222 8989</p>
-                              <p><i className="mdi-communication-email cyan-text text-darken-2"></i> help@shemura-mt.com</p>  
-                            </div>
+                           {this.state.article}
                             <div className="row">
                               <div className="col s12 m6 l6">
                                   <div className="center promo promo-example">

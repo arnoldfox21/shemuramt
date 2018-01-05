@@ -15,17 +15,30 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
-from backend.views import dashboard, data_suplier, form_suplier, forgot_pass, data_pembelian, charge, hub_suplier, detail, lock_user, pbarang, search_for_something, f_petugas, setting, data_barang, loginpage, index_page, handler500, handler404, f_barang, t_distributor, email, data_distributor, data_petugas, data_penjualan, tentang_kami, keranjang, profil_distributor, login_d, fakthur_p, hub_kami, pemesanan, t_aktif
-from backend.core import h_dist, login, login_validasi_dist, logout, logout_d, add_chart, cetak_fakthur 
+from backend.views import (dashboard, data_suplier, form_suplier, forgot_pass,
+                           data_pembelian, charge, hub_suplier,
+                           detail, lock_user,
+                           pbarang, search_for_something,
+                           f_petugas, setting, data_barang,
+                           loginpage, index_page, handler500, handler404,
+                           f_barang, t_distributor,
+                           email, data_distributor, data_petugas,
+                           data_penjualan, tentang_kami, keranjang,
+                           profil_distributor,
+                           login_d, fakthur_p, hub_kami, pemesanan, t_aktif)
+from backend.core import (h_dist, login, login_validasi_dist, logout,
+                          logout_d, add_chart, cetak_fakthur)
 from backend.api_views import (ReadUser, RegisterUser, UpdateUser)
 from backend.api.APIdistributor import (SelectAllDistributor, loginview)
 from backend.api.APIsupplier import (OrderBahan)
 from backend.api.APIbarang import (Selectitem, SelectAll)
+from backend.api.APIcompanyprofile import (AboutCompany)
+
 
 
 urlpatterns = [
-    url(r'^admin/$',  dashboard, name='backend'),
-    url(r'^developer/',  include(admin.site.urls)),
+    url(r'^admin/$', dashboard, name='backend'),
+    url(r'^developer/', include(admin.site.urls)),
     url(r'^login/$', loginpage, name='loginpage'),
     url(r'^cek/$', login, name='cek'),
     url(r'^logout/$', logout, name='logout'),
@@ -41,7 +54,8 @@ urlpatterns = [
     url(r'^keranjang/$', keranjang, name='keranjang'),
     url(r'^distributor/$', profil_distributor, name='p_distributor'),
     url(r'^login-distributor/$', login_d, name='login_distributor'),
-    url(r'^validasi-login/$', login_validasi_dist, name='validasi-login-distributor'),
+    url(r'^validasi-login/$', login_validasi_dist,
+        name='validasi-login-distributor'),
     url(r'^logout-d/$', logout_d, name='logout_d'),
     url(r'^fakthur-pemesanan/$', fakthur_p, name='fakthur-pemesanan'),
     url(r'^pemesanan', pemesanan, name='pemesanan'),
@@ -59,18 +73,22 @@ urlpatterns = [
     url(r'^results/$', search_for_something, name='search_for_something'),
     url(r'^detail-distributor$', detail, name="detail_d"),
     url(r'^data-pembelian$', data_pembelian, name="d_pembelian"),
-    url(r'^forgot-password$', forgot_pass, name= 'forgot-password'),
+    url(r'^forgot-password$', forgot_pass, name='forgot-password'),
     url(r'^data-suplier$', data_suplier, name='data-suplier'),
     url(r'^fsuplier$', form_suplier, name='fes'),
     url(r'^handler404/$', handler404),
     url(r'^handler500/$', handler500),
 
     url(r'^orderb/$', OrderBahan.as_view(), name='orderb'),
-    url(r'^items/select/$', Selectitem.as_view(), name='selectbarang'),
+    url(r'^items/select/(?P<uid>[\d]+)/$',
+        Selectitem.as_view(), name='selectbarang'),
+    url(r'^getcompanyprofile/(?P<uid>[\d]+)/$',
+        AboutCompany.as_view(), name='getinfo'),
     url(r'^Selectallbarang/$', SelectAll.as_view(), name='Selectallbarang'),
     url(r'^User/List/$', ReadUser.as_view(), name='Read-User'),
     url(r'^alldistributor/$', SelectAllDistributor.as_view(), name='alldist'),
     url(r'^loginrequest/$', loginview.as_view(), name='loginrequest'),
     url(r'^User/Add/$', RegisterUser.as_view(), name='Add-User'),
-    url(r'^User/Update/(?P<username>[\w.+_-]+)/$', UpdateUser.as_view(), name='Edit-User'),
+    url(r'^User/Update/(?P<username>[\w.+_-]+)/$',
+        UpdateUser.as_view(), name='Edit-User'),
 ]

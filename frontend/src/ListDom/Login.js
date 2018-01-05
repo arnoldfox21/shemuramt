@@ -1,5 +1,8 @@
 import React, { Component } from "react";
- 
+import axios from 'axios'
+import LoaderPage from '../assets/LoaderComponent'
+import Alert from '../assets/Alert'
+
 class Login extends React.Component {
   constructor(props){
     super(props)
@@ -7,6 +10,8 @@ class Login extends React.Component {
     this.state = {
       email: null,
       pass : null,
+      isLoading: true,
+      notification: [],
       loginOperations: []
     }
 
@@ -14,19 +19,30 @@ class Login extends React.Component {
 
   handleLogin(e) {
     e.preventDefault();
-    console.log(this.state.email)
-    console.log(this.state.pass)
-    localStorage.setItem("email", this.state.email);
+
+    var qs = require('qs');
+    axios.post('http://127.0.0.1:8000/loginrequest/', qs.stringify({
+      mail: this.state.email,
+      pass: this.state.pass
+    }))
+    .then((response) => {// iki kalo status 200/ selain 200 gk masuk sini
+      this.setState({notification: <Alert status={response} /> })
+    })
+    .catch(function (error) {
+    this.setState({notification: <Alert status={error} /> })
+  });
   }
 
   componentDidMount() {
-    fetch("http://127.0.0.1:8000/alldistributor/?format=json")
-    .then(result => {
-      
-    })
+    setTimeout(function() { 
+    this.setState({isLoading: false}) 
+    }.bind(this), 2000);
   }
 
   render() {
+  if(this.state.isLoading) {
+    return(<LoaderPage/>)
+  } else {
     return (
              <div>
                 <div className="parallax-container">
@@ -45,14 +61,14 @@ class Login extends React.Component {
                             <p className="center login-form-text">SHEMURA LOGIN</p>
                           </div>
                         </div>
-                    <form className="login-form" method="POST">
+                    {this.state.notification}
+                    <form className="login-form" action={(e)=>this.handleLogin(e)} method="POST">
                         <div className="row margin">
                           <div className="input-field col s12 m12 l12">
                             <i className="mdi-social-person-outline prefix"></i>
                             <input type="hidden" name="from_url" value=""/>
                             <input 
                               id="username" 
-                              placeholder="demo: demo@shemura.com" 
                               name="umail" 
                               type="text"
                               onChange={(e)=>this.setState({email: e.target.value}) }/>
@@ -64,7 +80,6 @@ class Login extends React.Component {
                             <i className="mdi-action-lock-outline prefix"></i>
                             <input 
                               id="password" 
-                              placeholder="demo: demo" 
                               name="pswd" 
                               type="password"
                               onChange={(e)=>this.setState({pass: e.target.value})}/>
@@ -80,8 +95,7 @@ class Login extends React.Component {
 
                          <div className="row">          
                           <div className="input-field col s12 m12 l12  login-text">
-                              <input id="remember-me" type="checkbox"/>
-                              <label for="remember-me">Ingat saya</label>
+                              
                           </div>
                         </div>
                         <div className="row">
@@ -91,15 +105,7 @@ class Login extends React.Component {
                             </i>
                           </div>
                         </div>
-                        <div className="row">
-                          <div className="input-field col s12">
-                            <b className="grey-text">atau masuk melalui akun google</b>
-                            <br/><br/>
-                             <a href="">
-                                 <img className="z-depth-1 waves-light waves-effect g_login" src="assets/images/g.png"/>
-                             </a>
-                          </div>
-                        </div>
+                        
                      </form>
                   </div>
                 </center>
@@ -109,10 +115,11 @@ class Login extends React.Component {
                     <img src="assets/images/slide5.jpg"/>
                   </div>
                 </div>
-                 <script src='https://www.google.com/recaptcha/api.js'></script>
+               
             </div>
               
     );
+  }
   }
 }
  

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import LoaderPage from '../assets/LoaderComponent'
 
  
 class Contact extends React.Component {
@@ -19,7 +20,7 @@ class Contact extends React.Component {
 
   renderContact() {
     if(this.state.isLoading) {
-      return(<p>Ladoing . . .</p>)
+      return(<LoaderPage/>)
     } else {
       return (
         <div>

@@ -1,38 +1,22 @@
 from rest_framework.generics import (
     CreateAPIView,
     ListAPIView,
-    UpdateAPIView,
-    DestroyAPIView,
-    GenericAPIView
+    UpdateAPIView
 )
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.exceptions import (APIException)
 
 from django.shortcuts import get_object_or_404
-from backend.models import Barang
-from backend.serializers.Serializerbarang import SelectItem
+from backend.models import Companyprofile
+from backend.serializers.Serializercompanyprofile import Info
 from rest_framework import permissions
 
 
-class SelectAll(ListAPIView):
+class AboutCompany(ListAPIView):
 
     permission_classes = []
-
-    def perform_all(self, serializer):
-        fd = self.request.POST.get('idb')
-
-    def get_queryset(self):
-        return Barang.objects.all()
-
-    def get_serializer_class(self):
-        return SelectItem
-
-
-class Selectitem(ListAPIView):
-
-    permission_classes = []
-    serializer_class = SelectItem
+    serializer_class = Info
 
     def list(self, request, *args, **kwargs):
         queryset = get_object_or_404(
@@ -45,4 +29,4 @@ class Selectitem(ListAPIView):
 
     def get_queryset(self):
 
-        return Barang.objects.all()
+        return Companyprofile.objects.all()
